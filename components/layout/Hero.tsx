@@ -28,7 +28,7 @@ export function Hero() {
             type="button"
             className="mt-10 inline-flex h-12 items-center justify-center bg-[#f2c40f] px-8 text-base font-black uppercase tracking-wide text-[#0a0f16] transition-colors hover:bg-[#ffd82f] md:h-20 md:px-12 md:text-4xl"
           >
-            Diagnóstico gratuito
+            ENTRE EM CONTATO
           </button>
         </div>
       </div>

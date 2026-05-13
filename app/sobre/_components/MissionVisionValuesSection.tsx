@@ -1,10 +1,12 @@
-import { Eye, Heart, Target } from "lucide-react";
-import type { ComponentType, SVGProps } from "react";
+import { Eye } from "lucide-react";
+import { BsFillRocketTakeoffFill, BsLightbulbFill } from "react-icons/bs";
+import type { ComponentType } from "react";
 
 interface MvvItem {
   title: string;
-  description: string;
-  icon: ComponentType<SVGProps<SVGSVGElement> & { className?: string }>;
+  description?: string;
+  bullets?: string[];
+  icon: ComponentType<{ className?: string }>;
 }
 
 const items: MvvItem[] = [
@@ -12,7 +14,7 @@ const items: MvvItem[] = [
     title: "Missão",
     description:
       "Recuperar ativos tributários com excelência técnica e ética, fortalecendo a saúde financeira das empresas e seus ecossistemas contábeis.",
-    icon: Target,
+    icon: BsFillRocketTakeoffFill,
   },
   {
     title: "Visão",
@@ -22,9 +24,8 @@ const items: MvvItem[] = [
   },
   {
     title: "Valores",
-    description:
-      "Ética, transparência, rigor técnico, compromisso com o cliente, inovação contínua e responsabilidade social.",
-    icon: Heart,
+    bullets: ["Precisão", "Transparência", "Recuperação", "Saúde Financeira"],
+    icon: BsLightbulbFill,
   },
 ];
 
@@ -40,7 +41,7 @@ export function MissionVisionValuesSection() {
         </div>
 
         <div className="grid gap-5 md:grid-cols-3">
-          {items.map(({ title, description, icon: Icon }) => (
+          {items.map(({ title, description, bullets, icon: Icon }) => (
             <article
               key={title}
               className="border-t-4 border-[#f2c40f] bg-white px-6 py-8 shadow-md transition-transform duration-300 hover:-translate-y-1 md:px-8 md:py-10"
@@ -51,9 +52,26 @@ export function MissionVisionValuesSection() {
               <h3 className="text-xl font-black uppercase tracking-tight text-[#12151b]">
                 {title}
               </h3>
-              <p className="mt-3 text-sm leading-7 text-[#3b3f47]">
-                {description}
-              </p>
+
+              {description ? (
+                <p className="mt-3 text-sm leading-7 text-[#3b3f47]">
+                  {description}
+                </p>
+              ) : null}
+
+              {bullets ? (
+                <ul className="mt-3 space-y-2 text-sm leading-7 text-[#3b3f47]">
+                  {bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-2">
+                      <span
+                        aria-hidden="true"
+                        className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-[#f2c40f]"
+                      />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </article>
           ))}
         </div>

@@ -5,7 +5,6 @@ const menuItems = [
   { label: "HOME", href: "#" },
   { label: "SERVIÇOS", href: "#" },
   { label: "SOBRE", href: "#" },
-  { label: "COMPLIANCE", href: "#" },
 ];
 
 export function NavigationMenu() {
@@ -19,12 +18,12 @@ export function NavigationMenu() {
           <Image
             src="/imagens/logo/m2_logo_sem_fundo.png"
             alt="Logo M2 Inteligência Tributária"
-            width={44}
-            height={44}
+            width={84}
+            height={84}
             className="h-9 w-9 object-contain md:h-11 md:w-11"
             priority
           />
-          <span>M2 Inteligência Tributária</span>
+          <span>Inteligência Tributária</span>
         </Link>
 
         <nav className="hidden items-center gap-9 text-xs font-semibold tracking-wide text-zinc-100 lg:flex">

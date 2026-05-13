@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Building2, Mail, MapPin, Phone } from "lucide-react";
 import {
@@ -34,19 +35,20 @@ export function Footer() {
       <div className="mx-auto grid w-full max-w-[1280px] gap-10 px-5 py-14 md:grid-cols-2 md:px-8 lg:grid-cols-4">
         <div className="space-y-5">
           <div className="flex items-center gap-2 text-2xl font-black tracking-tight text-[#f2c40f]">
-            <Building2 className="h-6 w-6" />
-            <span>M2 Inteligência Tributária</span>
+            <Image
+              src="/imagens/logo/m2_logo_sem_fundo.png"
+              alt="Logo M2 Inteligência Tributária"
+              width={84}
+              height={84}
+              className="h-12 w-12 object-contain md:h-16 md:w-16"
+              priority
+            />
+            <span>Inteligência Tributária</span>
           </div>
           <p className="max-w-sm text-sm leading-6 text-zinc-300">
             Escritório especializado em recuperação de crédito para empresas de
             contabilidade, com atuação estratégica, jurídica e operacional.
           </p>
-          <a
-            href="#"
-            className="inline-flex h-11 items-center justify-center bg-[#f2c40f] px-6 text-sm font-bold uppercase tracking-wide text-[#0a0f16] transition-colors hover:bg-[#ffd82f]"
-          >
-            Solicitar consultoria
-          </a>
         </div>
 
         <div className="space-y-4">
@@ -57,14 +59,14 @@ export function Footer() {
             <li className="flex items-start gap-3">
               <MapPin className="mt-0.5 h-4 w-4 text-[#f2c40f]" />
               <span>
-                Av. Exemplo Corporativo, 1234 - Sala 801
+                Av. Ana Saraiva de Menezes, CEP: 63046-515
                 <br />
-                Centro Empresarial, Sao Paulo - SP
+                Jd Gonzaga, Juazeiro do Norte - CE
               </span>
             </li>
             <li className="flex items-center gap-3">
               <Building2 className="h-4 w-4 text-[#f2c40f]" />
-              <span>CNPJ: 00.000.000/0001-00</span>
+              <span>CNPJ: 51.055.469/0001-69</span>
             </li>
             <li className="flex items-center gap-3">
               <Phone className="h-4 w-4 text-[#f2c40f]" />

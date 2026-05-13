@@ -1,6 +1,7 @@
 import { Hero } from "@/components/layout/Hero";
-import { ExpertiseSection } from "@/components/layout/ExpertiseSection";
+import { ExpertiseSection } from "@/components/sections/home/ExpertiseSection";
 import { NumbersSection } from "@/components/layout/NumbersSection";
+import { LeadQualificationSection } from "@/components/sections/home/LeadQualificationSection";
 import { Footer } from "@/components/layout/Footer";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <Hero />
       <ExpertiseSection />
       <NumbersSection />
+      <LeadQualificationSection />
       <Footer />
     </>
   );
