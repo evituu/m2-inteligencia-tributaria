@@ -2,13 +2,13 @@ import Image from "next/image";
 
 const leaders = [
   {
-    name: "Dr. Roberto Mendes",
+    name: "Veimar Barroso",
     role: "Sócio-fundador | Diretor Tributário",
     description:
       "Com mais de 15 anos de experiência em auditoria fiscal e contencioso tributário, lidera as operações de recuperação de créditos com foco em mitigação de riscos e conformidade legal.",
   },
   {
-    name: "Dra. Camila Machado",
+    name: "Nilce",
     role: "Sócia-fundadora | Diretora Estratégica",
     description:
       "Especialista em planejamento tributário corporativo. Sua visão analítica garante que cada projeto executado maximize a eficiência fiscal e fortaleça o caixa das empresas parceiras.",

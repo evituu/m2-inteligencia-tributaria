@@ -157,3 +157,8 @@
   animation: float-fast 5.2s ease-in-out infinite;
   animation-delay: 1.8s;
 }
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
