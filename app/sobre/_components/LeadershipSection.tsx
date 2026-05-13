@@ -1,0 +1,60 @@
+import Image from "next/image";
+
+const leaders = [
+  {
+    name: "Dr. Roberto Mendes",
+    role: "Sócio-fundador | Diretor Tributário",
+    description:
+      "Com mais de 15 anos de experiência em auditoria fiscal e contencioso tributário, lidera as operações de recuperação de créditos com foco em mitigação de riscos e conformidade legal.",
+  },
+  {
+    name: "Dra. Camila Machado",
+    role: "Sócia-fundadora | Diretora Estratégica",
+    description:
+      "Especialista em planejamento tributário corporativo. Sua visão analítica garante que cada projeto executado maximize a eficiência fiscal e fortaleça o caixa das empresas parceiras.",
+  },
+];
+
+export function LeadershipSection() {
+  return (
+    <section className="bg-[#05090c] py-16 text-white md:py-24">
+      <div className="mx-auto w-full max-w-[1280px] px-5 md:px-8">
+        <div className="relative mx-auto mb-14 max-w-[680px] overflow-hidden shadow-lg">
+          <div className="relative aspect-[16/10] w-full">
+            <Image
+              src="/imagens/office/m2_lideres_socios.png"
+              alt="Sócios da M2 Inteligência Tributária"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 680px"
+            />
+          </div>
+        </div>
+
+        <div className="mb-10 text-center">
+          <span className="mx-auto mb-4 block h-1.5 w-14 bg-[#f2c40f]" />
+          <h2 className="text-4xl font-black uppercase tracking-tight md:text-5xl">
+            Nossa Liderança
+          </h2>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {leaders.map((leader) => (
+            <article
+              key={leader.name}
+              className="border-l-4 border-[#f2c40f] bg-white/[0.04] px-6 py-7 md:px-8 md:py-9"
+            >
+              <h3 className="text-xl font-bold text-white">{leader.name}</h3>
+              <p className="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-[#f2c40f]">
+                {leader.role}
+              </p>
+              <p className="mt-4 text-sm leading-7 text-zinc-300">
+                {leader.description}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
