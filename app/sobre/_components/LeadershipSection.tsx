@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SlideIn } from "@/components/animations/SlideIn";
 
 const leaders = [
   {
@@ -39,19 +40,24 @@ export function LeadershipSection() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {leaders.map((leader) => (
-            <article
+          {leaders.map((leader, index) => (
+            <SlideIn
               key={leader.name}
-              className="border-l-4 border-[#f2c40f] bg-white/[0.04] px-6 py-7 md:px-8 md:py-9"
+              from="bottom"
+              delay={index * 170}
+              duration={1000}
+              distance={100}
             >
-              <h3 className="text-xl font-bold text-white">{leader.name}</h3>
-              <p className="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-[#f2c40f]">
-                {leader.role}
-              </p>
-              <p className="mt-4 text-sm leading-7 text-zinc-300">
-                {leader.description}
-              </p>
-            </article>
+              <article className="border-l-4 border-[#f2c40f] bg-white/[0.04] px-6 py-7 transition-transform duration-300 hover:-translate-y-1 md:px-8 md:py-9">
+                <h3 className="text-xl font-bold text-white">{leader.name}</h3>
+                <p className="mt-1 text-xs font-bold uppercase tracking-[0.18em] text-[#f2c40f]">
+                  {leader.role}
+                </p>
+                <p className="mt-4 text-sm leading-7 text-zinc-300">
+                  {leader.description}
+                </p>
+              </article>
+            </SlideIn>
           ))}
         </div>
       </div>
