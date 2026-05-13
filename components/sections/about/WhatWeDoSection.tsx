@@ -9,21 +9,21 @@ interface ServiceItem {
 
 const services: ServiceItem[] = [
   {
-    title: "Recuperação Tributária",
+    title: "Recuperação de PIS e COFINS sobre produtos monofásicos",
     description:
-      "Identificação e resgate de impostos pagos indevidamente, reforçando o caixa da sua empresa de forma legal e segura.",
+      "Análise fiscal para identificar valores de PIS e COFINS pagos indevidamente sobre produtos sujeitos à tributação monofásica, possibilitando restituição com segurança.",
     icon: BadgeDollarSign,
   },
   {
-    title: "Cobrança Extrajudicial",
+    title: "Exclusão do ICMS da base do PIS e da COFINS",
     description:
-      "Estratégias ágeis e eficientes para recuperação de passivos sem a necessidade de longos processos judiciais.",
+      "Revisão tributária para apurar créditos decorrentes da exclusão do ICMS da base de cálculo do PIS e da COFINS, conforme entendimento consolidado pelo STF",
     icon: FileSearch,
   },
   {
-    title: "Negociação de Dívidas",
+    title: "Recuperação de créditos previdenciários",
     description:
-      "Mediação profissional para reestruturação de passivos, garantindo as melhores condições e prazos para o seu negócio.",
+      "Revisão da folha de pagamento para identificar contribuições previdenciárias recolhidas indevidamente ou a maior, permitindo compensações futuras.",
     icon: Handshake,
   },
 ];
