@@ -1,6 +1,7 @@
 import { Eye } from "lucide-react";
 import { BsFillRocketTakeoffFill, BsLightbulbFill } from "react-icons/bs";
 import type { ComponentType } from "react";
+import { SlideIn } from "@/components/animations/SlideIn";
 
 interface MvvItem {
   title: string;
@@ -40,12 +41,17 @@ export function MissionVisionValuesSection() {
           </h2>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
-          {items.map(({ title, description, bullets, icon: Icon }) => (
-            <article
+        <div className="grid gap-5 md:auto-rows-fr md:grid-cols-3">
+          {items.map(({ title, description, bullets, icon: Icon }, index) => (
+            <SlideIn
               key={title}
-              className="border-t-4 border-[#f2c40f] bg-white px-6 py-8 shadow-md transition-transform duration-300 hover:-translate-y-1 md:px-8 md:py-10"
+              from="bottom"
+              delay={index * 300}
+              duration={1200}
+              distance={100}
+              className="h-full"
             >
+              <article className="h-full border-t-4 border-[#f2c40f] bg-white px-6 py-8 shadow-md transition-transform duration-300 hover:-translate-y-1 md:px-8 md:py-10">
               <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-[#f2c40f]/15 text-[#f2c40f]">
                 <Icon className="h-7 w-7" />
               </div>
@@ -72,7 +78,8 @@ export function MissionVisionValuesSection() {
                   ))}
                 </ul>
               ) : null}
-            </article>
+              </article>
+            </SlideIn>
           ))}
         </div>
       </div>
