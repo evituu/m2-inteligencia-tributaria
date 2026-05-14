@@ -130,7 +130,10 @@ export function Footer() {
 
       <div className="border-t border-zinc-800/90">
         <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-2 px-5 py-5 text-xs text-zinc-400 md:flex-row justify-center md:px-8">
-          <p>© {new Date().getFullYear()} M2 Inteligência Tributária. Todos os direitos reservados.</p>
+          <p suppressHydrationWarning>
+            © {new Date().getFullYear()} M2 Inteligência Tributária. Todos os
+            direitos reservados.
+          </p>
         </div>
       </div>
     </footer>

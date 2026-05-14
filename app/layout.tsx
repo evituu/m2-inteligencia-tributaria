@@ -1,20 +1,58 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const montserrat = localFont({
+  src: [
+    {
+      path: "../public/fonte/fonte_montserrat_static/Montserrat-Thin.ttf",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "../public/fonte/fonte_montserrat_static/Montserrat-Light.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonte/fonte_montserrat_static/Montserrat-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonte/fonte_montserrat_static/Montserrat-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonte/fonte_montserrat_static/Montserrat-SemiBold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../public/fonte/fonte_montserrat_static/Montserrat-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/fonte/fonte_montserrat_static/Montserrat-ExtraBold.ttf",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../public/fonte/fonte_montserrat_static/Montserrat-Black.ttf",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-montserrat",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "M2 Inteligência Tributária",
-  description: "Escritório especializado em recuperação de crédito para empresas de contabilidade, com atuação estratégica, jurídica e operacional.",
+  description:
+    "Escritório especializado em recuperação de crédito para empresas de contabilidade, com atuação estratégica, jurídica e operacional.",
   icons: {
     icon: "/imagens/logo/LOGO_M2_CLEAN.png",
   },
@@ -27,10 +65,16 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="pt-BR"
+      className={`${montserrat.variable} h-full`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body
+        className="min-h-full flex flex-col font-sans antialiased"
+        suppressHydrationWarning
+      >
+        {children}
+      </body>
     </html>
   );
 }
