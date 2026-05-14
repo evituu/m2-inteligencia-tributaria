@@ -24,12 +24,14 @@ export function Hero() {
             contabilidade transformarem ativos perdidos em liquidez imediata.
           </p>
 
-          <button
-            type="button"
-            className="mt-10 inline-flex h-12 items-center justify-center bg-[#f2c40f] px-8 text-base font-black uppercase tracking-wide text-[#0a0f16] transition-colors hover:bg-[#ffd82f] md:h-20 md:px-12 md:text-4xl"
+          <a
+            href="https://wa.me/5511999999999"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gold-gradient mt-10 inline-flex h-12 items-center justify-center px-8 text-base font-black uppercase tracking-wide text-[#0a0f16] shadow-[0_6px_24px_rgba(246,222,149,0.28)] transition-all duration-300 ease-out hover:-translate-y-1 hover:brightness-105 md:h-20 md:px-12 md:text-4xl"
           >
             ENTRE EM CONTATO
-          </button>
+          </a>
         </div>
       </div>
     </section>

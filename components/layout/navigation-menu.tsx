@@ -11,6 +11,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { GoldText } from "@/components/shared/GoldText";
 
 const menuItems = [
   { label: "HOME", href: "/" },
@@ -34,7 +35,7 @@ export function NavigationMenu() {
       <div className="mx-auto flex h-22 w-full max-w-[1280px] items-center justify-between px-5 md:px-8">
         <Link
           href="/"
-          className="flex items-center gap-2 font-heading text-2xl font-extrabold tracking-tight text-[#f2c40f] md:text-4xl"
+          className="flex items-center gap-2 font-heading text-2xl font-extrabold tracking-tight md:text-4xl"
         >
           <Image
             src="/imagens/logo/LOGO_M2.png"
@@ -44,7 +45,7 @@ export function NavigationMenu() {
             className="h-12 w-12 object-contain md:h-16 md:w-16"
             priority
           />
-          <span>Inteligência Tributária</span>
+          <GoldText>Inteligência Tributária</GoldText>
         </Link>
 
         <nav className="hidden items-center gap-9 text-xs font-semibold tracking-wide text-zinc-100 lg:flex">

@@ -163,3 +163,29 @@
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
+
+@layer utilities {
+  .text-gold-gradient {
+    background: linear-gradient(
+      135deg,
+      #d9ad55 0%,
+      #f6de95 42%,
+      #e8c676 70%,
+      #d7aa52 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .bg-gold-gradient {
+    background: linear-gradient(
+      135deg,
+      #d9ad55 0%,
+      #f6de95 42%,
+      #e8c676 70%,
+      #d7aa52 100%
+    );
+  }
+}
