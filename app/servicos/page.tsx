@@ -5,7 +5,7 @@ import { ServiceDetailsSection } from "@/app/servicos/_components/ServiceDetails
 import { MethodologySection } from "@/app/servicos/_components/MethodologySection";
 import { SegmentsSection } from "@/app/servicos/_components/SegmentsSection";
 import { ComplianceSection } from "@/app/servicos/_components/ComplianceSection";
-import { FaqSection } from "@/components/sections/home/FaqSection";
+import { FaqSection } from "@/components/home/FaqSection";
 import { ServicesCtaSection } from "@/app/servicos/_components/ServicesCtaSection";
 import { Footer } from "@/components/layout/Footer";
 

@@ -67,7 +67,7 @@ Acesse [http://localhost:3000](http://localhost:3000) no navegador.
 | `npm run start` | Executa o build de produção localmente. |
 | `npm run lint` | Roda o ESLint em todo o projeto. |
 
----
+-----
 
 ## Estrutura de pastas
 

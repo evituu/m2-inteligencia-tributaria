@@ -1,7 +1,7 @@
-import { AboutHeroSection } from "@/components/sections/about/AboutHeroSection";
+import { AboutHeroSection } from "@/app/sobre/_components/AboutHeroSection";
 import { CompanyStorySection } from "@/app/sobre/_components/CompanyStorySection";
-import { WorkEnvironmentSection } from "@/components/sections/about/WorkEnvironmentSection";
-import { WhatWeDoSection } from "@/components/sections/about/WhatWeDoSection";
+import { WorkEnvironmentSection } from "@/app/sobre/_components/WorkEnvironmentSection";
+import { WhatWeDoSection } from "@/app/sobre/_components/WhatWeDoSection";
 import { MissionVisionValuesSection } from "@/app/sobre/_components/MissionVisionValuesSection";
 import { LeadershipSection } from "@/app/sobre/_components/LeadershipSection";
 import { InstitutionalDifferentialsSection } from "@/app/sobre/_components/InstitutionalDifferentialsSection";

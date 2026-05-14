@@ -41,7 +41,7 @@ export function Footer() {
     <footer className="border-t border-[#f2c40f]/45 bg-[#05080d] text-white">
       <div className="mx-auto grid w-full max-w-[1280px] gap-10 px-5 py-14 md:grid-cols-2 md:px-8 lg:grid-cols-4">
         <div className="space-y-5">
-          <div className="flex items-center gap-2 text-2xl font-black tracking-tight text-[#f2c40f]">
+          <div className="flex items-center gap-2 text-2xl font-black tracking-tight">
             <Image
               src="/imagens/logo/LOGO_M2.png"
               alt="Logo M2 Inteligência Tributária"
@@ -50,7 +50,7 @@ export function Footer() {
               className="h-12 w-12 object-contain md:h-16 md:w-16"
               priority
             />
-            <span>Inteligência Tributária</span>
+            <span className="text-gold-gradient">Inteligência Tributária</span>
           </div>
           <p className="max-w-sm text-sm leading-6 text-zinc-300">
             Escritório especializado em recuperação de crédito para empresas de
@@ -59,12 +59,12 @@ export function Footer() {
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-[#f2c40f]">
+          <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-gold-gradient">
             Dados da empresa
           </h3>
           <ul className="space-y-3 text-sm text-zinc-200">
             <li className="flex items-start gap-3">
-              <MapPin className="mt-0.5 h-4 w-4 text-[#f2c40f]" />
+              <MapPin className="icon-gold-stroke mt-0.5 h-4 w-4" />
               <span>
                 Av. Ana Saraiva de Menezes, CEP: 63046-515
                 <br />
@@ -72,22 +72,22 @@ export function Footer() {
               </span>
             </li>
             <li className="flex items-center gap-3">
-              <Building2 className="h-4 w-4 text-[#f2c40f]" />
+              <Building2 className="icon-gold-stroke h-4 w-4" />
               <span>CNPJ: 51.055.469/0001-69</span>
             </li>
             <li className="flex items-center gap-3">
-              <Phone className="h-4 w-4 text-[#f2c40f]" />
+              <Phone className="icon-gold-stroke h-4 w-4" />
               <span>(11) 0000-0000</span>
             </li>
             <li className="flex items-center gap-3">
-              <Mail className="h-4 w-4 text-[#f2c40f]" />
+              <Mail className="icon-gold-stroke h-4 w-4" />
               <span>m2inteligenciatributaria@gmail.com</span>
             </li>
           </ul>
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-[#f2c40f]">
+          <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-gold-gradient">
             Navegação rápida
           </h3>
           <nav className="flex flex-col gap-2.5">
@@ -95,7 +95,7 @@ export function Footer() {
               <Link
                 key={item.label}
                 href={item.href}
-                className="text-sm text-zinc-200 transition-colors hover:text-[#f2c40f]"
+                className="hover-text-gold-gradient text-sm text-zinc-200"
               >
                 {item.label}
               </Link>
@@ -104,7 +104,7 @@ export function Footer() {
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-[#f2c40f]">
+          <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-gold-gradient">
             Redes sociais
           </h3>
           <div className="flex flex-col gap-2.5">
@@ -114,9 +114,9 @@ export function Footer() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-zinc-200 transition-colors hover:text-[#f2c40f]"
+                className="hover-text-gold-gradient inline-flex items-center gap-2 text-sm text-zinc-200"
               >
-                <Icon className="h-4 w-4 text-[#f2c40f]" />
+                <Icon className="icon-gold-fill h-4 w-4" />
                 <span>{label}</span>
               </a>
             ))}

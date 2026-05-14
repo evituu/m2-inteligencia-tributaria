@@ -7,15 +7,12 @@ export function WhatsAppCtaSection() {
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <div className="relative mx-auto flex w-full max-w-[960px] flex-col items-center gap-6 px-5 text-center md:px-8">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366]/15 ring-2 ring-[#25D366]/50">
-          <AiOutlineWhatsApp className="h-9 w-9 text-[#25D366]" />
-        </div>
 
         <h2 className="text-3xl font-black uppercase leading-tight tracking-tight text-white md:text-4xl">
           Fale{" "}
-          <span className="text-[#f2c40f]">diretamente</span>{" "}
+          <span className="text-gold-gradient">diretamente</span>{" "}
           com a nossa{" "}
-          <span className="text-[#f2c40f]">equipe</span>
+          <span className="text-gold-gradient">equipe</span>
         </h2>
 
         <p className="max-w-[600px] text-base leading-relaxed text-zinc-300 md:text-lg">

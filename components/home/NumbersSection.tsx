@@ -111,7 +111,7 @@ export function NumbersSection() {
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <span className="mx-auto mb-4 block h-1 w-14 bg-[#f2c40f]" />
           <h2 className="text-4xl font-black uppercase tracking-tight md:text-6xl">
-            Nossos Números
+            Nossos <span className="text-gold-gradient">Números</span>
           </h2>
           <p className="mt-4 text-sm leading-6 text-zinc-400 md:text-base">
             Indicadores que refletem escala, solidez operacional e presença

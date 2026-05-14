@@ -1,10 +1,10 @@
-import { Hero } from "@/components/sections/home/Hero";
-import { ExpertiseSection } from "@/components/sections/home/ExpertiseSection";
-import { NumbersSection } from "@/components/sections/home/NumbersSection";
-import { LeadQualificationSection } from "@/components/sections/home/LeadQualificationSection";
-import { WhatsAppCtaSection } from "@/components/sections/home/WhatsAppCtaSection";
+import { Hero } from "@/components/home/Hero";
+import { ExpertiseSection } from "@/components/home/ExpertiseSection";
+import { NumbersSection } from "@/components/home/NumbersSection";
+import { LeadQualificationSection } from "@/components/home/LeadQualificationSection";
+import { WhatsAppCtaSection } from "@/components/home/WhatsAppCtaSection";
 import { Footer } from "@/components/layout/Footer";
-import { FaqSection } from "@/components/sections/home/FaqSection";
+import { FaqSection } from "@/components/home/FaqSection";
 
 export default function Home() {
   return (

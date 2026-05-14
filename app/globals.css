@@ -188,4 +188,30 @@
       #d7aa52 100%
     );
   }
+
+  .hover-text-gold-gradient {
+    transition: color 0.3s ease, background 0.3s ease;
+  }
+
+  .hover-text-gold-gradient:hover {
+    background: linear-gradient(
+      135deg,
+      #d9ad55 0%,
+      #f6de95 42%,
+      #e8c676 70%,
+      #d7aa52 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .icon-gold-stroke {
+    stroke: url(#gold-gradient);
+  }
+
+  .icon-gold-fill {
+    fill: url(#gold-gradient);
+  }
 }

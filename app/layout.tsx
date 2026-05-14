@@ -73,6 +73,28 @@ export default function RootLayout({
         className="min-h-full flex flex-col font-sans antialiased"
         suppressHydrationWarning
       >
+        <svg
+          width="0"
+          height="0"
+          aria-hidden="true"
+          focusable="false"
+          style={{ position: "absolute" }}
+        >
+          <defs>
+            <linearGradient
+              id="gold-gradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stopColor="#d9ad55" />
+              <stop offset="42%" stopColor="#f6de95" />
+              <stop offset="70%" stopColor="#e8c676" />
+              <stop offset="100%" stopColor="#d7aa52" />
+            </linearGradient>
+          </defs>
+        </svg>
         {children}
       </body>
     </html>

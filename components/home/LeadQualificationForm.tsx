@@ -269,7 +269,7 @@ export function LeadQualificationForm() {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="h-11 w-full bg-[#f2c40f] text-sm font-black uppercase tracking-wide text-[#0a0f16] hover:bg-[#ffd82f]"
+            className="bg-gold-gradient h-11 w-full text-sm font-black uppercase tracking-wide text-[#0a0f16] transition-all duration-300 hover:brightness-105"
           >
             {isSubmitting ? "Enviando..." : "Enviar"}
           </Button>

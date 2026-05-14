@@ -1,6 +1,6 @@
 import { CheckCircle2, Lock } from "lucide-react";
 
-import { LeadQualificationForm } from "@/components/forms/LeadQualificationForm";
+import { LeadQualificationForm } from "@/components/home/LeadQualificationForm";
 
 const postSubmitSteps = [
   "Analisamos as informações enviadas.",
