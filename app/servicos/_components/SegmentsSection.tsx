@@ -121,7 +121,7 @@ export function SegmentsSection() {
     <section className="bg-[#efefef] py-16 md:py-24">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-8">
         <div className="mb-12 max-w-[760px]">
-          <span className="mb-5 block h-1.5 w-14 bg-[#f2c40f]" />
+          <span className="bg-gold-gradient mb-5 block h-1.5 w-14" />
           <h2 className="text-4xl font-black uppercase tracking-tight text-[#12151b] md:text-5xl">
             Segmentos atendidos
           </h2>
@@ -158,11 +158,9 @@ export function SegmentsSection() {
                       transform: `scale(${scale})`,
                       transition:
                         "opacity 1s cubic-bezier(0.4,0,0.2,1), transform 1s cubic-bezier(0.4,0,0.2,1), border-color 0.8s ease, box-shadow 0.8s ease",
-                      borderColor: isCurrent
-                        ? "#f2c40f"
-                        : "rgb(228 228 231)",
+                      borderColor: isCurrent ? "#d7aa52" : "rgb(228 228 231)",
                       boxShadow: isCurrent
-                        ? "0 8px 30px rgba(242,196,15,0.15)"
+                        ? "0 8px 30px rgba(217,173,85,0.2)"
                         : "0 1px 3px rgba(0,0,0,0.06)",
                     }}
                   >
@@ -170,11 +168,11 @@ export function SegmentsSection() {
                       className="flex h-14 w-14 items-center justify-center rounded-full"
                       style={{
                         background: isCurrent
-                          ? "linear-gradient(135deg, #fde97a, #f2c40f, #c9940a)"
-                          : "rgba(242,196,15,0.15)",
-                        color: isCurrent ? "#fff" : "#c9a227",
+                          ? "linear-gradient(135deg, #d9ad55 0%, #f6de95 42%, #e8c676 70%, #d7aa52 100%)"
+                          : "rgba(217,173,85,0.16)",
+                        color: isCurrent ? "#fff" : "#d7aa52",
                         boxShadow: isCurrent
-                          ? "0 4px 12px rgba(201,148,10,0.3)"
+                          ? "0 4px 12px rgba(217,173,85,0.34)"
                           : "none",
                         transition:
                           "background 0.8s ease, color 0.8s ease, box-shadow 0.8s ease",
@@ -200,14 +198,14 @@ export function SegmentsSection() {
           <button
             onClick={() => handleManual(prev)}
             aria-label="Segmento anterior"
-            className="absolute -left-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-200 bg-white text-[#12151b] shadow-md transition-all duration-300 hover:border-[#f2c40f] hover:text-[#c9a227] md:-left-4 md:h-12 md:w-12"
+            className="absolute -left-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-200 bg-white text-[#12151b] shadow-md transition-all duration-300 hover:border-[#d7aa52] hover:text-[#d7aa52] md:-left-4 md:h-12 md:w-12"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
           <button
             onClick={() => handleManual(next)}
             aria-label="Próximo segmento"
-            className="absolute -right-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-200 bg-white text-[#12151b] shadow-md transition-all duration-300 hover:border-[#f2c40f] hover:text-[#c9a227] md:-right-4 md:h-12 md:w-12"
+            className="absolute -right-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-200 bg-white text-[#12151b] shadow-md transition-all duration-300 hover:border-[#d7aa52] hover:text-[#d7aa52] md:-right-4 md:h-12 md:w-12"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
@@ -224,7 +222,7 @@ export function SegmentsSection() {
                 width: i === current ? 28 : 8,
                 background:
                   i === current
-                    ? "linear-gradient(90deg, #f2c40f, #c9940a)"
+                    ? "linear-gradient(90deg, #d9ad55 0%, #f6de95 42%, #e8c676 70%, #d7aa52 100%)"
                     : "#d4d4d8",
                 transition: "width 0.6s ease, background 0.6s ease",
               }}

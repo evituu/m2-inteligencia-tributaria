@@ -18,7 +18,8 @@ export function LeadQualificationSection() {
         <div>
           <span className="mb-5 block h-1.5 w-14 bg-[#f2c40f]" />
           <h2 className="text-4xl font-black uppercase leading-[1.08] tracking-tight md:text-5xl">
-            Solicite uma análise inicial
+            Solicite uma <br />
+            <span className="text-gold-gradient">análise </span> inicial
           </h2>
           <p className="mt-6 max-w-[680px] text-base leading-8 text-zinc-300 md:text-lg">
             Preencha o formulário para que nossa equipe entenda o cenário da sua

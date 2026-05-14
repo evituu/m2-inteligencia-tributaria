@@ -15,7 +15,8 @@ export function AboutHeroSection() {
         <div className="max-w-[700px]">
           <span className="mb-6 block h-1.5 w-14 bg-[#f2c40f]" />
           <h1 className="text-4xl font-black uppercase leading-[1.08] tracking-tight md:text-5xl lg:text-6xl">
-            Sobre a M2 Inteligência Tributária
+            Sobre a <br />
+            <span className="text-gold-gradient">M2 Inteligência Tributária</span>
           </h1>
           <p className="mt-6 max-w-[600px] text-base leading-relaxed text-zinc-300 md:text-lg">
             Somos especialistas em recuperação de crédito tributário com foco

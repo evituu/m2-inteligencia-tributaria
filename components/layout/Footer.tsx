@@ -9,9 +9,9 @@ import {
 import { FaInstagram } from "react-icons/fa";
 
 const quickLinks = [
-  { label: "Home", href: "#" },
-  { label: "Sobre nós", href: "#" },
-  { label: "Serviços", href: "#" },
+  { label: "Home", href: "/home" },
+  { label: "Sobre nós", href: "/sobre" },
+  { label: "Serviços", href: "/servicos" },
 ];
 
 const socialLinks = [
@@ -121,10 +121,6 @@ export function Footer() {
               </a>
             ))}
           </div>
-          <p className="pt-3 text-xs leading-5 text-zinc-400">
-            Atendemos todo o Brasil com consultoria especializada para
-            recuperação tributária e compliance fiscal.
-          </p>
         </div>
       </div>
 

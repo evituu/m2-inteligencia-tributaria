@@ -105,7 +105,7 @@ export function LeadQualificationForm() {
   return (
     <Card className="border border-zinc-200 bg-white py-0 shadow-xl">
       <CardHeader className="border-b border-zinc-100 px-6 py-5 md:px-7">
-        <CardTitle className="text-lg text-center font-extrabold text-[#12151b]">
+        <CardTitle className="text-center text-2xl font-extrabold text-black md:text-3xl">
           FORMULÁRIO
         </CardTitle>
       </CardHeader>

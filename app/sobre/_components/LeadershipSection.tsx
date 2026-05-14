@@ -20,15 +20,23 @@ export function LeadershipSection() {
   return (
     <section className="bg-[#05090c] py-16 text-white md:py-24">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-8">
-        <div className="relative mx-auto mb-14 max-w-[680px] overflow-hidden shadow-lg">
-          <div className="relative aspect-[16/10] w-full">
-            <Image
-              src="/imagens/office/m2_lideres_socios.png"
-              alt="Sócios da M2 Inteligência Tributária"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 680px"
-            />
+        <div className="relative mx-auto mb-14 max-w-[680px]">
+          <div
+            className="rounded-lg p-1.5 shadow-[0_0_32px_rgba(217,173,85,0.25)] md:p-2"
+            style={{
+              background:
+                "linear-gradient(135deg, #d9ad55 0%, #f6de95 42%, #e8c676 70%, #d7aa52 100%)",
+            }}
+          >
+            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md md:rounded-lg">
+              <Image
+                src="/imagens/office/m2_lideres_socios.png"
+                alt="Sócios da M2 Inteligência Tributária"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 680px"
+              />
+            </div>
           </div>
         </div>
 

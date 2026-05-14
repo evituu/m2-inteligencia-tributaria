@@ -42,9 +42,7 @@ export function MethodologySection() {
           <span className="mx-auto mb-4 block h-1.5 w-14 bg-[#f2c40f]" />
           <h2 className="text-4xl font-black uppercase tracking-tight md:text-5xl">
             Nossa{" "}
-            <span className="bg-gradient-to-r from-[#f2c40f] via-[#fde97a] to-[#c9940a] bg-clip-text text-transparent">
-              metodologia
-            </span>
+            <span className="text-gold-gradient">metodologia</span>
           </h2>
           <p className="mt-5 text-base leading-7 text-zinc-300 md:text-lg">
             Processo técnico, transparente e auditável, conduzido em seis etapas

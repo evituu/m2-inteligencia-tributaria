@@ -52,35 +52,41 @@ const faqs = [
 
 export function FaqSection() {
   return (
-    <section className="bg-white py-16 md:py-24">
+    <section className="bg-zinc-700 py-16 md:py-24">
       <div className="mx-auto w-full max-w-[920px] px-5 md:px-8">
-        <div className="mb-10 text-center">
-          <span className="mx-auto mb-4 block h-1.5 w-14 bg-[#f2c40f]" />
-          <h2 className="text-4xl font-black uppercase tracking-tight text-[#12151b] md:text-5xl">
-            Perguntas frequentes
-          </h2>
-          <p className="mt-4 text-base text-[#3b3f47] md:text-lg">
-            Esclarecemos as principais dúvidas sobre recuperação tributária e
-            previdenciária.
-          </p>
-        </div>
+        <div className="rounded-2xl border border-white/10 bg-[#1a1f27] px-6 py-10 shadow-2xl shadow-black/25 md:px-10">
+          <div className="mb-10 text-center">
+            <span className="mx-auto mb-4 block h-1.5 w-14 bg-[#f2c40f]" />
+            <h2 className="text-4xl font-black uppercase tracking-tight text-gold-gradient md:text-5xl">
+              Perguntas frequentes
+            </h2>
+            <p className="mt-4 text-base text-gold-gradient md:text-lg">
+              Esclarecemos as principais dúvidas sobre recuperação tributária e
+              previdenciária.
+            </p>
+          </div>
 
-        <Accordion type="single" collapsible className="border-t border-zinc-200">
-          {faqs.map(({ question, answer }) => (
-            <AccordionItem
-              key={question}
-              value={question}
-              className="border-b border-zinc-200"
-            >
-              <AccordionTrigger className="py-5 text-base font-bold text-[#12151b] md:text-lg">
-                {question}
-              </AccordionTrigger>
-              <AccordionContent className="text-sm leading-7 text-[#3b3f47] md:text-base">
-                {answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+          <Accordion
+            type="single"
+            collapsible
+            className="border-t border-[#f2c40f]/35"
+          >
+            {faqs.map(({ question, answer }) => (
+              <AccordionItem
+                key={question}
+                value={question}
+                className="border-b border-[#f2c40f]/25"
+              >
+                <AccordionTrigger className="py-5 text-left text-base font-bold hover:no-underline md:text-lg">
+                  <span className="text-zinc-300 hover:text-white">{question}</span>
+                </AccordionTrigger>
+                <AccordionContent className="text-sm leading-7 text-zinc-200 md:text-base">
+                  {answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
       </div>
     </section>
   );
