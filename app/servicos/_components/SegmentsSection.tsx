@@ -1,20 +1,29 @@
+"use client";
+
 import {
   Beef,
   Car,
+  ChevronLeft,
+  ChevronRight,
   Coffee,
   Disc,
   Drumstick,
   Flame,
   FuelIcon,
-  Heart,
   PawPrint,
   Pill,
   ShoppingCart,
   Sparkles,
   Tractor,
-  Users,
 } from "lucide-react";
-import type { ComponentType, SVGProps } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ComponentType,
+  type SVGProps,
+} from "react";
 
 interface SegmentItem {
   name: string;
@@ -34,11 +43,80 @@ const segments: SegmentItem[] = [
   { name: "Bares e restaurantes", icon: Coffee },
   { name: "Açougues", icon: Drumstick },
   { name: "Frigoríficos", icon: Beef },
-  { name: "Empresas com folha de pagamento relevante", icon: Users },
-  { name: "Empresas com benefícios e adicionais relevantes", icon: Heart },
 ];
 
+const AUTOPLAY_MS = 4000;
+const GAP = 20;
+
+function getVisibleCount(width: number) {
+  if (width >= 1024) return 5;
+  if (width >= 768) return 3;
+  if (width >= 500) return 2;
+  return 1;
+}
+
 export function SegmentsSection() {
+  const total = segments.length;
+  const [current, setCurrent] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [measure, setMeasure] = useState({ cardW: 220, visible: 5 });
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const remeasure = useCallback(() => {
+    if (!containerRef.current) return;
+    const w = containerRef.current.offsetWidth;
+    const v = getVisibleCount(w);
+    const cardW = (w - GAP * (v - 1)) / v;
+    setMeasure({ cardW, visible: v });
+  }, []);
+
+  useEffect(() => {
+    remeasure();
+    window.addEventListener("resize", remeasure);
+    return () => window.removeEventListener("resize", remeasure);
+  }, [remeasure]);
+
+  const goTo = useCallback(
+    (index: number) => setCurrent(((index % total) + total) % total),
+    [total],
+  );
+  const next = useCallback(() => goTo(current + 1), [current, goTo]);
+  const prev = useCallback(() => goTo(current - 1), [current, goTo]);
+
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setCurrent((c) => (c + 1) % total);
+    }, AUTOPLAY_MS);
+  }, [total]);
+
+  useEffect(() => {
+    resetTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [resetTimer]);
+
+  const handleManual = useCallback(
+    (action: () => void) => {
+      action();
+      resetTimer();
+    },
+    [resetTimer],
+  );
+
+  const { cardW, visible } = measure;
+  const centerOffset =
+    (containerRef.current?.offsetWidth ?? cardW * visible + GAP * (visible - 1)) / 2 -
+    cardW / 2;
+  const translateX = -current * (cardW + GAP) + centerOffset;
+
+  const distanceFromCenter = (index: number) => {
+    const raw = index - current;
+    const wrapped = ((raw + total / 2) % total) - total / 2;
+    return Math.abs(wrapped);
+  };
+
   return (
     <section className="bg-[#efefef] py-16 md:py-24">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-8">
@@ -53,19 +131,104 @@ export function SegmentsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {segments.map(({ name, icon: Icon }) => (
-            <article
-              key={name}
-              className="flex h-full items-center gap-3 border border-zinc-200 bg-white px-4 py-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#f2c40f]/60 hover:shadow-md"
+        <div className="relative" ref={containerRef}>
+          <div className="overflow-hidden py-6">
+            <div
+              className="flex will-change-transform"
+              style={{
+                gap: GAP,
+                transform: `translateX(${translateX}px)`,
+                transition: "transform 1s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#f2c40f]/15 text-[#c9a227]">
-                <Icon className="h-5 w-5" />
-              </div>
-              <span className="text-sm font-medium leading-5 text-[#12151b]">
-                {name}
-              </span>
-            </article>
+              {segments.map(({ name, icon: Icon }, i) => {
+                const dist = distanceFromCenter(i);
+                const isCurrent = i === current;
+                const halfVisible = Math.floor(visible / 2);
+                const opacity = dist <= halfVisible ? 1 - dist * 0.2 : 0.3;
+                const scale = isCurrent ? 1.04 : 1 - dist * 0.02;
+
+                return (
+                  <article
+                    key={name}
+                    className="flex shrink-0 flex-col items-center gap-4 rounded-2xl border bg-white px-5 py-8"
+                    style={{
+                      width: cardW,
+                      opacity,
+                      transform: `scale(${scale})`,
+                      transition:
+                        "opacity 1s cubic-bezier(0.4,0,0.2,1), transform 1s cubic-bezier(0.4,0,0.2,1), border-color 0.8s ease, box-shadow 0.8s ease",
+                      borderColor: isCurrent
+                        ? "#f2c40f"
+                        : "rgb(228 228 231)",
+                      boxShadow: isCurrent
+                        ? "0 8px 30px rgba(242,196,15,0.15)"
+                        : "0 1px 3px rgba(0,0,0,0.06)",
+                    }}
+                  >
+                    <div
+                      className="flex h-14 w-14 items-center justify-center rounded-full"
+                      style={{
+                        background: isCurrent
+                          ? "linear-gradient(135deg, #fde97a, #f2c40f, #c9940a)"
+                          : "rgba(242,196,15,0.15)",
+                        color: isCurrent ? "#fff" : "#c9a227",
+                        boxShadow: isCurrent
+                          ? "0 4px 12px rgba(201,148,10,0.3)"
+                          : "none",
+                        transition:
+                          "background 0.8s ease, color 0.8s ease, box-shadow 0.8s ease",
+                      }}
+                    >
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <span
+                      className="text-center text-sm font-semibold leading-5"
+                      style={{
+                        color: isCurrent ? "#12151b" : "#a1a1aa",
+                        transition: "color 0.8s ease",
+                      }}
+                    >
+                      {name}
+                    </span>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+
+          <button
+            onClick={() => handleManual(prev)}
+            aria-label="Segmento anterior"
+            className="absolute -left-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-200 bg-white text-[#12151b] shadow-md transition-all duration-300 hover:border-[#f2c40f] hover:text-[#c9a227] md:-left-4 md:h-12 md:w-12"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            onClick={() => handleManual(next)}
+            aria-label="Próximo segmento"
+            className="absolute -right-1 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-zinc-200 bg-white text-[#12151b] shadow-md transition-all duration-300 hover:border-[#f2c40f] hover:text-[#c9a227] md:-right-4 md:h-12 md:w-12"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+
+        <div className="mt-8 flex items-center justify-center gap-2">
+          {segments.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => handleManual(() => goTo(i))}
+              aria-label={`Ir para segmento ${i + 1}`}
+              className="h-2 rounded-full"
+              style={{
+                width: i === current ? 28 : 8,
+                background:
+                  i === current
+                    ? "linear-gradient(90deg, #f2c40f, #c9940a)"
+                    : "#d4d4d8",
+                transition: "width 0.6s ease, background 0.6s ease",
+              }}
+            />
           ))}
         </div>
       </div>

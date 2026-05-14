@@ -14,8 +14,8 @@ import {
 
 const menuItems = [
   { label: "HOME", href: "/" },
-  { label: "SERVIÇOS", href: "/servicos" },
   { label: "SOBRE", href: "/sobre" },
+  { label: "SERVIÇOS", href: "/servicos" },
 ];
 
 export function NavigationMenu() {

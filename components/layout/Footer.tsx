@@ -10,8 +10,8 @@ import {
 
 const quickLinks = [
   { label: "Home", href: "#" },
-  { label: "Serviços", href: "#" },
   { label: "Sobre nós", href: "#" },
+  { label: "Serviços", href: "#" },
 ];
 
 const socialLinks = [

@@ -6,7 +6,7 @@ import {
   FileSearch,
   ShieldCheck,
 } from "lucide-react";
-import Link from "next/link";
+import { AiOutlineWhatsApp } from "react-icons/ai";
 import type { ComponentType, SVGProps } from "react";
 
 interface ServiceItem {
@@ -111,16 +111,26 @@ export function ServicesGridSection() {
                   {indicatedFor}
                 </p>
               </div>
-
-              <Link
-                href={`#${slug}`}
-                className="mt-6 inline-flex items-center gap-2 self-start border-b-2 border-[#f2c40f] pb-0.5 text-sm font-bold uppercase tracking-wide text-[#12151b] transition-colors hover:text-[#c9a227]"
-              >
-                Saiba mais
-                <span aria-hidden="true">→</span>
-              </Link>
             </article>
           ))}
+        </div>
+
+        <div className="mt-12 flex flex-col items-center gap-4 text-center">
+          <p className="max-w-[520px] text-base leading-relaxed text-[#3b3f47] md:text-lg">
+            <strong className="font-bold text-[#12151b]">
+              Conheça melhor os nossos serviços
+            </strong>{" "}
+            Converse com a nossa equipe e descubra as próximas oportunidades para sua empresa.
+          </p>
+          <a
+            href="https://wa.me/5511999999999"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#25D366] via-[#21bf5b] to-[#1ebe57] px-8 text-base font-black uppercase tracking-wide text-white shadow-[0_4px_24px_rgba(37,211,102,0.35)] transition-all duration-300 hover:scale-[1.02] hover:from-[#1ebe57] hover:via-[#1da851] hover:to-[#179245] hover:shadow-[0_6px_32px_rgba(37,211,102,0.45)]"
+          >
+            <AiOutlineWhatsApp className="h-6 w-6" />
+            Conheça mais serviços no WhatsApp
+          </a>
         </div>
       </div>
     </section>

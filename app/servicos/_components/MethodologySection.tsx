@@ -1,7 +1,7 @@
 const steps = [
   {
     number: "01",
-    title: "Diagnóstico inicial",
+    title: "Diagnóstico",
     description:
       "Entendemos o regime tributário, segmento, porte e particularidades da empresa para identificar potenciais oportunidades.",
   },
@@ -47,7 +47,10 @@ export function MethodologySection() {
         <div className="mx-auto mb-14 max-w-[760px] text-center">
           <span className="mx-auto mb-4 block h-1.5 w-14 bg-[#f2c40f]" />
           <h2 className="text-4xl font-black uppercase tracking-tight md:text-5xl">
-            Nossa metodologia
+            Nossa{" "}
+            <span className="bg-gradient-to-r from-[#f2c40f] via-[#fde97a] to-[#c9940a] bg-clip-text text-transparent">
+              metodologia
+            </span>
           </h2>
           <p className="mt-5 text-base leading-7 text-zinc-300 md:text-lg">
             Processo técnico, transparente e auditável, conduzido em seis etapas
@@ -60,15 +63,21 @@ export function MethodologySection() {
           {steps.map(({ number, title, description }) => (
             <li
               key={number}
-              className="relative h-full border border-white/10 bg-white/[0.03] px-6 py-7 shadow-2xl shadow-black/20 transition-all duration-300 hover:-translate-y-1 hover:border-[#f2c40f]/60 md:px-7 md:py-8"
+              className="relative h-full border border-[#f2c40f]/30 bg-white px-6 py-7 shadow-2xl shadow-black/20 transition-all duration-300 hover:-translate-y-1 hover:border-[#f2c40f] hover:shadow-[0_8px_32px_rgba(242,196,15,0.18)] md:px-7 md:py-8"
             >
-              <span className="absolute right-5 top-5 text-4xl font-black text-[#f2c40f]/25 md:text-5xl">
+              <span
+                className="absolute right-5 top-5 inline-flex items-center justify-center rounded-xl bg-gradient-to-br from-[#fde97a] via-[#f2c40f] to-[#c9940a] px-3 py-1 text-3xl font-black text-[#f2c40f] shadow-md shadow-[#c9940a]/40 md:text-4xl"
+                style={{ WebkitTextStroke: "1px #12151b" }}
+              >
                 {number}
               </span>
-              <h3 className="mt-1 max-w-[80%] text-lg font-bold uppercase tracking-tight text-white">
+              <h3
+                className="mt-1 max-w-[80%] text-lg font-bold uppercase tracking-tight text-[#12151b]"
+                style={{ WebkitTextStroke: "0.5px #c9940a" }}
+              >
                 {title}
               </h3>
-              <p className="mt-4 text-sm leading-7 text-zinc-300">
+              <p className="mt-4 text-sm leading-7 text-zinc-600">
                 {description}
               </p>
             </li>

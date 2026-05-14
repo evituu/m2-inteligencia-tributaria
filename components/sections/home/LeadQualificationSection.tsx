@@ -10,7 +10,10 @@ const postSubmitSteps = [
 
 export function LeadQualificationSection() {
   return (
-    <section className="bg-[#0a0f16] py-16 text-white md:py-24">
+    <section
+      id="formulario"
+      className="bg-[#0a0f16] py-16 text-white md:py-24"
+    >
       <div className="mx-auto grid w-full max-w-[1280px] gap-10 px-5 md:px-8 lg:grid-cols-[1.1fr_1fr] lg:items-start">
         <div>
           <span className="mb-5 block h-1.5 w-14 bg-[#f2c40f]" />
