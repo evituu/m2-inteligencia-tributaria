@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "M2 Inteligência Tributária",
   description: "Escritório especializado em recuperação de crédito para empresas de contabilidade, com atuação estratégica, jurídica e operacional.",
   icons: {
-    icon: "/imagens/logo/m2_logo_preta.png",
+    icon: "/imagens/logo/LOGO_M2_CLEAN.png",
   },
 };
 

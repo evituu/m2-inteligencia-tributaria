@@ -37,11 +37,11 @@ export function NavigationMenu() {
           className="flex items-center gap-2 font-heading text-2xl font-extrabold tracking-tight text-[#f2c40f] md:text-4xl"
         >
           <Image
-            src="/imagens/logo/m2_logo_sem_fundo.png"
+            src="/imagens/logo/LOGO_M2.png"
             alt="Logo M2 Inteligência Tributária"
-            width={84}
-            height={84}
-            className="h-9 w-9 object-contain md:h-11 md:w-11"
+            width={100}
+            height={100}
+            className="h-12 w-12 object-contain md:h-16 md:w-16"
             priority
           />
           <span>Inteligência Tributária</span>

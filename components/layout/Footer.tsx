@@ -2,11 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Building2, Mail, MapPin, Phone } from "lucide-react";
 import {
-  AiFillFacebook,
   AiFillLinkedin,
   AiOutlineMail,
   AiOutlineWhatsApp,
 } from "react-icons/ai";
+import { FaInstagram } from "react-icons/fa";
 
 const quickLinks = [
   { label: "Home", href: "#" },
@@ -15,8 +15,15 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { label: "Facebook", href: "#", icon: AiFillFacebook },
-  { label: "LinkedIn", href: "#", icon: AiFillLinkedin },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/m2inteligenciatributaria/",
+    icon: FaInstagram,
+  },
+  { 
+    label: "LinkedIn", 
+    href: "https://www.linkedin.com/company/m2-intelig%C3%AAncia-tribut%C3%A1ria/", 
+    icon: AiFillLinkedin },
   {
     label: "WhatsApp",
     href: "https://wa.me/5511999999999",
@@ -36,7 +43,7 @@ export function Footer() {
         <div className="space-y-5">
           <div className="flex items-center gap-2 text-2xl font-black tracking-tight text-[#f2c40f]">
             <Image
-              src="/imagens/logo/m2_logo_sem_fundo.png"
+              src="/imagens/logo/LOGO_M2.png"
               alt="Logo M2 Inteligência Tributária"
               width={84}
               height={84}
