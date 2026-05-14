@@ -14,7 +14,7 @@ const items: MvvItem[] = [
   {
     title: "Missão",
     description:
-      "Recuperar ativos tributários com excelência técnica e ética, fortalecendo a saúde financeira das empresas e seus ecossistemas contábeis.",
+      "Contribuir para o desenvolvimento das empresas brasileiras devolvendo o que sempre foi delas.",
     icon: BsFillRocketTakeoffFill,
   },
   {
