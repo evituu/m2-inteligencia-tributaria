@@ -19,7 +19,7 @@ export function ServicesIntroSection() {
           <p className="mt-6 max-w-[560px] text-base leading-8 text-[#3b3f47] md:text-lg">
             Alterações constantes na legislação, complexidade do sistema fiscal
             brasileiro e falta de revisão periódica fazem com que parte
-            relevante das empresas recolha tributos a maior — sem perceber.
+            relevante das empresas recolha tributos a maior sem perceber.
           </p>
           <p className="mt-4 max-w-[560px] text-base leading-8 text-[#3b3f47] md:text-lg">
             A <span className="font-semibold text-[#12151b]">M2 Inteligência Tributária</span>{" "}

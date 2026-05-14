@@ -6,7 +6,7 @@ import { MethodologySection } from "@/app/servicos/_components/MethodologySectio
 import { SegmentsSection } from "@/app/servicos/_components/SegmentsSection";
 import { RequiredDocumentsSection } from "@/app/servicos/_components/RequiredDocumentsSection";
 import { ComplianceSection } from "@/app/servicos/_components/ComplianceSection";
-import { ServicesFaqSection } from "@/app/servicos/_components/ServicesFaqSection";
+import { FaqSection } from "@/components/sections/home/FaqSection";
 import { ServicesCtaSection } from "@/app/servicos/_components/ServicesCtaSection";
 import { Footer } from "@/components/layout/Footer";
 
@@ -21,6 +21,7 @@ export default function ServicosPage() {
       <SegmentsSection />
       <RequiredDocumentsSection />
       <ComplianceSection />
+      <FaqSection />
       <ServicesCtaSection />
       <Footer />
     </>

@@ -1,4 +1,5 @@
 import { BadgeDollarSign, FileSearch, Handshake } from "lucide-react";
+import Link from "next/link";
 import type { ComponentType, SVGProps } from "react";
 
 interface ServiceItem {
@@ -57,6 +58,15 @@ export function WhatWeDoSection() {
               </p>
             </article>
           ))}
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <Link
+            href="/servicos#grid-servicos"
+            className="inline-flex h-12 items-center justify-center rounded-full bg-[#c9a227] px-8 text-sm font-black uppercase tracking-wide text-[#0a0f16] shadow-[0_0_18px_rgba(255,255,255,0.35)] transition-all duration-300 hover:bg-[#d8b241] hover:shadow-[0_0_24px_rgba(255,255,255,0.45)]"
+          >
+            Saiba +
+          </Link>
         </div>
       </div>
     </section>
