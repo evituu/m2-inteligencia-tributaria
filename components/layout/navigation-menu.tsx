@@ -50,7 +50,7 @@ export function NavigationMenu() {
             className="h-12 w-12 shrink-0 object-contain md:h-16 md:w-16"
             priority
           />
-          <GoldText>M2 Inteligência Tributária</GoldText>
+          <GoldText>Inteligência Tributária</GoldText>
         </Link>
 
         <div className="hidden items-center gap-7 lg:flex">
