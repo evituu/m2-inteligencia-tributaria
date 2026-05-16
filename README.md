@@ -4,7 +4,7 @@ Site institucional da **M2 Inteligência Tributária** — escritório especiali
 
 Aplicação construída com **Next.js 16 (App Router)**, **React 19**, **TypeScript** e **Tailwind CSS v4**, com componentes baseados em **shadcn/ui** (estilo `radix-nova`).
 
----
+-----
 
 ## Sumário
 
