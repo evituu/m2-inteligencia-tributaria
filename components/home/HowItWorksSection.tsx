@@ -43,12 +43,6 @@ export function HowItWorksSection() {
               key={step.title}
               className="relative border border-white/10 bg-white/[0.03] p-6 shadow-xl shadow-black/15"
             >
-              {index < steps.length - 1 ? (
-                <span
-                  aria-hidden="true"
-                  className="absolute left-full top-14 z-0 hidden h-px w-5 bg-[#f2c40f]/35 lg:block"
-                />
-              ) : null}
               <div className="relative z-10 mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-[#f2c40f]/50 bg-[#0a0f16] text-2xl font-black text-[#f2c40f]">
                 {index + 1}
               </div>
