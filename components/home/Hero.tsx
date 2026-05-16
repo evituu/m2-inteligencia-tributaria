@@ -37,14 +37,14 @@ export function Hero() {
               href={analysisWhatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-gold-gradient inline-flex h-12 items-center justify-center px-8 text-sm font-black uppercase tracking-wide text-[#0a0f16] shadow-[0_6px_24px_rgba(246,222,149,0.28)] transition-all duration-300 ease-out hover:-translate-y-1 hover:brightness-105 md:h-16 md:px-10 md:text-xl"
+              className="btn-gold-animated inline-flex min-h-14 items-center justify-center rounded-full px-8 py-3 text-center text-sm font-black uppercase tracking-wide text-[#0a0f16] shadow-[0_10px_30px_rgba(246,222,149,0.34)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_14px_38px_rgba(246,222,149,0.44)] md:min-h-16 md:px-10 md:text-xl"
             >
               Quero minha análise gratuita →
             </a>
 
             <a
               href="#como-funciona"
-              className="inline-flex h-12 items-center justify-center border border-white/80 px-8 text-sm font-black uppercase tracking-wide text-white transition-all duration-300 hover:-translate-y-1 hover:border-[#f2c40f] hover:text-[#f2c40f] md:h-16 md:px-10 md:text-xl"
+              className="inline-flex min-h-14 items-center justify-center rounded-full border border-white/70 bg-white/5 px-8 py-3 text-center text-sm font-black uppercase tracking-wide text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#f2c40f] hover:bg-[#f2c40f]/10 hover:text-[#f2c40f] md:min-h-16 md:px-10 md:text-xl"
             >
               Como funciona ↓
             </a>

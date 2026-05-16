@@ -165,6 +165,12 @@
   50% { opacity: 0; }
 }
 
+@keyframes gold-gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 @layer utilities {
   .text-gold-gradient {
     background: linear-gradient(
@@ -188,6 +194,19 @@
       #e8c676 70%,
       #d7aa52 100%
     );
+  }
+
+  .btn-gold-animated {
+    background: linear-gradient(
+      120deg,
+      #c9a84c 0%,
+      #f7e4a1 28%,
+      #d4a83f 52%,
+      #fff0b8 74%,
+      #c9a84c 100%
+    );
+    background-size: 240% 240%;
+    animation: gold-gradient-shift 4.5s ease infinite;
   }
 
   .hover-text-gold-gradient {
