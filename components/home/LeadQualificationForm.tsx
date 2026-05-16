@@ -1,10 +1,9 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Lock } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,22 +20,29 @@ import {
 import { cn } from "@/lib/utils";
 
 const serviceOptions = [
-  "Recuperação de crédito",
-  "Cobrança extrajudicial",
-  "Negociação de débitos",
-  "Análise de carteira inadimplente",
-  "Consultoria para redução de inadimplência",
-  "Inteligência tributária",
-  "Ainda não sei",
+  "Contribuição Previdenciária Patronal (INSS)",
+  "Exclusão do ICMS do PIS/COFINS",
+  "PIS/COFINS sobre Despesas Essenciais",
+  "Produtos Monofásicos (Simples Nacional)",
+  "Posto de Combustível — PIS/COFINS sobre Diesel",
+  "Posto de Combustível — Evaporação",
+  "Ainda não sei / quero uma análise geral",
 ] as const;
 
 const challengeOptions = [
-  "Clientes inadimplentes",
-  "Dificuldade para negociar débitos",
-  "Alto volume de cobranças em aberto",
-  "Falta de processo para recuperação de crédito",
-  "Necessidade de análise da carteira",
+  "Não sei se tenho direito a créditos",
+  "Já sei que tenho direito, mas preciso formalizar",
+  "Quero compensar tributos futuros",
+  "Preciso de liquidez (restituição em dinheiro)",
+  "Meu contador identificou uma oportunidade",
   "Outro",
+] as const;
+
+const taxRegimeOptions = [
+  "Lucro Real",
+  "Lucro Presumido",
+  "Simples Nacional",
+  "Não sei",
 ] as const;
 
 const leadQualificationSchema = z.object({
@@ -50,6 +56,11 @@ const leadQualificationSchema = z.object({
     .trim()
     .min(1, "Informe o nome da empresa.")
     .max(120, "O nome da empresa deve ter no máximo 120 caracteres."),
+  cnpj: z
+    .string()
+    .trim()
+    .min(1, "Informe o CNPJ.")
+    .refine((value) => value.replace(/\D/g, "").length === 14, "Informe um CNPJ válido."),
   whatsapp: z
     .string()
     .trim()
@@ -58,10 +69,8 @@ const leadQualificationSchema = z.object({
       const digits = value.replace(/\D/g, "");
       return digits.length >= 10 && digits.length <= 13;
     }, "Informe um WhatsApp válido."),
-  professionalEmail: z
-    .string()
-    .trim()
-    .email("Informe um e-mail válido."),
+  professionalEmail: z.string().trim().email("Informe um e-mail válido."),
+  taxRegime: z.string().min(1, "Selecione uma opção."),
   service: z.string().min(1, "Selecione uma opção."),
   challenge: z.string().min(1, "Selecione uma opção."),
   needDetails: z
@@ -74,7 +83,17 @@ const leadQualificationSchema = z.object({
 type LeadQualificationFormData = z.infer<typeof leadQualificationSchema>;
 
 const dropdownTriggerClasses =
-  "h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20";
+  "h-10 w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm text-foreground transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
+
+function maskCnpj(value: string) {
+  return value
+    .replace(/\D/g, "")
+    .slice(0, 14)
+    .replace(/^(\d{2})(\d)/, "$1.$2")
+    .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+    .replace(/\.(\d{3})(\d)/, ".$1/$2")
+    .replace(/(\d{4})(\d)/, "$1-$2");
+}
 
 export function LeadQualificationForm() {
   const {
@@ -82,14 +101,17 @@ export function LeadQualificationForm() {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LeadQualificationFormData>({
     resolver: zodResolver(leadQualificationSchema),
     defaultValues: {
       fullName: "",
       companyName: "",
+      cnpj: "",
       whatsapp: "",
       professionalEmail: "",
+      taxRegime: "",
       service: "",
       challenge: "",
       needDetails: "",
@@ -142,10 +164,30 @@ export function LeadQualificationForm() {
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-1.5">
+              <Label htmlFor="cnpj">CNPJ *</Label>
+              <Input
+                id="cnpj"
+                placeholder="00.000.000/0001-00"
+                inputMode="numeric"
+                maxLength={18}
+                aria-invalid={Boolean(errors.cnpj)}
+                {...register("cnpj", {
+                  onChange: (event) =>
+                    setValue("cnpj", maskCnpj(event.target.value), {
+                      shouldValidate: true,
+                    }),
+                })}
+              />
+              {errors.cnpj ? (
+                <p className="text-xs text-destructive">{errors.cnpj.message}</p>
+              ) : null}
+            </div>
+
+            <div className="space-y-1.5">
               <Label htmlFor="whatsapp">WhatsApp *</Label>
               <Input
                 id="whatsapp"
-                placeholder="(11) 99999-9999"
+                placeholder="(88) 99999-9999"
                 aria-invalid={Boolean(errors.whatsapp)}
                 {...register("whatsapp")}
               />
@@ -153,107 +195,47 @@ export function LeadQualificationForm() {
                 <p className="text-xs text-destructive">{errors.whatsapp.message}</p>
               ) : null}
             </div>
-
-            <div className="space-y-1.5">
-              <Label htmlFor="professionalEmail">E-mail*</Label>
-              <Input
-                id="professionalEmail"
-                type="email"
-                placeholder="voce@empresa.com.br"
-                aria-invalid={Boolean(errors.professionalEmail)}
-                {...register("professionalEmail")}
-              />
-              {errors.professionalEmail ? (
-                <p className="text-xs text-destructive">
-                  {errors.professionalEmail.message}
-                </p>
-              ) : null}
-            </div>
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="service">Qual serviço você procura? *</Label>
-            <Controller
-              name="service"
-              control={control}
-              render={({ field }) => (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button
-                      type="button"
-                      aria-invalid={Boolean(errors.service)}
-                      className={cn(
-                        dropdownTriggerClasses,
-                        "inline-flex items-center justify-between",
-                        !field.value ? "text-muted-foreground" : "text-foreground"
-                      )}
-                    >
-                      <span>{field.value || "Selecione uma opção"}</span>
-                      <ChevronDown className="h-4 w-4 opacity-70" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="max-h-72">
-                    <DropdownMenuRadioGroup
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      {serviceOptions.map((option) => (
-                        <DropdownMenuRadioItem key={option} value={option}>
-                          {option}
-                        </DropdownMenuRadioItem>
-                      ))}
-                    </DropdownMenuRadioGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
+            <Label htmlFor="professionalEmail">E-mail *</Label>
+            <Input
+              id="professionalEmail"
+              type="email"
+              placeholder="voce@empresa.com.br"
+              aria-invalid={Boolean(errors.professionalEmail)}
+              {...register("professionalEmail")}
             />
-            {errors.service ? (
-              <p className="text-xs text-destructive">{errors.service.message}</p>
+            {errors.professionalEmail ? (
+              <p className="text-xs text-destructive">
+                {errors.professionalEmail.message}
+              </p>
             ) : null}
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="challenge">
-              Qual é o principal desafio da sua empresa hoje? *
-            </Label>
-            <Controller
-              name="challenge"
-              control={control}
-              render={({ field }) => (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button
-                      type="button"
-                      aria-invalid={Boolean(errors.challenge)}
-                      className={cn(
-                        dropdownTriggerClasses,
-                        "inline-flex items-center justify-between",
-                        !field.value ? "text-muted-foreground" : "text-foreground"
-                      )}
-                    >
-                      <span>{field.value || "Selecione uma opção"}</span>
-                      <ChevronDown className="h-4 w-4 opacity-70" />
-                    </button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="max-h-72">
-                    <DropdownMenuRadioGroup
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      {challengeOptions.map((option) => (
-                        <DropdownMenuRadioItem key={option} value={option}>
-                          {option}
-                        </DropdownMenuRadioItem>
-                      ))}
-                    </DropdownMenuRadioGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
-            />
-            {errors.challenge ? (
-              <p className="text-xs text-destructive">{errors.challenge.message}</p>
-            ) : null}
-          </div>
+          <DropdownField
+            name="taxRegime"
+            label="Regime tributário *"
+            options={taxRegimeOptions}
+            control={control}
+            error={errors.taxRegime?.message}
+          />
+
+          <DropdownField
+            name="service"
+            label="Qual serviço você procura? *"
+            options={serviceOptions}
+            control={control}
+            error={errors.service?.message}
+          />
+
+          <DropdownField
+            name="challenge"
+            label="Qual é o principal desafio da sua empresa hoje? *"
+            options={challengeOptions}
+            control={control}
+            error={errors.challenge?.message}
+          />
 
           <div className="space-y-1.5">
             <Label htmlFor="needDetails">Conte brevemente sobre sua necessidade</Label>
@@ -271,10 +253,70 @@ export function LeadQualificationForm() {
             disabled={isSubmitting}
             className="bg-gold-gradient h-11 w-full text-sm font-black uppercase tracking-wide text-[#0a0f16] transition-all duration-300 hover:brightness-105"
           >
-            {isSubmitting ? "Enviando..." : "Enviar"}
+            {isSubmitting ? "Enviando..." : "Solicitar análise gratuita"}
           </Button>
+
+          <p className="flex items-center justify-center gap-2 text-center text-xs text-zinc-500">
+            <Lock className="h-3.5 w-3.5" />
+            Seus dados são tratados com confidencialidade, conforme a LGPD.
+          </p>
         </form>
       </CardContent>
     </Card>
+  );
+}
+
+function DropdownField({
+  name,
+  label,
+  options,
+  control,
+  error,
+}: {
+  name: "taxRegime" | "service" | "challenge";
+  label: string;
+  options: readonly string[];
+  control: ReturnType<typeof useForm<LeadQualificationFormData>>["control"];
+  error?: string;
+}) {
+  return (
+    <div className="space-y-1.5">
+      <Label>{label}</Label>
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className={cn(
+                  dropdownTriggerClasses,
+                  "inline-flex items-center justify-between gap-3",
+                  error ? "border-destructive ring-3 ring-destructive/20" : "",
+                  !field.value ? "text-muted-foreground" : "text-foreground"
+                )}
+              >
+                <span className="truncate">{field.value || "Selecione uma opção"}</span>
+                <ChevronDown className="h-4 w-4 shrink-0 opacity-70" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="max-h-72 w-[var(--radix-dropdown-menu-trigger-width)]">
+              <DropdownMenuRadioGroup
+                value={field.value}
+                onValueChange={field.onChange}
+              >
+                {options.map((option) => (
+                  <DropdownMenuRadioItem key={option} value={option}>
+                    {option}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )}
+      />
+      {error ? <p className="text-xs text-destructive">{error}</p> : null}
+    </div>
   );
 }
