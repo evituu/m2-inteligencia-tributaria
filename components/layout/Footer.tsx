@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Building2, Mail, MapPin, Phone } from "lucide-react";
 import {
   AiFillLinkedin,
@@ -113,13 +112,13 @@ export function Footer() {
           </h3>
           <nav className="flex flex-col gap-2.5">
             {quickLinks.map((item) => (
-              <Link
+              <a
                 key={item.label}
                 href={item.href}
                 className="hover-text-gold-gradient text-sm text-zinc-200"
               >
                 {item.label}
-              </Link>
+              </a>
             ))}
           </nav>
         </div>
@@ -150,9 +149,9 @@ export function Footer() {
           <p suppressHydrationWarning>
             © {new Date().getFullYear()} M2 Inteligência Tributária. Todos os
             direitos reservados. · CNPJ: 51.055.469/0001-69 ·{" "}
-            <Link href="/politica-de-privacidade" className="hover:text-[#f2c40f]">
+            <a href="/politica-de-privacidade" className="hover:text-[#f2c40f]">
               Política de Privacidade
-            </Link>
+            </a>
           </p>
         </div>
       </div>
