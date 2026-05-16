@@ -127,6 +127,7 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
   }
 }
 
@@ -213,5 +214,27 @@
 
   .icon-gold-fill {
     fill: url(#gold-gradient);
+  }
+}
+
+.whatsapp-fab {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .whatsapp-fab {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 9999;
+    display: flex;
+    width: 56px;
+    height: 56px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: #25d366;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
 }

@@ -3,35 +3,50 @@ import Link from "next/link";
 import { Building2, Mail, MapPin, Phone } from "lucide-react";
 import {
   AiFillLinkedin,
+  AiFillYoutube,
   AiOutlineMail,
   AiOutlineWhatsApp,
 } from "react-icons/ai";
 import { FaInstagram } from "react-icons/fa";
+import { FaThreads } from "react-icons/fa6";
 
 const quickLinks = [
-  { label: "Home", href: "/home" },
-  { label: "Sobre nós", href: "/sobre" },
-  { label: "Serviços", href: "/servicos" },
+  { label: "Home", href: "/" },
+  { label: "Sobre", href: "/#sobre" },
+  { label: "Serviços", href: "/#servicos" },
+  { label: "Resultados", href: "/#resultados" },
+  { label: "Contato", href: "/#formulario" },
 ];
 
 const socialLinks = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/m2inteligenciatributaria/",
+    href: "https://www.instagram.com/m2inteligenciatributaria",
     icon: FaInstagram,
   },
-  { 
-    label: "LinkedIn", 
-    href: "https://www.linkedin.com/company/m2-intelig%C3%AAncia-tribut%C3%A1ria/", 
-    icon: AiFillLinkedin },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/m2-intelig%C3%AAnciatribut%C3%A1ria",
+    icon: AiFillLinkedin,
+  },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@M2Inteligenciatributaria",
+    icon: AiFillYoutube,
+  },
+  {
+    label: "Threads",
+    href: "https://www.threads.com/@m2inteligenciatributaria",
+    icon: FaThreads,
+  },
   {
     label: "WhatsApp",
-    href: "https://wa.me/5511999999999",
+    href: "https://wa.me/5588992156717",
     icon: AiOutlineWhatsApp,
   },
   {
     label: "E-mail",
-    href: "mailto:m2inteligenciatributaria@gmail.com",
+    href: "mailto:m2inteligenciadptovendas@gmail.com",
     icon: AiOutlineMail,
   },
 ];
@@ -50,11 +65,12 @@ export function Footer() {
               className="h-12 w-12 object-contain md:h-16 md:w-16"
               priority
             />
-            <span className="text-gold-gradient">Inteligência Tributária</span>
+            <span className="text-gold-gradient">M2 Inteligência Tributária</span>
           </div>
           <p className="max-w-sm text-sm leading-6 text-zinc-300">
-            Escritório especializado em recuperação de crédito para empresas de
-            contabilidade, com atuação estratégica, jurídica e operacional.
+            Especialistas em recuperação de créditos tributários para empresas de
+            todos os portes. Atuação em todo o Brasil, com rigor técnico e
+            compromisso com resultado.
           </p>
         </div>
 
@@ -64,11 +80,16 @@ export function Footer() {
           </h3>
           <ul className="space-y-3 text-sm text-zinc-200">
             <li className="flex items-start gap-3">
-              <MapPin className="icon-gold-stroke mt-0.5 h-4 w-4" />
+              <MapPin className="icon-gold-stroke mt-0.5 h-4 w-4 shrink-0" />
               <span>
-                Av. Ana Saraiva de Menezes, CEP: 63046-515
+                Juazeiro do Norte/CE
                 <br />
-                Jd Gonzaga, Juazeiro do Norte - CE
+                Av. Ana Saraiva de Menezes, 938 — Jd. Gonzaga · CEP 63.046-515
+                <br />
+                <br />
+                Porangatu/GO
+                <br />
+                Rua 14, nº 49 — Centro · CEP 76.550-000
               </span>
             </li>
             <li className="flex items-center gap-3">
@@ -77,11 +98,11 @@ export function Footer() {
             </li>
             <li className="flex items-center gap-3">
               <Phone className="icon-gold-stroke h-4 w-4" />
-              <span>(11) 0000-0000</span>
+              <span>(88) 9 9215-6717</span>
             </li>
             <li className="flex items-center gap-3">
               <Mail className="icon-gold-stroke h-4 w-4" />
-              <span>m2inteligenciatributaria@gmail.com</span>
+              <span>m2inteligenciadptovendas@gmail.com</span>
             </li>
           </ul>
         </div>
@@ -116,7 +137,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="hover-text-gold-gradient inline-flex items-center gap-2 text-sm text-zinc-200"
               >
-                <Icon className="icon-gold-fill h-4 w-4" />
+                <Icon className="h-4 w-4 text-[#f2c40f]" />
                 <span>{label}</span>
               </a>
             ))}
@@ -125,10 +146,13 @@ export function Footer() {
       </div>
 
       <div className="border-t border-zinc-800/90">
-        <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-2 px-5 py-5 text-xs text-zinc-400 md:flex-row justify-center md:px-8">
+        <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center justify-center gap-2 px-5 py-5 text-center text-xs text-zinc-400 md:px-8">
           <p suppressHydrationWarning>
             © {new Date().getFullYear()} M2 Inteligência Tributária. Todos os
-            direitos reservados.
+            direitos reservados. · CNPJ: 51.055.469/0001-69 ·{" "}
+            <Link href="/politica-de-privacidade" className="hover:text-[#f2c40f]">
+              Política de Privacidade
+            </Link>
           </p>
         </div>
       </div>

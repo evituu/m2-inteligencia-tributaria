@@ -11,42 +11,42 @@ const faqs = [
   {
     question: "Minha empresa tem direito à recuperação tributária?",
     answer:
-      "Empresas que recolhem PIS, COFINS, INSS sobre a folha, IRPJ e CSLL podem ter créditos a recuperar. A confirmação só ocorre após o diagnóstico técnico inicial, que analisa o regime, segmento e documentos fiscais.",
+      "Provavelmente sim. A maior parte das empresas nos regimes de Lucro Real, Lucro Presumido ou Simples Nacional tem ao menos uma tese aplicável. A melhor forma de saber é com a análise gratuita que oferecemos.",
   },
   {
     question: "Quais regimes tributários podem ser analisados?",
     answer:
-      "Atuamos com empresas dos regimes Lucro Real, Lucro Presumido e, em algumas situações específicas, Simples Nacional. Cada regime possui oportunidades particulares de revisão.",
+      "Atendemos empresas nos três principais regimes: Lucro Real, Lucro Presumido e Simples Nacional. Cada regime tem teses específicas, e nossa equipe identifica qual se aplica ao seu caso.",
   },
   {
     question: "A análise inicial tem custo?",
     answer:
-      "Não. A análise inicial é gratuita e tem como objetivo identificar se existem oportunidades reais de recuperação para a sua empresa, antes de qualquer formalização.",
+      "Não. A análise prévia é 100% gratuita e sem compromisso. Avaliamos o potencial antes de qualquer proposta.",
   },
   {
     question: "Quais documentos são necessários para começar?",
     answer:
-      "Em geral: notas fiscais (XMLs), escriturações fiscais, folha de pagamento, eSocial, EFD-Reinf, DCTFWeb e acesso ao e-CAC via procuração ou certificado digital. A lista completa é definida após o diagnóstico inicial.",
+      "Na análise inicial, precisamos apenas de informações básicas: CNPJ, regime tributário e segmento. A documentação detalhada, como SPED, DCTF e folha de pagamento, é solicitada somente após a confirmação do trabalho.",
   },
   {
     question: "O crédito é recebido em dinheiro ou usado para compensação?",
     answer:
-      "Depende do caso. Pode ser via restituição em espécie, compensação com tributos federais futuros ou via PER/DCOMP. A definição é feita em conjunto com a empresa, considerando o cenário tributário e o fluxo de caixa.",
+      "Depende do tipo de crédito e da situação da empresa. Em geral, é possível receber em dinheiro via PER/DCOMP ou compensar tributos futuros. Nossa equipe orienta sobre a melhor opção para cada caso.",
   },
   {
     question: "Quanto tempo demora o processo?",
     answer:
-      "A análise técnica e a apuração dos créditos costumam levar entre 30 e 90 dias, dependendo do volume documental. O recebimento ou compensação varia conforme o processo administrativo junto à Receita Federal.",
+      "Varia conforme a tese e a celeridade da Receita Federal. Compensações levam em média 60 a 180 dias após o protocolo. Restituições em dinheiro podem levar de 6 meses a 2 anos. Você é informado em cada etapa.",
   },
   {
     question: "A Receita Federal pode questionar?",
     answer:
-      "Toda operação é conduzida com base documental sólida, memória de cálculo e fundamentação técnica/jurídica. Eventuais questionamentos são respondidos com a documentação que ampara cada crédito apurado.",
+      "Todos os créditos recuperados têm base em legislação vigente e jurisprudência consolidada, inclusive decisões do STF e STJ. Casos questionados são acompanhados pela nossa equipe sem custo adicional.",
   },
   {
     question: "Como funcionam os honorários?",
     answer:
-      "Trabalhamos com honorários de êxito — você só paga quando o crédito é efetivamente apurado e disponibilizado para compensação ou restituição. Os percentuais são definidos em contrato, com total transparência.",
+      "Trabalhamos com honorários condicionados ao êxito: você só paga se houver recuperação efetiva. O percentual é definido em contrato antes de qualquer trabalho, com total transparência.",
   },
 ];
 
@@ -58,11 +58,10 @@ export function FaqSection() {
           <div className="mb-10 text-center">
             <span className="mx-auto mb-4 block h-1.5 w-14 bg-[#f2c40f]" />
             <h2 className="text-4xl font-black uppercase tracking-tight text-gold-gradient md:text-5xl">
-              Perguntas frequentes
+              Tire suas dúvidas antes de começar
             </h2>
-            <p className="mt-4 text-base text-gold-gradient md:text-lg">
-              Esclarecemos as principais dúvidas sobre recuperação tributária e
-              previdenciária.
+            <p className="mt-4 text-base text-zinc-300 md:text-lg">
+              Tudo que você precisa saber antes de dar o primeiro passo.
             </p>
           </div>
 

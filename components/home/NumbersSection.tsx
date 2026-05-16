@@ -1,27 +1,30 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Banknote, Map, Users } from "lucide-react";
+import { Banknote, BriefcaseBusiness, MapPinned, Scale } from "lucide-react";
 
 const metrics = [
   {
-    label: "recuperados para nossos clientes",
-    value: 800,
+    label: "Recuperados para nossos clientes",
+    value: 156,
     prefix: "R$ ",
-    suffix: "M+",
+    suffix: " milhões+",
     icon: Banknote,
   },
   {
-    label: "empresas que atendemos",
-    value: 1000,
-    suffix: "+",
-    icon: Users,
+    label: "Empresas atendidas",
+    value: 473,
+    icon: BriefcaseBusiness,
   },
   {
-    label: "estados com atuação nacional",
-    value: 15,
-    suffix: "+",
-    icon: Map,
+    label: "Atuação nacional",
+    textValue: "Todo o Brasil",
+    icon: MapPinned,
+  },
+  {
+    label: "Linhas de serviço tributário",
+    value: 6,
+    icon: Scale,
   },
 ];
 
@@ -101,6 +104,7 @@ export function NumbersSection() {
 
   return (
     <section
+      id="resultados"
       ref={sectionRef}
       className="relative overflow-hidden bg-[#05090c] py-18 text-white md:py-24"
     >
@@ -115,12 +119,12 @@ export function NumbersSection() {
           </h2>
           <p className="mt-4 text-sm leading-6 text-zinc-400 md:text-base">
             Indicadores que refletem escala, solidez operacional e presença
-            nacional na recuperação estratégica de ativos.
+            nacional na recuperação de créditos tributários.
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
-          {metrics.map(({ label, value, prefix, suffix, icon: Icon }) => (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {metrics.map(({ label, value, textValue, prefix, suffix, icon: Icon }) => (
             <article
               key={label}
               className="group relative overflow-hidden border border-white/10 bg-white/[0.03] px-5 py-7 text-center shadow-2xl shadow-black/20 transition-transform duration-300 hover:-translate-y-1 hover:border-[#f2c40f]/70 md:px-6 md:py-8"
@@ -129,13 +133,17 @@ export function NumbersSection() {
               <div className="mx-auto mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-[#f2c40f]/45 bg-[#f2c40f]/10 text-[#f2c40f]">
                 <Icon className="h-6 w-6" />
               </div>
-              <p className="text-4xl font-black leading-none tracking-tight text-white md:text-5xl lg:text-6xl">
-                <AnimatedNumber
-                  value={value}
-                  prefix={prefix}
-                  suffix={suffix}
-                  shouldStart={shouldStartCount}
-                />
+              <p className="min-h-[64px] text-3xl font-black leading-none tracking-tight text-white md:text-4xl lg:text-5xl">
+                {typeof value === "number" ? (
+                  <AnimatedNumber
+                    value={value}
+                    prefix={prefix}
+                    suffix={suffix}
+                    shouldStart={shouldStartCount}
+                  />
+                ) : (
+                  <span>{textValue}</span>
+                )}
               </p>
               <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-zinc-300">
                 {label}
@@ -143,6 +151,11 @@ export function NumbersSection() {
             </article>
           ))}
         </div>
+
+        <p className="mx-auto mt-6 max-w-3xl text-center text-xs leading-5 text-zinc-500">
+          *Dados consolidados. Valores recuperados via restituição e compensação
+          homologadas pela Receita Federal.
+        </p>
       </div>
     </section>
   );

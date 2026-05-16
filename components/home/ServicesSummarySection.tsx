@@ -1,0 +1,91 @@
+const services = [
+  {
+    title: "Contribuição Previdenciária Patronal",
+    tag: "Lucro Real · Lucro Presumido",
+    description:
+      "Verbas indenizatórias indevidamente incluídas na base do INSS patronal nos últimos 5 anos.",
+  },
+  {
+    title: "Exclusão do ICMS do PIS/COFINS",
+    tag: "Lucro Real · Lucro Presumido",
+    description:
+      "Tese do STF (Tema 69): ICMS não compõe a base de cálculo do PIS e COFINS. Créditos retroativos disponíveis.",
+  },
+  {
+    title: "PIS/COFINS — Despesas Essenciais",
+    tag: "Lucro Real",
+    description:
+      "Aproveitamento de créditos sobre despesas diretamente ligadas à atividade operacional da empresa.",
+  },
+  {
+    title: "Produtos Monofásicos",
+    tag: "Simples Nacional",
+    description:
+      "Empresas que revendem alimentos, cosméticos, medicamentos e autopeças pagam PIS/COFINS em duplicidade.",
+  },
+  {
+    title: "PIS/COFINS sobre Diesel",
+    tag: "Lucro Real · Postos",
+    description:
+      "Postos de combustível têm direito a crédito de PIS e COFINS sobre o diesel adquirido para revenda.",
+  },
+  {
+    title: "Evaporação de Combustíveis",
+    tag: "Lucro Real · Postos",
+    description:
+      "Perdas de estoque por evaporação são dedutíveis para fins de IRPJ e CSLL.",
+  },
+];
+
+const whatsappUrl =
+  "https://wa.me/5588992156717?text=Ol%C3%A1!%20Gostaria%20de%20uma%20an%C3%A1lise%20tribut%C3%A1ria%20gratuita.";
+
+export function ServicesSummarySection() {
+  return (
+    <section id="servicos" className="bg-[#05090c] py-16 text-white md:py-24">
+      <div className="mx-auto w-full max-w-[1280px] px-5 md:px-8">
+        <div className="mb-12 max-w-3xl">
+          <span className="text-xs font-black uppercase tracking-[0.24em] text-[#f2c40f]">
+            Serviços
+          </span>
+          <h2 className="mt-4 text-4xl font-black uppercase leading-[1.08] tracking-tight md:text-5xl">
+            O que podemos recuperar para você
+          </h2>
+        </div>
+
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {services.map((service) => (
+            <article
+              key={service.title}
+              className="border border-white/10 border-t-[#f2c40f] border-t-2 bg-[#1a1a1a] p-6 transition-transform duration-300 hover:-translate-y-1 hover:border-[#f2c40f]/70"
+            >
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#f2c40f]">
+                {service.tag}
+              </p>
+              <h3 className="text-xl font-black uppercase leading-tight text-white">
+                {service.title}
+              </h3>
+              <p className="mt-4 text-sm leading-7 text-zinc-300">
+                {service.description}
+              </p>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          <p className="text-base font-semibold text-zinc-200">
+            Não sabe qual serviço se aplica?
+          </p>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gold-gradient inline-flex h-12 items-center justify-center px-6 text-sm font-black uppercase tracking-wide text-[#0a0f16] transition-all hover:brightness-105"
+          >
+            Falar com especialista
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
