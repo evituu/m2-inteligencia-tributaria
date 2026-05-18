@@ -9,7 +9,7 @@ const leaders = [
       "Com mais de 15 anos de experiência em auditoria fiscal e contencioso tributário, lidera as operações de recuperação de créditos com foco em mitigação de riscos e conformidade legal.",
   },
   {
-    name: "Nilce",
+    name: "Nucci",
     role: "Sócia-fundadora | Diretora Estratégica",
     description:
       "Especialista em planejamento tributário corporativo. Sua visão analítica garante que cada projeto executado maximize a eficiência fiscal e fortaleça o caixa das empresas parceiras.",
@@ -28,9 +28,9 @@ export function LeadershipSection() {
                 "linear-gradient(135deg, #d9ad55 0%, #f6de95 42%, #e8c676 70%, #d7aa52 100%)",
             }}
           >
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md md:rounded-lg">
+            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-md md:rounded-lg">
               <Image
-                src="/imagens/office/m2_lideres_socios.png"
+                src="/imagens/office/foto_veimar_m2.jpg"
                 alt="Sócios da M2 Inteligência Tributária"
                 fill
                 className="object-cover"
@@ -43,7 +43,8 @@ export function LeadershipSection() {
         <div className="mb-10 text-center">
           <span className="mx-auto mb-4 block h-1.5 w-14 bg-[#f2c40f]" />
           <h2 className="text-4xl font-black uppercase tracking-tight md:text-5xl">
-            Nossa Liderança
+            Nossa 
+            <span className="text-gold-gradient"> Liderança</span>
           </h2>
         </div>
 

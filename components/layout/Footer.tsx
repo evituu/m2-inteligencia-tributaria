@@ -11,10 +11,10 @@ import { FaThreads } from "react-icons/fa6";
 
 const quickLinks = [
   { label: "Home", href: "/" },
-  { label: "Sobre", href: "/#sobre" },
-  { label: "Serviços", href: "/#servicos" },
-  { label: "Resultados", href: "/#resultados" },
-  { label: "Contato", href: "/#formulario" },
+  { label: "Sobre", href: "/sobre" },
+  { label: "Serviços", href: "/servicos" },
+  { label: "Resultados", href: "/resultados" },
+  { label: "Contato", href: "/formulario" },
 ];
 
 const socialLinks = [
@@ -64,9 +64,9 @@ export function Footer() {
               className="h-12 w-12 object-contain md:h-16 md:w-16"
               priority
             />
-            <span className="text-gold-gradient">M2 Inteligência Tributária</span>
+            <span className="text-gold-gradient">Inteligência Tributária</span>
           </div>
-          <p className="max-w-sm text-sm leading-6 text-zinc-300">
+          <p className="max-w-sm text-justify text-sm leading-6 text-zinc-300">
             Especialistas em recuperação de créditos tributários para empresas de
             todos os portes. Atuação em todo o Brasil, com rigor técnico e
             compromisso com resultado.
@@ -149,9 +149,6 @@ export function Footer() {
           <p suppressHydrationWarning>
             © {new Date().getFullYear()} M2 Inteligência Tributária. Todos os
             direitos reservados. · CNPJ: 51.055.469/0001-69 ·{" "}
-            <a href="/politica-de-privacidade" className="hover:text-[#f2c40f]">
-              Política de Privacidade
-            </a>
           </p>
         </div>
       </div>

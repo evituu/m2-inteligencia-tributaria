@@ -1,3 +1,5 @@
+import { SlideIn } from "@/components/animations/SlideIn";
+
 const steps = [
   {
     title: "Diagnóstico",
@@ -12,7 +14,7 @@ const steps = [
   {
     title: "Revisão dos últimos 5 anos",
     description:
-      "Analisamos o histórico fiscal dentro do prazo legal de recuperação, garantindo o aproveitamento máximo dos créditos.",
+      "Analisamos o histórico fiscal dentro do prazo legal de recuperação.",
   },
   {
     title: "Cruzamento e validação",
@@ -39,7 +41,6 @@ export function MethodologySection() {
 
       <div className="relative mx-auto w-full max-w-[1280px] px-5 md:px-8">
         <div className="mx-auto mb-14 max-w-[760px] text-center">
-          <span className="mx-auto mb-4 block h-1.5 w-14 bg-[#f2c40f]" />
           <h2 className="text-4xl font-black uppercase tracking-tight md:text-5xl">
             Nossa{" "}
             <span className="text-gold-gradient">metodologia</span>
@@ -51,24 +52,27 @@ export function MethodologySection() {
           </p>
         </div>
 
-        <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {steps.map(({ title, description }) => (
-            <li
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {steps.map(({ title, description }, index) => (
+            <SlideIn
               key={title}
-              className="relative h-full border border-[#f2c40f]/30 bg-white px-6 py-7 shadow-2xl shadow-black/20 transition-all duration-300 hover:-translate-y-1 hover:border-[#f2c40f] hover:shadow-[0_8px_32px_rgba(242,196,15,0.18)] md:px-7 md:py-8"
+              from="bottom"
+              delay={index * 300}
+              duration={1200}
+              distance={100}
+              className="h-full"
             >
-              <h3
-                className="mt-1 text-lg font-bold uppercase tracking-tight text-[#12151b]"
-                style={{ WebkitTextStroke: "0.5px #c9940a" }}
-              >
-                {title}
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-zinc-600">
-                {description}
-              </p>
-            </li>
+              <article className="relative h-full border border-[#f2c40f]/30 bg-white px-6 py-7 shadow-2xl shadow-black/20 transition-all duration-300 hover:-translate-y-1 hover:border-[#f2c40f] hover:shadow-[0_8px_32px_rgba(242,196,15,0.18)] md:px-7 md:py-8">
+                <h3 className="mt-1 text-lg font-bold uppercase tracking-tight text-[#12151b]">
+                  {title}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-zinc-600">
+                  {description}
+                </p>
+              </article>
+            </SlideIn>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );

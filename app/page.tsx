@@ -1,4 +1,5 @@
 import { Hero } from "@/components/home/Hero";
+import { LatestInsightsTicker } from "@/components/home/LatestInsightsTicker";
 import { ExpertiseSection } from "@/components/home/ExpertiseSection";
 import { HowItWorksSection } from "@/components/home/HowItWorksSection";
 import { NumbersSection } from "@/components/home/NumbersSection";
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <LatestInsightsTicker />
       <ExpertiseSection />
       <NumbersSection />
       <HowItWorksSection />

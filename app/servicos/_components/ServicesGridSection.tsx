@@ -129,7 +129,7 @@ export function ServicesGridSection() {
             className="inline-flex h-14 items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#25D366] via-[#21bf5b] to-[#1ebe57] px-8 text-base font-black uppercase tracking-wide text-white shadow-[0_4px_24px_rgba(37,211,102,0.35)] transition-all duration-300 hover:scale-[1.02] hover:from-[#1ebe57] hover:via-[#1da851] hover:to-[#179245] hover:shadow-[0_6px_32px_rgba(37,211,102,0.45)]"
           >
             <AiOutlineWhatsApp className="h-6 w-6" />
-            Conheça mais serviços no WhatsApp
+            Falar com um especialista
           </a>
         </div>
       </div>

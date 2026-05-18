@@ -123,7 +123,7 @@ export function SegmentsSection() {
         <div className="mb-12 max-w-[760px]">
           <span className="bg-gold-gradient mb-5 block h-1.5 w-14" />
           <h2 className="text-4xl font-black uppercase tracking-tight text-[#12151b] md:text-5xl">
-            Segmentos atendidos
+            Segmentos <span className="text-gold-gradient">atendidos</span>
           </h2>
           <p className="mt-5 text-base leading-7 text-[#3b3f47] md:text-lg">
             Atuamos com empresas de diversos setores que possuem oportunidades

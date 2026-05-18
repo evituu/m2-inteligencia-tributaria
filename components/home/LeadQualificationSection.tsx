@@ -15,7 +15,8 @@ export function LeadQualificationSection() {
         <div>
           <span className="mb-5 block h-1.5 w-14 bg-[#f2c40f]" />
           <h2 className="text-4xl font-black uppercase leading-[1.08] tracking-tight md:text-5xl">
-            Descubra quanto sua empresa pode recuperar
+            Descubra quanto 
+            <span className="text-gold-gradient"> sua empresa </span> pode recuperar
           </h2>
           <p className="mt-6 max-w-[680px] text-base leading-8 text-zinc-300 md:text-lg">
             Preencha o formulário. Nossa equipe realiza a análise prévia sem

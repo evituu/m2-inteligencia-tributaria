@@ -6,7 +6,9 @@ export function ExpertiseSection() {
       <div className="mx-auto grid w-full max-w-[1280px] items-center gap-12 px-5 md:grid-cols-2 md:px-8">
         <div className="max-w-[620px]">
           <h2 className="text-4xl font-black uppercase leading-[1.08] tracking-tight text-[#12151b] md:text-5xl">
-            Especialistas em recuperar o que é seu por direito
+            Especialistas em recuperar o que é 
+            <span className="text-gold-gradient"> seu </span> por
+            <span className="text-gold-gradient"> direito</span>
           </h2>
 
           <div className="mt-7 space-y-5 text-base leading-8 text-[#3b3f47] md:text-xl">
@@ -34,7 +36,7 @@ export function ExpertiseSection() {
 
         <div className="relative mx-auto w-full max-w-[560px] overflow-hidden shadow-2xl shadow-black/20">
           <Image
-            src="/imagens/office/m2_lideres_socios.png"
+            src="/imagens/office/foto_material_m2.jpg"
             alt="Sócios da M2 Inteligência Tributária"
             width={760}
             height={640}

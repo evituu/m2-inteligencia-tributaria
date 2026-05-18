@@ -1,3 +1,5 @@
+import { SlideIn } from "@/components/animations/SlideIn";
+
 const services = [
   {
     title: "Contribuição Previdenciária Patronal",
@@ -37,38 +39,46 @@ const services = [
   },
 ];
 
-const whatsappUrl =
-  "https://wa.me/5588992156717?text=Ol%C3%A1!%20Gostaria%20de%20uma%20an%C3%A1lise%20tribut%C3%A1ria%20gratuita.";
+const whatsappUrl = `https://wa.me/5588992156717?text=${encodeURIComponent(
+  "Olá! Gostaria de conversar com um especialista."
+)}`;
 
 export function ServicesSummarySection() {
   return (
     <section id="servicos" className="bg-[#05090c] py-16 text-white md:py-24">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-8">
-        <div className="mb-12 max-w-3xl">
-          <span className="text-xs font-black uppercase tracking-[0.24em] text-[#f2c40f]">
-            Serviços
-          </span>
+        <div className="mx-auto mb-12 max-w-3xl text-center">
           <h2 className="mt-4 text-4xl font-black uppercase leading-[1.08] tracking-tight md:text-5xl">
-            O que podemos recuperar para você
+            Nossos
+            <span className="text-gold-gradient"> serviços</span>
           </h2>
+          <p className="mt-4 text-sm leading-6 text-zinc-400 md:text-base">
+            Soluções tributárias com base em análise técnica e conformidade legal.
+          </p>
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
-            <article
+          {services.map((service, index) => (
+            <SlideIn
               key={service.title}
-              className="border border-white/10 border-t-[#f2c40f] border-t-2 bg-[#1a1a1a] p-6 transition-transform duration-300 hover:-translate-y-1 hover:border-[#f2c40f]/70"
+              from="bottom"
+              delay={index * 300}
+              duration={1200}
+              distance={100}
+              className="h-full"
             >
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#f2c40f]">
-                {service.tag}
-              </p>
-              <h3 className="text-xl font-black uppercase leading-tight text-white">
-                {service.title}
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-zinc-300">
-                {service.description}
-              </p>
-            </article>
+              <article className="h-full border border-white/10 border-t-2 border-t-[#f2c40f] bg-[#1a1a1a] p-6 transition-transform duration-300 hover:-translate-y-1 hover:border-[#f2c40f]/70">
+                <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-[#f2c40f]">
+                  {service.tag}
+                </p>
+                <h3 className="text-xl font-black uppercase leading-tight text-white">
+                  {service.title}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-zinc-300">
+                  {service.description}
+                </p>
+              </article>
+            </SlideIn>
           ))}
         </div>
 

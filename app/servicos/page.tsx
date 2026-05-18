@@ -8,13 +8,15 @@ import { ComplianceSection } from "@/app/servicos/_components/ComplianceSection"
 import { FaqSection } from "@/components/home/FaqSection";
 import { ServicesCtaSection } from "@/app/servicos/_components/ServicesCtaSection";
 import { Footer } from "@/components/layout/Footer";
+import { ServicesSummarySection } from "@/components/home/ServicesSummarySection";
 
 export default function ServicosPage() {
   return (
     <>
       <ServicesHeroSection />
       <ServicesIntroSection />
-      <ServicesGridSection />
+      {/* <ServicesGridSection /> */}
+      <ServicesSummarySection />
       <MethodologySection />
       <SegmentsSection />
       <ComplianceSection />
