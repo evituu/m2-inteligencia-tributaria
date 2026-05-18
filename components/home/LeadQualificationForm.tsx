@@ -256,7 +256,7 @@ export function LeadQualificationForm() {
             {isSubmitting ? "Enviando..." : "Solicitar análise gratuita"}
           </Button>
 
-          <p className="flex items-center justify-center gap-2 text-center text-xs text-zinc-500">
+          <p className="flex items-center justify-center gap-2 text-center text-[12px] text-zinc-500">
             <Lock className="h-3.5 w-3.5" />
             Seus dados são tratados com confidencialidade, conforme a LGPD.
           </p>

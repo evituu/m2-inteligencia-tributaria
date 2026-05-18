@@ -136,7 +136,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="hover-text-gold-gradient inline-flex items-center gap-2 text-sm text-zinc-200"
               >
-                <Icon className="h-4 w-4 text-[#f2c40f]" />
+                <Icon className="h-4 w-4 text-[#d7aa52]" />
                 <span>{label}</span>
               </a>
             ))}
