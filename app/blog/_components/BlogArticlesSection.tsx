@@ -29,7 +29,7 @@ export function BlogArticlesSection({ articles }: BlogArticlesSectionProps) {
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-8">
         <div className="mb-10 max-w-2xl">
           <h2 className="text-3xl font-black uppercase tracking-tight text-black md:text-4xl">
-            Últimos <span className="text-gold-gradient">insights</span>
+            Últimas <span className="text-gold-gradient">publicações</span>
           </h2>
           <p className="mt-3 text-sm leading-7 text-zinc-400 md:text-base">
             Conteúdos técnicos sobre recuperação de crédito, compliance e
@@ -45,7 +45,7 @@ export function BlogArticlesSection({ articles }: BlogArticlesSectionProps) {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Pesquisar artigos..."
-              className="h-12 rounded-none border-zinc-700 bg-[#0a0f16] pr-4 pl-11 text-sm text-white placeholder:text-zinc-500 focus-visible:border-[#f2c40f] focus-visible:ring-[#f2c40f]/25"
+              className="h-12 rounded-none border-zinc-700 bg-white pr-4 pl-11 text-sm text-black placeholder:text-zinc-500 focus-visible:border-[#f2c40f] focus-visible:ring-[#f2c40f]/25"
               aria-label="Pesquisar artigos"
             />
           </div>

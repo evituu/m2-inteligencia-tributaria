@@ -27,9 +27,6 @@ export function BlogFeaturedHero({ article }: BlogFeaturedHeroProps) {
       <NavigationMenu />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-col justify-end px-5 pt-32 pb-14 md:px-8 md:pt-40 md:pb-20">
-        <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-[#f2c40f]">
-          Insights · Artigos
-        </p>
         <span className="mb-6 inline-flex w-fit items-center bg-[#f2c40f]/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[#f2c40f]">
           {article.category}
         </span>

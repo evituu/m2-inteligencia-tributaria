@@ -8,7 +8,8 @@ export function WhatsAppCtaSection() {
 
       <div className="relative mx-auto flex w-full max-w-[960px] flex-col items-center gap-6 px-5 text-center md:px-8">
         <h2 className="text-3xl font-black uppercase leading-tight tracking-tight text-white md:text-4xl">
-          Prefere conversar antes de preencher formulário?
+          Prefere conversar antes de 
+          <span className="text-gold-gradient"> preencher formulário? </span>
         </h2>
 
         <p className="max-w-[650px] text-base leading-relaxed text-zinc-300 md:text-lg">
