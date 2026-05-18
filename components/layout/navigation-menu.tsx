@@ -18,7 +18,6 @@ const menuItems = [
   { label: "HOME", href: "/" },
   { label: "SOBRE", href: "/sobre" },
   { label: "SERVIÇOS", href: "/servicos" },
-  { label: "RESULTADOS", href: "/#resultados" },
   { label: "CONTATO", href: "/#formulario" },
   { label: "BLOG", href: "/blog" },
 ];

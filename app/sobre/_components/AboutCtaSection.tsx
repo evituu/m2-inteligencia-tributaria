@@ -10,7 +10,8 @@ export function AboutCtaSection() {
       <div className="relative mx-auto w-full max-w-[780px] px-5 text-center md:px-8">
         <span className="mx-auto mb-5 block h-1.5 w-14 bg-[#f2c40f]" />
         <h2 className="text-3xl font-black uppercase tracking-tight md:text-5xl">
-          Vamos conversar sobre o futuro da sua empresa?
+          Vamos conversar sobre o 
+          <span className="text-gold-gradient"> futuro da sua empresa?</span> 
         </h2>
         <p className="mt-5 text-base leading-relaxed text-zinc-300 md:text-lg">
           Entre em contato e descubra como podemos recuperar créditos e
