@@ -18,8 +18,8 @@ const menuItems = [
   { label: "HOME", href: "/" },
   { label: "SOBRE", href: "/sobre" },
   { label: "SERVIÇOS", href: "/servicos" },
-  { label: "CONTATO", href: "/#formulario" },
   { label: "BLOG", href: "/blog" },
+  { label: "CONTATO", href: "/#formulario" },
 ];
 
 export function NavigationMenu() {
@@ -58,7 +58,7 @@ export function NavigationMenu() {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-11 items-center justify-center bg-[#c9a84c] px-5 text-xs font-black uppercase tracking-wide text-black transition-all hover:brightness-110"
+            className="inline-flex h-11 items-center justify-center bg-[#c9a84c] px-5 text-center text-xs font-black uppercase tracking-wide text-black transition-all hover:brightness-110"
           >
             Falar com especialista
           </a>
