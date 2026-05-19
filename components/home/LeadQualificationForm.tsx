@@ -113,10 +113,29 @@ export function LeadQualificationForm() {
   async function onSubmit(data: LeadQualificationFormData) {
     setSubmitError(null);
 
+    const csrfResponse = await fetch("/api/auth/csrf", {
+      method: "GET",
+      credentials: "include",
+      cache: "no-store",
+    });
+
+    if (!csrfResponse.ok) {
+      setSubmitError("Falha de segurança (CSRF). Recarregue a página e tente novamente.");
+      return;
+    }
+
+    const csrfData = (await csrfResponse.json()) as { csrfToken?: string };
+    const csrfToken = csrfData.csrfToken || "";
+    if (!csrfToken) {
+      setSubmitError("Falha de segurança (CSRF). Recarregue a página e tente novamente.");
+      return;
+    }
+
     const response = await fetch("/api/leads", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-csrf-token": csrfToken,
       },
       body: JSON.stringify(data),
     });
