@@ -6,11 +6,35 @@ import { Input } from "@/components/ui/input";
 export function BlogNewsletterSection() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!email.trim()) return;
-    setSubmitted(true);
+    const normalizedEmail = email.trim();
+
+    if (!normalizedEmail || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: normalizedEmail }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Falha ao assinar newsletter");
+      }
+
+      setSubmitted(true);
+    } catch {
+      setErrorMessage("Nao foi possivel concluir a assinatura. Tente novamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -21,12 +45,12 @@ export function BlogNewsletterSection() {
           Newsletter <span className="text-gold-gradient">M2 News</span>
         </h2>
         <p className="mt-4 text-sm leading-7 text-[#3b3f47] md:text-base">
-          Receba as últimas notícias e insights sobre recuperação de crédito, compliance fiscal, holding e reforma tributária.
+          Receba as ultimas noticias e insights sobre recuperacao de credito, compliance fiscal, holding e reforma tributaria.
         </p>
 
         {submitted ? (
           <p className="mt-8 text-sm font-semibold text-[#12151b]">
-            Obrigado! Em breve você receberá nossos insights.
+            Obrigado! Em breve voce recebera nossos insights.
           </p>
         ) : (
           <form
@@ -44,12 +68,17 @@ export function BlogNewsletterSection() {
             />
             <button
               type="submit"
-              className="inline-flex h-12 items-center justify-center bg-gold-gradient px-8 text-sm font-black uppercase tracking-wide text-[#0a0f16] transition-all hover:brightness-105"
+              disabled={isSubmitting}
+              className="inline-flex h-12 items-center justify-center bg-gold-gradient px-8 text-sm font-black uppercase tracking-wide text-[#0a0f16] transition-all hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
             >
-              Assinar
+              {isSubmitting ? "Enviando..." : "Assinar"}
             </button>
           </form>
         )}
+
+        {errorMessage ? (
+          <p className="mt-4 text-sm font-semibold text-red-700">{errorMessage}</p>
+        ) : null}
       </div>
     </section>
   );

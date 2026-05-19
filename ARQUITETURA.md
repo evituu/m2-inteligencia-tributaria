@@ -243,3 +243,12 @@ Conforme o projeto evoluir, considerar criar:
 - `lib/` — submódulos para integrações (ex.: `lib/api.ts`, `lib/validators.ts`).
 - `types/` — definições TypeScript compartilhadas.
 - `.env.local` — variáveis de ambiente (lembrar de adicionar ao `.gitignore`).
+
+## Atualiza��o 2026-05-19 - Captacao de Leads
+- O formulario da home exibe modal de sucesso apos envio, com CTA para WhatsApp e opcao de fechar para continuar na pagina.
+- A API de leads (POST /api/leads) aplica limite de 3 envios por e-mail em janela de 30 minutos, retornando HTTP 429 ao exceder o limite.
+
+
+## Atualizacao 2026-05-19 - Newsletter
+- O componente `app/blog/_components/BlogNewsletterSection.tsx` agora envia assinatura real para `POST /api/newsletter/subscribe`.
+- O endpoint `app/api/newsletter/subscribe/route.ts` valida payload com Zod e persiste por `upsert` em `NewsletterSubscriber`, reativando assinante com status `subscribed`.
