@@ -1,6 +1,8 @@
-"use client";
+﻿"use client";
 
+import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { AdminShell } from "../_components/AdminShell";
 
 type AdminPost = {
   id: string;
@@ -24,6 +26,8 @@ export default function AdminPostsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<"all" | AdminPost["status"]>("all");
+  const [search, setSearch] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -52,13 +56,7 @@ export default function AdminPostsPage() {
   }
 
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      void loadPosts();
-    }, 0);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
+    void loadPosts();
   }, []);
 
   async function handleCreate(event: FormEvent<HTMLFormElement>) {
@@ -96,9 +94,10 @@ export default function AdminPostsPage() {
   }
 
   async function updateStatus(postId: string, status: AdminPost["status"]) {
+    const csrfToken = await getCsrfToken();
     const response = await fetch(`/api/admin/posts/${postId}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
       body: JSON.stringify({ status }),
     });
 
@@ -125,96 +124,146 @@ export default function AdminPostsPage() {
     await loadPosts();
   }
 
-  return (
-    <main className="mx-auto max-w-6xl px-6 py-10">
-      <h1 className="text-3xl font-extrabold text-[#12151b]">Admin - Posts</h1>
-      <p className="mt-2 text-sm text-zinc-600">Gerencie posts do blog em tempo real.</p>
+  const filteredPosts = posts.filter((post) => {
+    const statusMatches = statusFilter === "all" || post.status === statusFilter;
+    const searchValue = search.trim().toLowerCase();
+    const searchMatches =
+      searchValue.length === 0 ||
+      post.title.toLowerCase().includes(searchValue) ||
+      post.slug.toLowerCase().includes(searchValue);
 
-      <section className="mt-8 rounded-2xl border border-zinc-200 bg-white p-6">
-        <h2 className="text-lg font-bold text-[#12151b]">Novo post</h2>
+    return statusMatches && searchMatches;
+  });
+
+  return (
+    <AdminShell
+      title="Artigos"
+      subtitle="Gerencie status editorial, busca e publicações do blog."
+      primaryAction={{ label: "Inserir novo artigo", href: "/admin/posts/novo" }}
+    >
+      <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center">
+          <select
+            value={statusFilter}
+            onChange={(event) => setStatusFilter(event.target.value as "all" | AdminPost["status"])}
+            className="h-10 rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-zinc-100"
+          >
+            <option value="all">Todos os status</option>
+            <option value="published">Publicados</option>
+            <option value="draft">Rascunhos</option>
+            <option value="archived">Desativados</option>
+          </select>
+
+          <input
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Buscar por título ou slug"
+            className="h-10 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-zinc-100 placeholder:text-zinc-500"
+          />
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">
+        <h2 className="text-lg font-bold text-white">Rascunho rápido</h2>
+        <p className="mt-1 text-sm text-zinc-400">Atalho para criar um rascunho agora.</p>
+
         <form className="mt-4 space-y-3" onSubmit={handleCreate}>
           <input
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             placeholder="Título do post"
-            className="h-10 w-full rounded-md border border-zinc-300 px-3 text-sm"
+            className="h-10 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-zinc-100"
             required
           />
           <input
             value={computedSlug}
             readOnly
             placeholder="slug-gerado"
-            className="h-10 w-full rounded-md border border-zinc-200 bg-zinc-50 px-3 text-sm text-zinc-600"
+            className="h-10 w-full rounded-md border border-zinc-800 bg-zinc-950 px-3 text-sm text-zinc-500"
           />
           <textarea
             value={content}
             onChange={(event) => setContent(event.target.value)}
             placeholder="Conteúdo do post"
-            className="min-h-32 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm"
+            className="min-h-28 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100"
             required
           />
-          <button
-            type="submit"
-            disabled={saving}
-            className="h-10 rounded-md bg-[#12151b] px-4 text-sm font-semibold text-white disabled:opacity-60"
-          >
-            {saving ? "Salvando..." : "Criar rascunho"}
-          </button>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <button
+              type="submit"
+              disabled={saving}
+              className="inline-flex h-10 items-center justify-center rounded-md bg-[#f2c40f] px-4 text-sm font-semibold text-[#12151b] disabled:opacity-60"
+            >
+              {saving ? "Salvando..." : "Criar rascunho"}
+            </button>
+            <Link
+              href="/admin/posts/novo"
+              className="inline-flex h-10 items-center justify-center rounded-md border border-zinc-700 px-4 text-sm font-semibold text-zinc-200"
+            >
+              Abrir formulário completo
+            </Link>
+          </div>
         </form>
       </section>
 
-      <section className="mt-8 rounded-2xl border border-zinc-200 bg-white p-6">
-        <h2 className="text-lg font-bold text-[#12151b]">Posts</h2>
-        {error ? <p className="mt-3 text-sm text-red-600">{error}</p> : null}
+      <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">
+        <h2 className="text-lg font-bold text-white">Lista de artigos</h2>
+        {error ? <p className="mt-3 text-sm text-red-400">{error}</p> : null}
 
-        {loading ? <p className="mt-4 text-sm text-zinc-600">Carregando...</p> : null}
+        {loading ? <p className="mt-4 text-sm text-zinc-400">Carregando...</p> : null}
 
-        {!loading && posts.length === 0 ? (
-          <p className="mt-4 text-sm text-zinc-600">Nenhum post cadastrado.</p>
+        {!loading && filteredPosts.length === 0 ? (
+          <p className="mt-4 text-sm text-zinc-400">Nenhum artigo encontrado para o filtro atual.</p>
         ) : null}
 
-        {!loading && posts.length > 0 ? (
+        {!loading && filteredPosts.length > 0 ? (
           <div className="mt-4 space-y-3">
-            {posts.map((post) => (
-              <div
-                key={post.id}
-                className="flex flex-col gap-3 rounded-xl border border-zinc-200 p-4 md:flex-row md:items-center md:justify-between"
-              >
-                <div>
-                  <p className="font-semibold text-[#12151b]">{post.title}</p>
-                  <p className="text-xs text-zinc-500">
-                    /{post.slug} • {post.status} •{" "}
-                    {new Date(post.createdAt).toLocaleDateString("pt-BR")}
-                  </p>
+            {filteredPosts.map((post) => (
+              <article key={post.id} className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-4">
+                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <p className="font-semibold text-white">{post.title}</p>
+                    <p className="text-xs text-zinc-400">
+                      /{post.slug} • {post.status} • {new Date(post.createdAt).toLocaleDateString("pt-BR")}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => updateStatus(post.id, "published")}
+                      className="h-8 rounded-md border border-emerald-800 bg-emerald-900/40 px-3 text-xs font-semibold text-emerald-200"
+                    >
+                      Publicar
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateStatus(post.id, "draft")}
+                      className="h-8 rounded-md border border-amber-800 bg-amber-900/40 px-3 text-xs font-semibold text-amber-200"
+                    >
+                      Rascunho
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => updateStatus(post.id, "archived")}
+                      className="h-8 rounded-md border border-zinc-700 bg-zinc-800 px-3 text-xs font-semibold text-zinc-200"
+                    >
+                      Desativar
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => removePost(post.id)}
+                      className="h-8 rounded-md border border-red-900 bg-red-950/60 px-3 text-xs font-semibold text-red-200"
+                    >
+                      Excluir
+                    </button>
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => updateStatus(post.id, "published")}
-                    className="h-8 rounded-md border border-emerald-300 bg-emerald-50 px-3 text-xs font-semibold text-emerald-700"
-                  >
-                    Publicar
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => updateStatus(post.id, "archived")}
-                    className="h-8 rounded-md border border-amber-300 bg-amber-50 px-3 text-xs font-semibold text-amber-700"
-                  >
-                    Arquivar
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => removePost(post.id)}
-                    className="h-8 rounded-md border border-red-300 bg-red-50 px-3 text-xs font-semibold text-red-700"
-                  >
-                    Excluir
-                  </button>
-                </div>
-              </div>
+              </article>
             ))}
           </div>
         ) : null}
       </section>
-    </main>
+    </AdminShell>
   );
 }
+

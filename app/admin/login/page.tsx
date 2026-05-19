@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -40,18 +40,22 @@ export default function AdminLoginPage() {
       router.push(next);
       return;
     }
-    router.push("/admin/posts");
+    router.push("/admin");
   }
 
   return (
-    <main className="mx-auto flex min-h-[70vh] w-full max-w-md items-center px-6 py-12">
-      <div className="w-full rounded-xl border border-zinc-200 bg-white p-6 shadow-xl">
-        <h1 className="text-2xl font-extrabold text-[#12151b]">Login Admin</h1>
-        <p className="mt-2 text-sm text-zinc-600">Acesso ao dashboard do blog.</p>
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#04070d] px-4 py-8">
+      <div className="pointer-events-none absolute -left-20 top-1/4 h-52 w-52 rounded-full bg-[#f2c40f]/20 blur-3xl" />
+      <div className="pointer-events-none absolute -right-20 bottom-1/4 h-56 w-56 rounded-full bg-[#f2c40f]/10 blur-3xl" />
+
+      <div className="relative z-10 w-full max-w-md rounded-2xl border border-zinc-800 bg-[#060b12]/95 p-6 shadow-2xl shadow-black/40 md:p-7">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c9a84c]">M2 Admin</p>
+        <h1 className="mt-2 text-3xl font-black text-white">Login do painel</h1>
+        <p className="mt-2 text-sm text-zinc-400">Acesse para gerenciar artigos e publicação do blog.</p>
 
         <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-1">
-            <label className="text-sm font-medium text-zinc-800" htmlFor="email">
+            <label className="text-sm font-medium text-zinc-200" htmlFor="email">
               E-mail
             </label>
             <input
@@ -60,12 +64,12 @@ export default function AdminLoginPage() {
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="h-10 w-full rounded-md border border-zinc-300 px-3 text-sm outline-none focus:border-zinc-500"
+              className="h-10 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-zinc-100 outline-none focus:border-[#c9a84c]"
             />
           </div>
 
           <div className="space-y-1">
-            <label className="text-sm font-medium text-zinc-800" htmlFor="password">
+            <label className="text-sm font-medium text-zinc-200" htmlFor="password">
               Senha
             </label>
             <input
@@ -74,21 +78,22 @@ export default function AdminLoginPage() {
               required
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              className="h-10 w-full rounded-md border border-zinc-300 px-3 text-sm outline-none focus:border-zinc-500"
+              className="h-10 w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 text-sm text-zinc-100 outline-none focus:border-[#c9a84c]"
             />
           </div>
 
-          {errorMessage ? <p className="text-sm text-red-600">{errorMessage}</p> : null}
+          {errorMessage ? <p className="text-sm text-red-400">{errorMessage}</p> : null}
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="h-10 w-full rounded-md bg-[#12151b] text-sm font-semibold text-white transition hover:bg-[#1c222c] disabled:opacity-60"
+            className="h-10 w-full rounded-md bg-[#f2c40f] text-sm font-semibold text-[#12151b] transition hover:bg-[#e3b80d] disabled:opacity-60"
           >
-            {isSubmitting ? "Entrando..." : "Entrar"}
+            {isSubmitting ? "Entrando..." : "Entrar no dashboard"}
           </button>
         </form>
       </div>
     </main>
   );
 }
+
