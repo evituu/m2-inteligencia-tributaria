@@ -14,7 +14,7 @@ const createPostSchema = z.object({
   coverImageUrl: z.string().url().optional(),
   status: z.enum(["draft", "published", "archived"]).default("draft"),
   publishedAt: z.string().datetime().optional(),
-  authorId: z.string().min(1),
+  authorId: z.string().min(1).optional(),
   categoryId: z.string().min(1).optional(),
 });
 const ADMIN_POSTS_RATE_LIMIT_WINDOW_MS = 60 * 1000;
@@ -71,6 +71,19 @@ export async function POST(req: Request) {
 
   const data = parsed.data;
 
+  let authorId = data.authorId;
+  if (!authorId) {
+    const existingAuthor = await prisma.author.findFirst({ orderBy: { createdAt: "asc" } });
+    if (existingAuthor) {
+      authorId = existingAuthor.id;
+    } else {
+      const createdAuthor = await prisma.author.create({
+        data: { name: "Equipe M2", slug: "equipe-m2" },
+      });
+      authorId = createdAuthor.id;
+    }
+  }
+
   const post = await prisma.post.create({
     data: {
       title: data.title,
@@ -80,7 +93,7 @@ export async function POST(req: Request) {
       coverImageUrl: data.coverImageUrl,
       status: data.status,
       publishedAt: data.publishedAt ? new Date(data.publishedAt) : null,
-      authorId: data.authorId,
+      authorId,
       categoryId: data.categoryId,
       createdById: guard.user.id,
     },
