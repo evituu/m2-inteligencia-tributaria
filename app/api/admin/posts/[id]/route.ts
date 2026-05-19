@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { requireAdminFromRequest } from "../../../../../lib/server/auth/guards";
 import { prisma } from "../../../../../lib/server/db";
+import { validateCsrf } from "../../../../../lib/server/security/csrf";
 
 const updatePostSchema = z.object({
   title: z.string().min(3).optional(),
@@ -15,6 +16,14 @@ const updatePostSchema = z.object({
   authorId: z.string().min(1).optional(),
   categoryId: z.string().min(1).nullable().optional(),
 });
+function isUniqueConstraintError(error: unknown) {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as { code?: string }).code === "P2002"
+  );
+}
 
 type RouteParams = { params: Promise<{ id: string }> };
 
@@ -36,6 +45,10 @@ export async function GET(req: Request, { params }: RouteParams) {
 }
 
 export async function PATCH(req: Request, { params }: RouteParams) {
+  if (!validateCsrf(req)) {
+    return NextResponse.json({ message: "CSRF invalido" }, { status: 403 });
+  }
+
   const guard = await requireAdminFromRequest(req);
 
   if (!guard.ok) {
@@ -51,23 +64,36 @@ export async function PATCH(req: Request, { params }: RouteParams) {
 
   const { id } = await params;
 
-  const item = await prisma.post.update({
-    where: { id },
-    data: {
-      ...parsed.data,
-      publishedAt:
-        parsed.data.publishedAt === undefined
-          ? undefined
-          : parsed.data.publishedAt === null
-            ? null
-            : new Date(parsed.data.publishedAt),
-    },
-  });
+  let item;
+  try {
+    item = await prisma.post.update({
+      where: { id },
+      data: {
+        ...parsed.data,
+        publishedAt:
+          parsed.data.publishedAt === undefined
+            ? undefined
+            : parsed.data.publishedAt === null
+              ? null
+              : new Date(parsed.data.publishedAt),
+      },
+    });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) {
+      return NextResponse.json({ message: "Slug ja em uso" }, { status: 409 });
+    }
+
+    throw error;
+  }
 
   return NextResponse.json(item, { status: 200 });
 }
 
 export async function DELETE(req: Request, { params }: RouteParams) {
+  if (!validateCsrf(req)) {
+    return NextResponse.json({ message: "CSRF invalido" }, { status: 403 });
+  }
+
   const guard = await requireAdminFromRequest(req);
 
   if (!guard.ok) {

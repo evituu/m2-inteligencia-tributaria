@@ -19,6 +19,11 @@ const createPostSchema = z.object({
 });
 const ADMIN_POSTS_RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const ADMIN_POSTS_RATE_LIMIT_MAX_REQUESTS = 30;
+const postStatusSchema = z.enum(["draft", "published", "archived"]);
+const getPostsQuerySchema = z.object({
+  status: postStatusSchema.optional(),
+  search: z.string().trim().min(1).optional(),
+});
 
 export async function GET(req: Request) {
   const guard = await requireAdminFromRequest(req);
@@ -27,7 +32,29 @@ export async function GET(req: Request) {
     return guard.response;
   }
 
+  const { searchParams } = new URL(req.url);
+  const queryParsed = getPostsQuerySchema.safeParse({
+    status: searchParams.get("status") ?? undefined,
+    search: searchParams.get("search") ?? undefined,
+  });
+
+  if (!queryParsed.success) {
+    return NextResponse.json({ message: "Query invalida" }, { status: 400 });
+  }
+
+  const { status, search } = queryParsed.data;
   const items = await prisma.post.findMany({
+    where: {
+      ...(status ? { status } : {}),
+      ...(search
+        ? {
+            OR: [
+              { title: { contains: search, mode: "insensitive" } },
+              { slug: { contains: search, mode: "insensitive" } },
+            ],
+          }
+        : {}),
+    },
     orderBy: { createdAt: "desc" },
     include: {
       author: { select: { id: true, name: true, slug: true } },
@@ -84,20 +111,36 @@ export async function POST(req: Request) {
     }
   }
 
-  const post = await prisma.post.create({
-    data: {
-      title: data.title,
-      slug: data.slug,
-      excerpt: data.excerpt,
-      content: data.content,
-      coverImageUrl: data.coverImageUrl,
-      status: data.status,
-      publishedAt: data.publishedAt ? new Date(data.publishedAt) : null,
-      authorId,
-      categoryId: data.categoryId,
-      createdById: guard.user.id,
-    },
-  });
+  try {
+    const post = await prisma.post.create({
+      data: {
+        title: data.title,
+        slug: data.slug,
+        excerpt: data.excerpt,
+        content: data.content,
+        coverImageUrl: data.coverImageUrl,
+        status: data.status,
+        publishedAt: data.publishedAt ? new Date(data.publishedAt) : null,
+        authorId,
+        categoryId: data.categoryId,
+        createdById: guard.user.id,
+      },
+    });
 
-  return NextResponse.json(post, { status: 201 });
+    return NextResponse.json(post, { status: 201 });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) {
+      return NextResponse.json({ message: "Slug ja em uso" }, { status: 409 });
+    }
+
+    throw error;
+  }
+}
+function isUniqueConstraintError(error: unknown) {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as { code?: string }).code === "P2002"
+  );
 }
