@@ -14,7 +14,7 @@ export function ServicesCtaSection() {
         <span className="mx-auto mb-5 block h-1.5 w-14 bg-[#f2c40f]" />
         <h2 className="text-3xl font-black uppercase leading-tight tracking-tight md:text-5xl">
           Quer saber se sua empresa possui{" "}
-          <span className="text-[#f2c40f]">créditos a recuperar?</span>
+          <span className="text-gold-gradient">créditos a recuperar?</span>
         </h2>
         <p className="mt-6 text-base leading-relaxed text-zinc-300 md:text-lg">
           Solicite uma análise inicial e entenda quais oportunidades podem
@@ -25,7 +25,7 @@ export function ServicesCtaSection() {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
             href="/#formulario"
-            className="inline-flex h-14 items-center justify-center bg-[#f2c40f] px-8 text-base font-black uppercase tracking-wide text-[#0a0f16] transition-colors hover:bg-[#ffd82f]"
+            className="inline-flex h-14 items-center justify-center bg-gold-gradient px-8 text-base font-black uppercase tracking-wide text-[#0a0f16] transition-colors hover:bg-[#ffd82f]"
           >
             Solicitar análise inicial
           </Link>

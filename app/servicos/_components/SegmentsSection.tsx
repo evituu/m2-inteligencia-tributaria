@@ -59,12 +59,14 @@ export function SegmentsSection() {
   const total = segments.length;
   const [current, setCurrent] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
   const [measure, setMeasure] = useState({ cardW: 220, visible: 5 });
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const remeasure = useCallback(() => {
     if (!containerRef.current) return;
     const w = containerRef.current.offsetWidth;
+    setContainerWidth(w);
     const v = getVisibleCount(w);
     const cardW = (w - GAP * (v - 1)) / v;
     setMeasure({ cardW, visible: v });
@@ -107,8 +109,7 @@ export function SegmentsSection() {
 
   const { cardW, visible } = measure;
   const centerOffset =
-    (containerRef.current?.offsetWidth ?? cardW * visible + GAP * (visible - 1)) / 2 -
-    cardW / 2;
+    (containerWidth || cardW * visible + GAP * (visible - 1)) / 2 - cardW / 2;
   const translateX = -current * (cardW + GAP) + centerOffset;
 
   const distanceFromCenter = (index: number) => {
@@ -123,7 +124,7 @@ export function SegmentsSection() {
         <div className="mb-12 max-w-[760px]">
           <span className="bg-gold-gradient mb-5 block h-1.5 w-14" />
           <h2 className="text-4xl font-black uppercase tracking-tight text-[#12151b] md:text-5xl">
-            Segmentos atendidos
+            Segmentos <span className="text-gold-gradient">atendidos</span>
           </h2>
           <p className="mt-5 text-base leading-7 text-[#3b3f47] md:text-lg">
             Atuamos com empresas de diversos setores que possuem oportunidades

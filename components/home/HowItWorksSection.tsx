@@ -26,11 +26,11 @@ export function HowItWorksSection() {
     <section id="como-funciona" className="bg-[#0a0f16] py-16 text-white md:py-24">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-8">
         <div className="mx-auto mb-12 max-w-3xl text-center">
-          <span className="text-xs font-black uppercase tracking-[0.24em] text-[#f2c40f]">
-            Processo
-          </span>
           <h2 className="mt-4 text-4xl font-black uppercase leading-[1.08] tracking-tight md:text-5xl">
-            Como recuperamos os seus créditos
+            Como 
+            <span className="text-gold-gradient"> recuperamos </span>
+            os seus 
+            <span className="text-gold-gradient"> créditos </span>
           </h2>
           <p className="mt-4 text-base text-zinc-400 md:text-lg">
             Transparente do início ao fim. Você acompanha cada etapa.

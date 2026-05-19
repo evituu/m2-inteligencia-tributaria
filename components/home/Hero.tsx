@@ -5,7 +5,7 @@ const analysisWhatsappUrl =
 
 export function Hero() {
   return (
-    <section className="relative isolate flex min-h-[760px] items-center overflow-hidden bg-[#04070d] text-white">
+    <section className="relative isolate flex min-h-screen items-center overflow-hidden bg-[#04070d] text-white">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/imagens/office/fachada_m2.webp')" }}
@@ -22,8 +22,10 @@ export function Hero() {
 
           <span className="mb-8 block h-2 w-16 bg-[#f2c40f]" />
 
-          <h1 className="text-4xl font-black uppercase leading-[1.08] tracking-tight md:text-6xl lg:text-7xl">
-            Imposto pago a mais não é custo. É crédito a recuperar.
+          <h1 className="text-3xl font-black uppercase leading-[1.08] tracking-tight md:text-6xl lg:text-7xl">
+            Imposto{" "}
+            <span className="text-gold-gradient">pago a mais</span> não é custo. É{" "}
+            <span className="text-gold-gradient">crédito a recuperar</span>.
           </h1>
 
           <p className="mt-8 max-w-[720px] text-base text-zinc-300 md:text-2xl">

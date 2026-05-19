@@ -7,6 +7,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
+import { SlideIn } from "@/components/animations/SlideIn";
 
 interface ComplianceItem {
   title: string;
@@ -70,19 +71,27 @@ export function ComplianceSection() {
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map(({ title, description, icon: Icon }) => (
-            <article
+          {items.map(({ title, description, icon: Icon }, index) => (
+            <SlideIn
               key={title}
+              from="bottom"
+              delay={index * 300}
+              duration={1200}
+              distance={100}
+              className="h-full"
+            >
+              <article
               className="h-full border border-zinc-200 bg-white px-6 py-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#f2c40f]/60 hover:shadow-md md:px-7 md:py-8"
             >
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#0a0f16] text-[#f2c40f]">
+              <div className="mx-auto mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#0a0f16] text-[#f2c40f]">
                 <Icon className="h-6 w-6" />
               </div>
-              <h3 className="text-lg font-bold text-[#12151b]">{title}</h3>
+              <h3 className="text-lg text-center font-bold text-[#12151b]">{title}</h3>
               <p className="mt-3 text-sm leading-7 text-[#3b3f47]">
                 {description}
               </p>
-            </article>
+              </article>
+            </SlideIn>
           ))}
         </div>
       </div>

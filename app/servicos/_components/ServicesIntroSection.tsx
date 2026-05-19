@@ -14,7 +14,9 @@ export function ServicesIntroSection() {
         <div>
           <span className="mb-5 block h-1.5 w-14 bg-[#f2c40f]" />
           <h2 className="text-4xl font-black uppercase leading-[1.08] tracking-tight text-[#12151b] md:text-5xl">
-            Muitas empresas pagam mais tributos do que deveriam
+            Muitas empresas 
+            <span className="text-gold-gradient"> pagam mais tributos </span>
+            do que deveriam
           </h2>
           <p className="mt-6 max-w-[560px] text-base leading-8 text-[#3b3f47] md:text-lg">
             Alterações constantes na legislação, complexidade do sistema fiscal

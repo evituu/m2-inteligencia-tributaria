@@ -243,3 +243,91 @@ Conforme o projeto evoluir, considerar criar:
 - `lib/` — submódulos para integrações (ex.: `lib/api.ts`, `lib/validators.ts`).
 - `types/` — definições TypeScript compartilhadas.
 - `.env.local` — variáveis de ambiente (lembrar de adicionar ao `.gitignore`).
+
+## Atualiza��o 2026-05-19 - Captacao de Leads
+- O formulario da home exibe modal de sucesso apos envio, com CTA para WhatsApp e opcao de fechar para continuar na pagina.
+- A API de leads (POST /api/leads) aplica limite de 3 envios por e-mail em janela de 30 minutos, retornando HTTP 429 ao exceder o limite.
+
+
+## Atualizacao 2026-05-19 - Newsletter
+- O componente `app/blog/_components/BlogNewsletterSection.tsx` agora envia assinatura real para `POST /api/newsletter/subscribe`.
+- O endpoint `app/api/newsletter/subscribe/route.ts` valida payload com Zod e persiste por `upsert` em `NewsletterSubscriber`, reativando assinante com status `subscribed`.
+
+## Atualizacao 2026-05-19 - Area Admin e Autorizacao
+- Middleware em `middleware.ts` protege `/admin/*` e `/api/admin/*` com validacao de access token e role `admin`.
+- Foram adicionadas telas base de administracao em `app/admin/page.tsx` e `app/admin/posts/page.tsx`.
+- CRUD administrativo inicial de blog disponivel em:
+  - `POST/GET /api/admin/posts`
+  - `GET/PATCH/DELETE /api/admin/posts/[id]`
+  - `POST/GET /api/admin/categories`
+  - `GET/PATCH/DELETE /api/admin/categories/[id]`
+- As rotas administrativas retornam `401` quando nao autenticado/autorizado.
+
+## Atualizacao 2026-05-19 - Login do Admin
+- O acesso a rotas /admin/* sem autenticacao redireciona para /admin/login (com parametro next).
+- A pagina de login admin autentica via POST /api/auth/login e, apos sucesso, redireciona para /admin/posts ou para o next informado.
+
+
+## Atualizacao 2026-05-19 - Seguranca de Rotas Criticas
+- Foi criada camada compartilhada em `lib/server/security/rate-limit.ts` e `lib/server/security/csrf.ts`.
+- As rotas `POST /api/auth/login`, `POST /api/leads`, `POST /api/newsletter/subscribe` e `POST /api/admin/posts` agora exigem CSRF valido via cookie `m2_csrf_token` + header `x-csrf-token`.
+- As mesmas rotas passaram a aplicar rate limit em memoria por janela de tempo e retornam `429` quando excedido.
+## Atualizacao 2026-05-19 - Frontend Admin Operacional
+- Foi criada a rota GET /api/auth/csrf para emissao de token CSRF e cookie m2_csrf_token.
+- A pagina /admin/login passou a obter CSRF antes do POST /api/auth/login.
+- A pagina /admin/posts agora permite listar, criar rascunho, publicar, arquivar e excluir posts via API admin.
+- O POST /api/admin/posts aceita ausencia de authorId e usa autor existente, criando "Equipe M2" quando necessario.
+
+---
+
+## Auth (JWT + Sessao)
+
+- Fluxo: `POST /api/auth/login` emite access token (curto) e refresh token (rotativo) em cookie `httpOnly`.
+- Renovacao: `POST /api/auth/refresh` valida sessao ativa e rotaciona refresh token.
+- Encerramento: `POST /api/auth/logout` revoga sessao atual.
+- Contexto autenticado: `GET /api/auth/me` retorna usuario autenticado.
+- Rotas `/admin/*` e `/api/admin/*` exigem role `admin`.
+
+## API Handlers
+
+- Publico:
+  - `POST /api/leads`
+  - `POST /api/newsletter/subscribe`
+  - `GET /api/blog/posts`
+  - `GET /api/blog/posts/[slug]`
+- Admin:
+  - `GET/POST /api/admin/posts`
+  - `GET/PATCH/DELETE /api/admin/posts/[id]`
+  - `GET/POST /api/admin/categories`
+  - `GET/PATCH/DELETE /api/admin/categories/[id]`
+
+## Prisma e Persistencia
+
+- ORM: Prisma (`prisma/schema.prisma`).
+- Banco: PostgreSQL na VPS.
+- Tabelas principais: `User`, `Session`, `Author`, `Category`, `Post`, `Lead`, `NewsletterSubscriber`.
+- Migrations versionadas em `prisma/migrations/*`.
+- Deploy usa `npx.cmd prisma migrate deploy` (nao usar `migrate dev` em producao).
+
+## Seguranca Aplicada
+
+- CSRF em rotas mutaveis criticas (cookie + header).
+- Rate limit em memoria nas rotas criticas (`auth/login`, `leads`, `newsletter`, `admin/posts`).
+- Limite de leads: maximo de 3 envios por e-mail em janela de 30 minutos, com `429` ao exceder.
+- Cookies de auth com `httpOnly` e validacao server-side em todas as rotas administrativas.
+
+## Operacao em VPS
+
+- App Next.js monolitico (site + API + admin) rodando em processo Node gerenciado (PM2 ou systemd) atras de Nginx.
+- Fluxo minimo de deploy:
+  1. `npm.cmd ci`
+  2. `npx.cmd prisma generate`
+  3. `npx.cmd prisma migrate deploy`
+  4. `npm.cmd run build`
+  5. restart do servico
+  6. health-check de homepage e endpoints criticos
+- Runbook detalhado em `docs/operations/vps-deploy.md`.
+## Atualizacao 2026-05-19 - Upload local de capa no Admin
+- Foi criada a rota POST /api/admin/uploads/cover para upload de imagem de capa em disco local da VPS (public/uploads/covers).
+- A rota exige autenticacao admin e CSRF, aceita JPG/PNG/WEBP e limita arquivo a 5MB.
+- O editor de artigo no admin passou a suportar upload de capa com preenchimento automatico da URL e preview.

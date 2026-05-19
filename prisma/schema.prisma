@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  admin
+  editor
+}
+
+enum PostStatus {
+  draft
+  published
+  archived
+}
+
+enum NewsletterStatus {
+  subscribed
+  unsubscribed
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  role         UserRole  @default(admin)
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  sessions     Session[]
+  posts        Post[]    @relation("PostAuthorUser")
+}
+
+model Session {
+  id                String   @id @default(cuid())
+  userId            String
+  refreshTokenHash  String
+  userAgent         String?
+  ipAddress         String?
+  expiresAt         DateTime
+  revokedAt         DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Author {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  bio       String?
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  posts       Post[]
+}
+
+model Post {
+  id            String      @id @default(cuid())
+  title         String
+  slug          String      @unique
+  excerpt       String?
+  content       String
+  coverImageUrl String?
+  status        PostStatus  @default(draft)
+  publishedAt   DateTime?
+  authorId      String
+  categoryId    String?
+  createdById   String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  author        Author      @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  category      Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdBy     User?       @relation("PostAuthorUser", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([status, publishedAt])
+  @@index([authorId])
+  @@index([categoryId])
+}
+
+model Lead {
+  id            String   @id @default(cuid())
+  fullName      String
+  email         String
+  phone         String?
+  company       String?
+  companySize   String?
+  monthlyRevenue String?
+  taxRegime     String?
+  message       String?
+  source        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([email])
+  @@index([createdAt])
+}
+
+model NewsletterSubscriber {
+  id            String           @id @default(cuid())
+  email         String           @unique
+  status        NewsletterStatus @default(subscribed)
+  subscribedAt  DateTime         @default(now())
+  unsubscribedAt DateTime?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+}

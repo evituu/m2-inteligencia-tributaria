@@ -16,8 +16,9 @@ export function ServicesHeroSection() {
         <div className="max-w-[760px]">
           <span className="mb-6 block h-1.5 w-14 bg-[#f2c40f]" />
           <h1 className="text-4xl font-black uppercase leading-[1.08] tracking-tight md:text-5xl lg:text-6xl">
-            Soluções tributárias para recuperar créditos e reduzir pagamentos
-            indevidos
+            <span className="text-gold-gradient">Soluções</span> tributárias para{" "}
+            <span className="text-gold-gradient">recuperar</span> créditos e{" "}
+            <span className="text-gold-gradient">reduzir</span> pagamentos indevidos
           </h1>
           <p className="mt-7 max-w-[680px] text-base leading-relaxed text-zinc-300 md:text-lg">
             A M2 Inteligência Tributária realiza revisões fiscais,
@@ -28,7 +29,7 @@ export function ServicesHeroSection() {
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
             <Link
               href="#cta-final"
-              className="inline-flex h-14 items-center justify-center bg-[#f2c40f] px-8 text-base font-black uppercase tracking-wide text-[#0a0f16] transition-colors hover:bg-[#ffd82f]"
+              className="inline-flex h-14 items-center justify-center bg-gold-gradient px-8 text-base font-black uppercase tracking-wide text-[#0a0f16] transition-colors hover:bg-[#ffd82f]"
             >
               Solicitar análise inicial
             </Link>

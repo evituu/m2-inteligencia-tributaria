@@ -8,7 +8,7 @@ const metrics = [
     label: "Recuperados para nossos clientes",
     value: 156,
     prefix: "R$ ",
-    suffix: " milhões+",
+    suffix: "milhões+",
     icon: Banknote,
   },
   {
@@ -68,10 +68,14 @@ function AnimatedNumber({
   }, [shouldStart, value]);
 
   return (
-    <span>
-      {prefix}
-      {currentValue.toLocaleString("pt-BR")}
-      {suffix}
+    <span className="inline-flex flex-col items-center leading-[1.05]">
+      <span className="whitespace-nowrap">
+        {prefix}
+        {currentValue.toLocaleString("pt-BR")}
+      </span>
+      {suffix && (
+        <span className="mt-1 text-[0.72em] leading-none">{suffix}</span>
+      )}
     </span>
   );
 }
@@ -133,7 +137,7 @@ export function NumbersSection() {
               <div className="mx-auto mb-4 flex h-11 w-11 items-center justify-center rounded-full border border-[#f2c40f]/45 bg-[#f2c40f]/10 text-[#f2c40f]">
                 <Icon className="h-6 w-6" />
               </div>
-              <p className="min-h-[64px] text-3xl font-black leading-none tracking-tight text-white md:text-4xl lg:text-5xl">
+              <p className="min-h-[96px] text-3xl font-black leading-[1.08] tracking-tight text-white md:text-4xl lg:text-5xl">
                 {typeof value === "number" ? (
                   <AnimatedNumber
                     value={value}

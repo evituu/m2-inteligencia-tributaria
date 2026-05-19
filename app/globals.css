@@ -236,6 +236,32 @@
   }
 }
 
+@keyframes insights-ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.insights-ticker:hover .insights-ticker-marquee {
+  animation-play-state: paused;
+}
+
+.insights-ticker-marquee {
+  display: flex;
+  width: max-content;
+  animation: insights-ticker-scroll 55s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .insights-ticker-marquee {
+    animation: none;
+  }
+}
+
 .whatsapp-fab {
   display: none;
 }
