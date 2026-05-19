@@ -112,20 +112,25 @@ export async function POST(req: Request) {
   }
 
   try {
-    const post = await prisma.post.create({
-      data: {
-        title: data.title,
-        slug: data.slug,
-        excerpt: data.excerpt,
-        content: data.content,
-        coverImageUrl: data.coverImageUrl,
-        status: data.status,
-        publishedAt: data.publishedAt ? new Date(data.publishedAt) : null,
-        authorId,
-        categoryId: data.categoryId,
-        createdById: guard.user.id,
-      },
-    });
+  const post = await prisma.post.create({
+    data: {
+      title: data.title,
+      slug: data.slug,
+      excerpt: data.excerpt,
+      content: data.content,
+      coverImageUrl: data.coverImageUrl,
+      status: data.status,
+      publishedAt:
+        data.publishedAt
+          ? new Date(data.publishedAt)
+          : data.status === "published"
+            ? new Date()
+            : null,
+      authorId,
+      categoryId: data.categoryId,
+      createdById: guard.user.id,
+    },
+  });
 
     return NextResponse.json(post, { status: 201 });
   } catch (error) {
