@@ -10,14 +10,25 @@ import { BlogEbookBanner } from "@/app/blog/_components/BlogEbookBanner";
 import { BlogNewsletterSection } from "@/app/blog/_components/BlogNewsletterSection";
 
 export const metadata: Metadata = {
-  title: "Insights e Artigos | M2 Inteligência Tributária",
+  title: "Insights e Artigos | M2 Inteligencia Tributaria",
   description:
-    "Conteúdos técnicos sobre recuperação de crédito, compliance fiscal, holding e reforma tributária para empresas e contadores.",
+    "Conteudos tecnicos sobre recuperacao de credito, compliance fiscal, holding e reforma tributaria para empresas e contadores.",
 };
 
-export default function BlogPage() {
-  const featuredArticle = getFeaturedArticle();
-  const articles = getArticlesExcludingFeatured();
+export default async function BlogPage() {
+  const featuredArticle = await getFeaturedArticle();
+  const articles = await getArticlesExcludingFeatured();
+
+  if (!featuredArticle) {
+    return (
+      <>
+        <section className="bg-[#04070d] px-5 py-32 text-center text-zinc-300 md:px-8">
+          Nenhum artigo publicado no momento.
+        </section>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>

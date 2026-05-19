@@ -38,8 +38,8 @@ function TickerItem({ article }: { article: Article }) {
   );
 }
 
-export function LatestInsightsTicker() {
-  const articles = getLatestArticles(3);
+export async function LatestInsightsTicker() {
+  const articles = await getLatestArticles(3);
 
   if (articles.length === 0) {
     return null;

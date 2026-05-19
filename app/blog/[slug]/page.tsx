@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
@@ -17,21 +17,21 @@ export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
 
   if (!article) {
-    return { title: "Artigo não encontrado | M2" };
+    return { title: "Artigo nao encontrado | M2" };
   }
 
   return {
-    title: `${article.title} | M2 Inteligência Tributária`,
+    title: `${article.title} | M2 Inteligencia Tributaria`,
     description: article.excerpt,
   };
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const article = await getArticleBySlug(slug);
 
   if (!article) {
     notFound();
@@ -57,14 +57,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             {article.title}
           </h1>
           <p className="mt-4 text-sm text-zinc-400">
-            {formatArticleDate(article.publishedAt)} ·{" "}
-            {article.readingTimeMinutes} min de leitura
+            {formatArticleDate(article.publishedAt)} · {article.readingTimeMinutes} min de leitura
           </p>
-          <p className="mt-8 text-base leading-8 text-zinc-300">
-            {article.excerpt}
-          </p>
+          <p className="mt-8 text-base leading-8 text-zinc-300">{article.excerpt}</p>
           <p className="mt-6 text-sm text-zinc-500">
-            Conteúdo completo em breve. Esta página está preparada para receber
+            Conteudo completo em breve. Esta pagina esta preparada para receber
             o corpo do artigo via CMS ou API.
           </p>
         </div>
