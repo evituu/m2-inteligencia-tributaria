@@ -174,3 +174,55 @@ m2-inteligencia-tributaria/
 
 - [`ARQUITETURA.md`](./ARQUITETURA.md) — visão arquitetural completa, stack detalhada e decisões técnicas.
 - [`AGENTS.md`](./AGENTS.md) — diretrizes obrigatórias para agentes de IA que forem editar o projeto (atenção a breaking changes do Next.js 16).
+
+---
+
+## Backend (Atual)
+
+### Endpoints principais
+
+- `GET /api/auth/csrf`
+- `POST /api/auth/login`
+- `POST /api/auth/refresh`
+- `POST /api/auth/logout`
+- `GET /api/auth/me`
+- `POST /api/leads`
+- `POST /api/newsletter/subscribe`
+- `GET /api/blog/posts`
+- `GET /api/blog/posts/[slug]`
+- `GET /api/admin/posts`
+- `POST /api/admin/posts`
+- `GET /api/admin/posts/[id]`
+- `PATCH /api/admin/posts/[id]`
+- `DELETE /api/admin/posts/[id]`
+- `GET /api/admin/categories`
+- `POST /api/admin/categories`
+- `GET /api/admin/categories/[id]`
+- `PATCH /api/admin/categories/[id]`
+- `DELETE /api/admin/categories/[id]`
+
+### Variaveis de ambiente (backend)
+
+- `DATABASE_URL`
+- `JWT_ACCESS_SECRET`
+- `JWT_REFRESH_SECRET`
+- `JWT_ACCESS_TTL`
+- `JWT_REFRESH_TTL`
+- `ADMIN_BOOTSTRAP_EMAIL`
+- `ADMIN_BOOTSTRAP_PASSWORD`
+
+Use `.env.example` como referencia de chaves e formato, sem versionar segredos reais.
+
+### Prisma: migration e seed
+
+```powershell
+npx.cmd prisma generate
+npx.cmd prisma migrate deploy
+```
+
+Se houver script de seed configurado no branch:
+
+```powershell
+npm.cmd run db:seed
+```
+
