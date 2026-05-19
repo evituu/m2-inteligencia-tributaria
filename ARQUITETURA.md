@@ -327,3 +327,7 @@ Conforme o projeto evoluir, considerar criar:
   5. restart do servico
   6. health-check de homepage e endpoints criticos
 - Runbook detalhado em `docs/operations/vps-deploy.md`.
+## Atualizacao 2026-05-19 - Upload local de capa no Admin
+- Foi criada a rota POST /api/admin/uploads/cover para upload de imagem de capa em disco local da VPS (public/uploads/covers).
+- A rota exige autenticacao admin e CSRF, aceita JPG/PNG/WEBP e limita arquivo a 5MB.
+- O editor de artigo no admin passou a suportar upload de capa com preenchimento automatico da URL e preview.

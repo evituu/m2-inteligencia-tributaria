@@ -89,6 +89,7 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
   const [categories, setCategories] = useState<CategoryOption[]>(initialCategories);
   const [manualSlug, setManualSlug] = useState(Boolean((persistedDraft?.slug ?? initialData?.slug)?.trim()));
   const [submitting, setSubmitting] = useState(false);
+  const [uploadingCover, setUploadingCover] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [autosaveState, setAutosaveState] = useState<"idle" | "saving" | "saved" | "error">("idle");
@@ -301,6 +302,38 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
     }
   }
 
+  async function handleCoverUpload(file: File | null) {
+    if (!file || uploadingCover) return;
+
+    setUploadingCover(true);
+    setError(null);
+    setSuccess(null);
+
+    const csrfToken = await getCsrfToken();
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const response = await fetch("/api/admin/uploads/cover", {
+      method: "POST",
+      headers: {
+        "x-csrf-token": csrfToken,
+      },
+      body: formData,
+    });
+
+    setUploadingCover(false);
+
+    if (!response.ok) {
+      const body = (await response.json().catch(() => null)) as { message?: string } | null;
+      setError(body?.message || "Nao foi possivel enviar a capa.");
+      return;
+    }
+
+    const data = (await response.json()) as { url: string };
+    setCoverImageUrl(data.url);
+    setSuccess("Capa enviada com sucesso.");
+  }
+
   function handleProtectedNavigation(href: string) {
     if (!hasUnsavedChanges || skipUnloadGuardRef.current) {
       router.push(href);
@@ -427,6 +460,27 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
               placeholder="https://..."
               className="h-10 border-zinc-700 bg-zinc-900 text-zinc-100"
             />
+            <div className="space-y-2 rounded-lg border border-zinc-800 bg-zinc-900/60 p-3">
+              <Label htmlFor="coverFile" className="text-zinc-300">
+                Upload da capa (JPG, PNG, WEBP até 5MB)
+              </Label>
+              <Input
+                id="coverFile"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                className="h-10 border-zinc-700 bg-zinc-950 text-zinc-100 file:mr-3 file:rounded file:border-0 file:bg-zinc-800 file:px-2 file:py-1 file:text-xs file:text-zinc-200"
+                onChange={(event) => void handleCoverUpload(event.target.files?.[0] ?? null)}
+              />
+              <p className="text-xs text-zinc-400">{uploadingCover ? "Enviando capa..." : "Selecione um arquivo para enviar."}</p>
+              {coverImageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={coverImageUrl}
+                  alt="Preview da capa"
+                  className="max-h-44 w-full rounded-md border border-zinc-800 object-cover"
+                />
+              ) : null}
+            </div>
           </div>
 
           <div className="space-y-2">
