@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,7 +27,7 @@ export function NavigationMenu() {
   return (
     <header className="absolute inset-x-0 top-0 z-20 border-b border-zinc-800/80 bg-[#060b12]/95 backdrop-blur-sm">
       <div className="mx-auto flex h-22 w-full max-w-[1280px] items-center justify-between gap-4 px-5 md:px-8">
-        <a
+        <Link
           href="/"
           className="flex min-w-0 items-center gap-2 font-heading text-xl font-extrabold tracking-tight md:text-3xl"
         >
@@ -39,18 +40,18 @@ export function NavigationMenu() {
             priority
           />
           <GoldText>Inteligência Tributária</GoldText>
-        </a>
+        </Link>
 
         <div className="hidden items-center gap-7 lg:flex">
           <nav className="flex items-center gap-7 text-xs font-semibold tracking-wide text-zinc-100">
             {menuItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
                 className="relative pb-1 transition-colors hover:text-[#f2c40f]"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -83,12 +84,12 @@ export function NavigationMenu() {
             <div className="mt-8 flex flex-col gap-2">
               {menuItems.map((item) => (
                 <SheetClose asChild key={item.label}>
-                  <a
+                  <Link
                     href={item.href}
                     className="rounded-md px-4 py-3 text-sm font-semibold tracking-wide text-zinc-200 transition-colors hover:bg-white/5 hover:text-[#f2c40f]"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </SheetClose>
               ))}
 

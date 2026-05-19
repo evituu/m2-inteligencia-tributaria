@@ -1,7 +1,4 @@
-const bcrypt = require("bcryptjs") as {
-  hash: (value: string, rounds: number) => Promise<string>;
-  compare: (value: string, hash: string) => Promise<boolean>;
-};
+import bcrypt from "bcryptjs";
 
 const SALT_ROUNDS = 10;
 

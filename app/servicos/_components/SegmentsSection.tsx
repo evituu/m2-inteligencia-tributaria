@@ -59,12 +59,14 @@ export function SegmentsSection() {
   const total = segments.length;
   const [current, setCurrent] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
   const [measure, setMeasure] = useState({ cardW: 220, visible: 5 });
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const remeasure = useCallback(() => {
     if (!containerRef.current) return;
     const w = containerRef.current.offsetWidth;
+    setContainerWidth(w);
     const v = getVisibleCount(w);
     const cardW = (w - GAP * (v - 1)) / v;
     setMeasure({ cardW, visible: v });
@@ -107,8 +109,7 @@ export function SegmentsSection() {
 
   const { cardW, visible } = measure;
   const centerOffset =
-    (containerRef.current?.offsetWidth ?? cardW * visible + GAP * (visible - 1)) / 2 -
-    cardW / 2;
+    (containerWidth || cardW * visible + GAP * (visible - 1)) / 2 - cardW / 2;
   const translateX = -current * (cardW + GAP) + centerOffset;
 
   const distanceFromCenter = (index: number) => {
