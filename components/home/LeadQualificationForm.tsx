@@ -119,8 +119,19 @@ export function LeadQualificationForm() {
     mode: "onBlur",
   });
 
-  async function onSubmit() {
-    await new Promise((resolve) => setTimeout(resolve, 700));
+  async function onSubmit(data: LeadQualificationFormData) {
+    const response = await fetch("/api/leads", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Falha ao enviar formulario");
+    }
+
     reset();
   }
 
