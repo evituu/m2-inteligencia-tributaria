@@ -2,7 +2,7 @@
 
 Site institucional da **M2 Inteligência Tributária** — escritório especializado em recuperação de crédito tributário, cobrança extrajudicial e negociação de dívidas para o ecossistema contábil.
 
-Aplicação construída com **Next.js 16 (App Router)**, **React 19**, **TypeScript** e **Tailwind CSS v4**, com componentes baseados em **shadcn/ui** (estilo `radix-nova`).
+Aplicação construída com **Next.js 16 (App Router)**, **React 19**, **TypeScript** e **Tailwind CSS v4**, com componentes baseadoss em **shadcn/ui** (estilo `radix-nova`).
 
 ---
 
