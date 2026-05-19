@@ -56,7 +56,13 @@ export default function AdminPostsPage() {
   }
 
   useEffect(() => {
-    void loadPosts();
+    const timer = window.setTimeout(() => {
+      void loadPosts();
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
   }, []);
 
   async function handleCreate(event: FormEvent<HTMLFormElement>) {
