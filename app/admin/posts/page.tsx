@@ -241,6 +241,12 @@ export default function AdminPostsPage() {
                     >
                       Publicar
                     </button>
+                    <Link
+                      href={`/admin/posts/${post.id}/editar`}
+                      className="inline-flex h-8 items-center rounded-md border border-[#c9a84c]/40 bg-[#c9a84c]/15 px-3 text-xs font-semibold text-[#f2c40f]"
+                    >
+                      Editar
+                    </Link>
                     <button
                       type="button"
                       onClick={() => updateStatus(post.id, "draft")}
