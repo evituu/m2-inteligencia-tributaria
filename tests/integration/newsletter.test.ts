@@ -26,7 +26,7 @@ describe("newsletter subscribe route", () => {
 
     const req = new Request("http://localhost/api/newsletter/subscribe", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": "csrf123", Cookie: "m2_csrf_token=csrf123" },
       body: JSON.stringify({ email: "contato@empresa.com.br" }),
     });
 

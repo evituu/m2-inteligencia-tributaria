@@ -3,6 +3,8 @@ import { z } from "zod";
 
 import { requireAdminFromRequest } from "../../../../lib/server/auth/guards";
 import { prisma } from "../../../../lib/server/db";
+import { validateCsrf } from "../../../../lib/server/security/csrf";
+import { buildRateLimitKey, checkRateLimit, getClientIp } from "../../../../lib/server/security/rate-limit";
 
 const createPostSchema = z.object({
   title: z.string().min(3),
@@ -15,6 +17,8 @@ const createPostSchema = z.object({
   authorId: z.string().min(1),
   categoryId: z.string().min(1).optional(),
 });
+const ADMIN_POSTS_RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const ADMIN_POSTS_RATE_LIMIT_MAX_REQUESTS = 30;
 
 export async function GET(req: Request) {
   const guard = await requireAdminFromRequest(req);
@@ -35,10 +39,27 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
+  if (!validateCsrf(req)) {
+    return NextResponse.json({ message: "CSRF invalido" }, { status: 403 });
+  }
+
   const guard = await requireAdminFromRequest(req);
 
   if (!guard.ok) {
     return guard.response;
+  }
+
+  const rate = checkRateLimit({
+    key: buildRateLimitKey(["admin-posts", guard.user.id, getClientIp(req)]),
+    limit: ADMIN_POSTS_RATE_LIMIT_MAX_REQUESTS,
+    windowMs: ADMIN_POSTS_RATE_LIMIT_WINDOW_MS,
+  });
+
+  if (!rate.allowed) {
+    return NextResponse.json(
+      { message: "Muitas tentativas. Tente novamente em instantes." },
+      { status: 429, headers: { "Retry-After": String(rate.retryAfterSec) } },
+    );
   }
 
   const rawBody = await req.json().catch(() => null);

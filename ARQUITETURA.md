@@ -262,3 +262,13 @@ Conforme o projeto evoluir, considerar criar:
   - `POST/GET /api/admin/categories`
   - `GET/PATCH/DELETE /api/admin/categories/[id]`
 - As rotas administrativas retornam `401` quando nao autenticado/autorizado.
+
+## Atualizacao 2026-05-19 - Login do Admin
+- O acesso a rotas /admin/* sem autenticacao redireciona para /admin/login (com parametro next).
+- A pagina de login admin autentica via POST /api/auth/login e, apos sucesso, redireciona para /admin/posts ou para o next informado.
+
+
+## Atualizacao 2026-05-19 - Seguranca de Rotas Criticas
+- Foi criada camada compartilhada em `lib/server/security/rate-limit.ts` e `lib/server/security/csrf.ts`.
+- As rotas `POST /api/auth/login`, `POST /api/leads`, `POST /api/newsletter/subscribe` e `POST /api/admin/posts` agora exigem CSRF valido via cookie `m2_csrf_token` + header `x-csrf-token`.
+- As mesmas rotas passaram a aplicar rate limit em memoria por janela de tempo e retornam `429` quando excedido.

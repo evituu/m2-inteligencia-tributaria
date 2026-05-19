@@ -43,7 +43,7 @@ describe("auth routes", () => {
 
     const req = new Request("http://localhost/api/auth/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": "csrf123", Cookie: "m2_csrf_token=csrf123" },
       body: JSON.stringify({ email: "admin@empresa.com", password: "12345678" }),
     });
 
@@ -61,7 +61,7 @@ describe("auth routes", () => {
 
     const req = new Request("http://localhost/api/auth/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-csrf-token": "csrf123", Cookie: "m2_csrf_token=csrf123" },
       body: JSON.stringify({ email: "admin@empresa.com", password: "errada123" }),
     });
 

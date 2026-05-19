@@ -26,7 +26,11 @@ describe("admin authz", () => {
 
     const req = new Request("http://localhost/api/admin/posts", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "x-csrf-token": "csrf123",
+        Cookie: "m2_csrf_token=csrf123",
+      },
       body: JSON.stringify({
         title: "Post teste",
         slug: "post-teste",
@@ -59,7 +63,8 @@ describe("admin authz", () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Cookie: `m2_access_token=${token}`,
+        "x-csrf-token": "csrf123",
+        Cookie: `m2_csrf_token=csrf123; m2_access_token=${token}`,
       },
       body: JSON.stringify({
         title: "Post teste",

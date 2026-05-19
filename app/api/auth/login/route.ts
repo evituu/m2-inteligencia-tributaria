@@ -6,6 +6,8 @@ import { prisma } from "../../../../lib/server/db";
 import { signAccessToken, signRefreshToken } from "../../../../lib/server/auth/jwt";
 import { verifyPassword } from "../../../../lib/server/auth/password";
 import { createRefreshSession, hashRefreshToken } from "../../../../lib/server/auth/session";
+import { checkRateLimit, buildRateLimitKey, getClientIp } from "../../../../lib/server/security/rate-limit";
+import { validateCsrf } from "../../../../lib/server/security/csrf";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -14,6 +16,8 @@ const loginSchema = z.object({
 
 const ACCESS_COOKIE = "m2_access_token";
 const REFRESH_COOKIE = "m2_refresh_token";
+const LOGIN_RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const LOGIN_RATE_LIMIT_MAX_REQUESTS = 10;
 
 function cookieOptions(maxAgeSeconds: number) {
   return {
@@ -26,6 +30,24 @@ function cookieOptions(maxAgeSeconds: number) {
 }
 
 export async function POST(req: Request) {
+  if (!validateCsrf(req)) {
+    return NextResponse.json({ message: "CSRF invalido" }, { status: 403 });
+  }
+
+  const ip = getClientIp(req);
+  const rate = checkRateLimit({
+    key: buildRateLimitKey(["auth-login", ip]),
+    limit: LOGIN_RATE_LIMIT_MAX_REQUESTS,
+    windowMs: LOGIN_RATE_LIMIT_WINDOW_MS,
+  });
+
+  if (!rate.allowed) {
+    return NextResponse.json(
+      { message: "Muitas tentativas. Tente novamente em instantes." },
+      { status: 429, headers: { "Retry-After": String(rate.retryAfterSec) } },
+    );
+  }
+
   const rawBody = await req.json().catch(() => null);
   const parsedBody = loginSchema.safeParse(rawBody);
 
