@@ -252,3 +252,13 @@ Conforme o projeto evoluir, considerar criar:
 ## Atualizacao 2026-05-19 - Newsletter
 - O componente `app/blog/_components/BlogNewsletterSection.tsx` agora envia assinatura real para `POST /api/newsletter/subscribe`.
 - O endpoint `app/api/newsletter/subscribe/route.ts` valida payload com Zod e persiste por `upsert` em `NewsletterSubscriber`, reativando assinante com status `subscribed`.
+
+## Atualizacao 2026-05-19 - Area Admin e Autorizacao
+- Middleware em `middleware.ts` protege `/admin/*` e `/api/admin/*` com validacao de access token e role `admin`.
+- Foram adicionadas telas base de administracao em `app/admin/page.tsx` e `app/admin/posts/page.tsx`.
+- CRUD administrativo inicial de blog disponivel em:
+  - `POST/GET /api/admin/posts`
+  - `GET/PATCH/DELETE /api/admin/posts/[id]`
+  - `POST/GET /api/admin/categories`
+  - `GET/PATCH/DELETE /api/admin/categories/[id]`
+- As rotas administrativas retornam `401` quando nao autenticado/autorizado.
