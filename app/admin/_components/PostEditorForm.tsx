@@ -56,7 +56,12 @@ function toDatetimeLocal(iso: string | null | undefined) {
 }
 
 async function getCsrfToken() {
-  const response = await fetch("/api/auth/csrf", { method: "GET" });
+  const response = await fetch("/api/auth/csrf", {
+    method: "GET",
+    credentials: "include",
+    cache: "no-store",
+  });
+  if (!response.ok) return "";
   const data = (await response.json()) as { csrfToken?: string };
   return data.csrfToken || "";
 }
@@ -177,6 +182,11 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
 
       try {
         const csrfToken = await getCsrfToken();
+        if (!csrfToken) {
+          setAutosaveState("error");
+          setError("Nao foi possivel validar CSRF. Recarregue a pagina e tente novamente.");
+          return;
+        }
         const response = await fetch(`/api/admin/posts/${initialData.id}`, {
           method: "PATCH",
           headers: {
@@ -257,6 +267,11 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
     setSuccess(null);
 
     const csrfToken = await getCsrfToken();
+    if (!csrfToken) {
+      setSubmitting(false);
+      setError("Nao foi possivel validar CSRF. Recarregue a pagina e tente novamente.");
+      return;
+    }
     const endpoint = mode === "create" ? "/api/admin/posts" : `/api/admin/posts/${initialData?.id}`;
     const method = mode === "create" ? "POST" : "PATCH";
 
@@ -310,6 +325,11 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
     setSuccess(null);
 
     const csrfToken = await getCsrfToken();
+    if (!csrfToken) {
+      setUploadingCover(false);
+      setError("Nao foi possivel validar CSRF. Recarregue a pagina e tente novamente.");
+      return;
+    }
     const formData = new FormData();
     formData.append("file", file);
 

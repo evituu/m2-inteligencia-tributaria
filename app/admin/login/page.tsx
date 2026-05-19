@@ -11,7 +11,12 @@ export default function AdminLoginPage() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function getCsrfToken() {
-    const response = await fetch("/api/auth/csrf", { method: "GET" });
+    const response = await fetch("/api/auth/csrf", {
+      method: "GET",
+      credentials: "include",
+      cache: "no-store",
+    });
+    if (!response.ok) return "";
     const data = (await response.json()) as { csrfToken?: string };
     return data.csrfToken || "";
   }
@@ -21,6 +26,11 @@ export default function AdminLoginPage() {
     setErrorMessage(null);
     setIsSubmitting(true);
     const csrfToken = await getCsrfToken();
+    if (!csrfToken) {
+      setIsSubmitting(false);
+      setErrorMessage("Falha de segurança (CSRF). Recarregue a página e tente novamente.");
+      return;
+    }
 
     const response = await fetch("/api/auth/login", {
       method: "POST",

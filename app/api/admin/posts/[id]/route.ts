@@ -63,6 +63,19 @@ export async function PATCH(req: Request, { params }: RouteParams) {
   }
 
   const { id } = await params;
+  const currentPost = await prisma.post.findUnique({
+    where: { id },
+    select: { publishedAt: true },
+  });
+
+  if (!currentPost) {
+    return NextResponse.json({ message: "Post nao encontrado" }, { status: 404 });
+  }
+
+  const shouldAutoPublishDate =
+    parsed.data.status === "published" &&
+    parsed.data.publishedAt === undefined &&
+    currentPost.publishedAt === null;
 
   let item;
   try {
@@ -72,7 +85,9 @@ export async function PATCH(req: Request, { params }: RouteParams) {
         ...parsed.data,
         publishedAt:
           parsed.data.publishedAt === undefined
-            ? undefined
+            ? shouldAutoPublishDate
+              ? new Date()
+              : undefined
             : parsed.data.publishedAt === null
               ? null
               : new Date(parsed.data.publishedAt),

@@ -34,7 +34,12 @@ export default function AdminPostsPage() {
   const computedSlug = useMemo(() => slugify(title), [title]);
 
   async function getCsrfToken() {
-    const response = await fetch("/api/auth/csrf", { method: "GET" });
+    const response = await fetch("/api/auth/csrf", {
+      method: "GET",
+      credentials: "include",
+      cache: "no-store",
+    });
+    if (!response.ok) return "";
     const data = (await response.json()) as { csrfToken?: string };
     return data.csrfToken || "";
   }
@@ -71,6 +76,11 @@ export default function AdminPostsPage() {
     setError(null);
 
     const csrfToken = await getCsrfToken();
+    if (!csrfToken) {
+      setSaving(false);
+      setError("Não foi possível validar CSRF. Recarregue a página e tente novamente.");
+      return;
+    }
 
     const response = await fetch("/api/admin/posts", {
       method: "POST",
@@ -101,6 +111,10 @@ export default function AdminPostsPage() {
 
   async function updateStatus(postId: string, status: AdminPost["status"]) {
     const csrfToken = await getCsrfToken();
+    if (!csrfToken) {
+      setError("Não foi possível validar CSRF. Recarregue a página e tente novamente.");
+      return;
+    }
     const response = await fetch(`/api/admin/posts/${postId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json", "x-csrf-token": csrfToken },
@@ -117,6 +131,10 @@ export default function AdminPostsPage() {
 
   async function removePost(postId: string) {
     const csrfToken = await getCsrfToken();
+    if (!csrfToken) {
+      setError("Não foi possível validar CSRF. Recarregue a página e tente novamente.");
+      return;
+    }
     const response = await fetch(`/api/admin/posts/${postId}`, {
       method: "DELETE",
       headers: { "x-csrf-token": csrfToken },
