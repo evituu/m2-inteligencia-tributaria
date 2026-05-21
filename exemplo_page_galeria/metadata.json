@@ -1,0 +1,6 @@
+{
+  "name": "M2 Intelligence Tax - Galeria",
+  "description": "Galeria de fotos e bastidores da M2 Intelligence Tax. Apresentando nossa equipe, eventos corporativos e cultura empresarial.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
