@@ -1,4 +1,5 @@
 import { HeroGaleria } from "./_components/hero-galeria";
+import { NavigationMenu } from "@/components/layout/navigation-menu";
 import { Footer } from "@/components/layout/Footer";
 
 
@@ -10,6 +11,7 @@ export const metadata = {
 export default function GaleriaPage() {
   return (
     <main className="min-h-screen bg-background flex flex-col">
+      <NavigationMenu />
       <HeroGaleria />
       <section className="w-full px-4 md:px-6 lg:px-8 py-16 md:py-20 bg-white">
         <div className="mx-auto max-w-6xl">
@@ -26,17 +28,14 @@ export default function GaleriaPage() {
             {[
               {
                 title: "Eventos e encontros",
-                author: "Equipe M2",
                 image: "/imagens/office/fachada_m2.webp",
               },
               {
                 title: "Escritorio M2",
-                author: "M2 Cultura",
                 image: "/imagens/office/m2_colaboradores_trabalhando.png",
               },
               {
                 title: "Bastidores",
-                author: "M2 Stories",
                 image: "/imagens/office/m2_lideres_socios.png",
               },
             ].map((album) => (
@@ -50,12 +49,6 @@ export default function GaleriaPage() {
                   <div className="absolute inset-x-6 bottom-5">
                     <h3 className="mt-1 text-xl font-semibold text-gold-gradient">{album.title}</h3>
                   </div>
-                </div>
-                <div className="mt-4 flex items-center gap-2">
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-zinc-100 text-xs font-semibold text-zinc-700">
-                    {album.author.split(" ").map((part) => part[0]).join("")}
-                  </span>
-                  <p className="text-sm font-medium text-zinc-700">{album.author}</p>
                 </div>
               </div>
             ))}

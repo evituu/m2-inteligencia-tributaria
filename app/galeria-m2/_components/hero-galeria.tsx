@@ -53,7 +53,7 @@ export function HeroGaleria() {
 
       {/* Conteúdo central com alta legibilidade */}
       <div className="relative z-10 max-w-4xl flex flex-col items-center text-center px-4 py-20 md:py-32">
-        <span className="text-[#f2c40f] text-sm md:text-sm font-semibold tracking-[0.2em] uppercase mb-4 drop-shadow-lg">
+        <span className="text-[#f2c40f] text-sm md:text-sm font-semibold italic tracking-[0.2em] uppercase mb-4 drop-shadow-lg">
           Nossas Memórias
         </span>
         
