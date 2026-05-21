@@ -20,6 +20,7 @@ const menuItems = [
   { label: "SOBRE", href: "/sobre" },
   { label: "SERVIÇOS", href: "/servicos" },
   { label: "BLOG", href: "/blog" },
+   {label: "GALERIA", href: "/galeria-m2"},
   { label: "CONTATO", href: "/#formulario" },
 ];
 
