@@ -1,7 +1,5 @@
 'use client'
 
-import { cn } from "@/lib/utils"
-
 const officeImages = [
   "/imagens/office/fachada_m2.webp",
   "/imagens/office/foto_calculadora_m2.png",
@@ -36,7 +34,7 @@ export function HeroGaleria() {
           >
             {/* Imagem de fundo */}
             <div
-              className="absolute inset-0 w-full h-full bg-cover bg-center"
+              className="absolute inset-0 w-full h-full bg-cover bg-center opacity-60"
               style={{
                 backgroundImage: `url('${image}')`,
                 backgroundPosition: "center",
@@ -56,14 +54,14 @@ export function HeroGaleria() {
       {/* Conteúdo central com alta legibilidade */}
       <div className="relative z-10 max-w-4xl flex flex-col items-center text-center px-4 py-20 md:py-32">
         <span className="text-[#f2c40f] text-sm md:text-sm font-semibold tracking-[0.2em] uppercase mb-4 drop-shadow-lg">
-          Nossa Cultura
+          Nossas Memórias
         </span>
         
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight drop-shadow-lg">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gold-gradient mb-6 tracking-tight drop-shadow-lg">
           Galeria M2
         </h1>
         
-        <p className="text-zinc-300 text-base md:text-lg mb-12 max-w-2xl leading-relaxed drop-shadow-md">
+        <p className="text-white text-base md:text-lg mb-12 max-w-2xl leading-relaxed drop-shadow-md">
           Transparência, excelência corporativa e a dedicação da nossa equipe refletidas em nosso 
           ambiente de trabalho e eventos. Conheça os bastidores da M2 Intelligence Tax.
         </p>
