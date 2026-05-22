@@ -1,6 +1,8 @@
+import Link from "next/link";
 import { HeroGaleria } from "./_components/hero-galeria";
 import { NavigationMenu } from "@/components/layout/navigation-menu";
 import { Footer } from "@/components/layout/Footer";
+import { getAllAlbums } from "./_lib/albums";
 
 
 export const metadata = {
@@ -25,32 +27,23 @@ export default function GaleriaPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Eventos e encontros",
-                image: "/imagens/office/fachada_m2.webp",
-              },
-              {
-                title: "Escritorio M2",
-                image: "/imagens/office/m2_colaboradores_trabalhando.png",
-              },
-              {
-                title: "Bastidores",
-                image: "/imagens/office/m2_lideres_socios.png",
-              },
-            ].map((album) => (
-              <div key={album.title} className="group">
+            {getAllAlbums().map((album) => (
+              <Link
+                key={album.slug}
+                href={`/galeria-m2/${album.slug}`}
+                className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f2c40f] focus-visible:ring-offset-2 rounded-2xl"
+              >
                 <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-zinc-200">
                   <div
                     className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-[1.02]"
-                    style={{ backgroundImage: `url('${album.image}')` }}
+                    style={{ backgroundImage: `url('${album.coverImage}')` }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
                   <div className="absolute inset-x-6 bottom-5">
                     <h3 className="mt-1 text-xl font-semibold text-gold-gradient">{album.title}</h3>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

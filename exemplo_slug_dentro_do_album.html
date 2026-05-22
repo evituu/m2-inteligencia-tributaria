@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>M2 INTELIGÊNCIA - Galeria M2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#dadada",
+                        "inverse-on-surface": "#f0f1f1",
+                        "tertiary-fixed": "#d4e4f6",
+                        "surface-container-highest": "#e2e2e2",
+                        "primary": "#000000",
+                        "surface-tint": "#5f5e5e",
+                        "secondary-container": "#fed65b",
+                        "tertiary": "#000000",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#e9c349",
+                        "on-tertiary-fixed-variant": "#394857",
+                        "on-primary-container": "#858383",
+                        "background": "#f9f9f9",
+                        "surface-container-low": "#f3f3f4",
+                        "on-background": "#1a1c1c",
+                        "inverse-primary": "#c8c6c5",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#474646",
+                        "tertiary-fixed-dim": "#b8c8da",
+                        "on-secondary-fixed": "#241a00",
+                        "surface-container-high": "#e8e8e8",
+                        "on-secondary-container": "#745c00",
+                        "outline": "#747878",
+                        "on-tertiary-fixed": "#0d1d2a",
+                        "surface-container": "#eeeeee",
+                        "secondary": "#735c00",
+                        "surface-bright": "#f9f9f9",
+                        "secondary-fixed": "#ffe088",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#1c1b1b",
+                        "primary-container": "#1c1b1b",
+                        "on-secondary-fixed-variant": "#574500",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#768696",
+                        "primary-fixed": "#e5e2e1",
+                        "outline-variant": "#c4c7c7",
+                        "tertiary-container": "#0d1d2a",
+                        "surface": "#f9f9f9",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-surface-variant": "#444748",
+                        "on-surface": "#1a1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "headline-xl": ["Montserrat"],
+                        "headline-sm": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "body-sm": ["Montserrat"],
+                        "body-md": ["Montserrat"],
+                        "label-lg": ["Montserrat"],
+                        "body-lg": ["Montserrat"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom scrollbar for a premium feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1c1c; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e9c349; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffe088; 
+        }
+    </style>
+</head>
+<body class="bg-primary text-on-primary font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar - Sub-page Context (Suppressed global nav items due to 'task/details' nature) -->
+<header class="fixed top-0 left-0 w-full bg-primary/95 backdrop-blur-md flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 z-50 border-b border-surface-tint/30 transition-all duration-300">
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-primary hover:text-secondary-fixed-dim transition-colors group flex items-center justify-center rounded-full hover:bg-surface-tint/20">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold tracking-tighter text-secondary-fixed-dim uppercase">
+                M2 INTELIGÊNCIA
+            </h1>
+</div>
+<div>
+<button class="font-label-lg text-label-lg uppercase tracking-widest text-on-primary hover:text-secondary-fixed-dim transition-colors py-2 px-4 border border-transparent hover:border-secondary-fixed-dim rounded-DEFAULT">
+                LOGIN
+            </button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-20 flex flex-col items-center w-full">
+<!-- Hero Section -->
+<section class="w-full max-w-container-max px-margin-mobile md:px-margin-desktop py-16 md:py-24 flex flex-col items-center text-center gap-6">
+<div class="w-16 h-1 bg-secondary-fixed-dim mb-4"></div>
+<h2 class="font-headline-xl text-headline-xl md:text-[56px] text-on-primary leading-tight">
+                Inauguração da Sede
+            </h2>
+<p class="font-body-lg text-body-lg text-surface-dim max-w-2xl">
+                Um marco histórico para a M2 Inteligência Tributária. Celebramos a abertura de nosso novo escritório central em São Paulo, um espaço desenhado para inovação, precisão e excelência em inteligência fiscal corporativa.
+            </p>
+<div class="flex items-center gap-2 mt-4 text-secondary-fixed-dim font-label-md text-label-md uppercase tracking-widest">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+<span>15 de Outubro, 2023</span>
+<span class="mx-2 text-surface-tint">|</span>
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>São Paulo, SP</span>
+</div>
+</section>
+<!-- Gallery Grid -->
+<section class="w-full max-w-container-max px-margin-mobile md:px-margin-desktop pb-24">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Photo Card 1 -->
+<div class="group relative aspect-[4/3] overflow-hidden rounded-sm border border-surface-tint/20 bg-inverse-surface cursor-pointer">
+<img alt="Gallery Image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida/ADBb0ujBezsy9YDR30CNDDvDQ7SyzjMINYQH2LQxHS6NRr601dMa7YsqtCxg06p3Z0WeH5wppKARWrS3mVRbGjnoGFsrZdgnlf9MkaIwGmr-qIrD6L3iCm5FjWqIFBFY0pOmAPZ2QnWocd0Ei0-yKHzmUzM8iMHjdHaKRjgTTPnZoq-7YF6u2BD8RIh9FBWoNSGd26v-qzYxnGIfn73Nz3JhLyuiI37w3_eEHPtGly3nh08E-1lsB8b278vvvb1E"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="absolute inset-0 border-2 border-secondary-fixed-dim opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none scale-95 group-hover:scale-100"></div>
+<div class="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined text-secondary-fixed-dim">zoom_in</span>
+</div>
+</div>
+<!-- Photo Card 2 -->
+<div class="group relative aspect-[4/3] overflow-hidden rounded-sm border border-surface-tint/20 bg-inverse-surface cursor-pointer">
+<img alt="Gallery Image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida/ADBb0uiJQIFBNUA-jtnOQsV4ERX_rZoMYZYKbBiRN8OTHcb3smCz1ACSdFxzGT3UPZtrJxtkp07uG2n9FFjM6dQfyVYqgC_eOw1qfdlUjR5OOi5Ti0mrsKIaLEUnBbdHp_NOD8M30krGKe9g5PrEvkCo4wfiFh7Ff2Y13RNDNj2f94WI6gJlS2muGdgIbWUMezZlt0RbhDiZ0oVYv-3QK7v1NfOzdq-BX0QbY13pxYJJwJmApJpImOU3Ro2RnnT2"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="absolute inset-0 border-2 border-secondary-fixed-dim opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none scale-95 group-hover:scale-100"></div>
+<div class="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined text-secondary-fixed-dim">zoom_in</span>
+</div>
+</div>
+<!-- Photo Card 3 -->
+<div class="group relative aspect-[4/3] overflow-hidden rounded-sm border border-surface-tint/20 bg-inverse-surface cursor-pointer lg:col-span-1 md:col-span-2 lg:row-span-2 lg:h-full">
+<img alt="Gallery Image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida/ADBb0uhjwu2J2qJsB5N8Bsl7awLKXkspKbCEzTM10CRtQf9b9Sc7bcGOPqUG45W4OsV46_T7A4uMlxixKQWJ30YJDHVrfknRw5K7VMBDyFjsG38ANAVSYhnXEdfn3jH-vU2YtowdEP5RNYs2AoLAp2xzVsgGfC5tUM8McQD98-pl8zky4uvljHPeCuKJqKu6H4FDsW3vS9dzrCgmhJKcanT1SWe7OV7XPU-RXODW8wm1GNCNvdxasgsAWMXHJNg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="absolute inset-0 border-2 border-secondary-fixed-dim opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none scale-95 group-hover:scale-100"></div>
+<div class="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined text-secondary-fixed-dim">zoom_in</span>
+</div>
+</div>
+<!-- Photo Card 4 -->
+<div class="group relative aspect-[4/3] overflow-hidden rounded-sm border border-surface-tint/20 bg-inverse-surface cursor-pointer">
+<img alt="Gallery Image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida/ADBb0uhjwu2J2qJsB5N8Bsl7awLKXkspKbCEzTM10CRtQf9b9Sc7bcGOPqUG45W4OsV46_T7A4uMlxixKQWJ30YJDHVrfknRw5K7VMBDyFjsG38ANAVSYhnXEdfn3jH-vU2YtowdEP5RNYs2AoLAp2xzVsgGfC5tUM8McQD98-pl8zky4uvljHPeCuKJqKu6H4FDsW3vS9dzrCgmhJKcanT1SWe7OV7XPU-RXODW8wm1GNCNvdxasgsAWMXHJNg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="absolute inset-0 border-2 border-secondary-fixed-dim opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none scale-95 group-hover:scale-100"></div>
+<div class="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined text-secondary-fixed-dim">zoom_in</span>
+</div>
+</div>
+<!-- Photo Card 5 -->
+<div class="group relative aspect-[4/3] overflow-hidden rounded-sm border border-surface-tint/20 bg-inverse-surface cursor-pointer">
+<img alt="Gallery Image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida/ADBb0ujBezsy9YDR30CNDDvDQ7SyzjMINYQH2LQxHS6NRr601dMa7YsqtCxg06p3Z0WeH5wppKARWrS3mVRbGjnoGFsrZdgnlf9MkaIwGmr-qIrD6L3iCm5FjWqIFBFY0pOmAPZ2QnWocd0Ei0-yKHzmUzM8iMHjdHaKRjgTTPnZoq-7YF6u2BD8RIh9FBWoNSGd26v-qzYxnGIfn73Nz3JhLyuiI37w3_eEHPtGly3nh08E-1lsB8b278vvvb1E"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="absolute inset-0 border-2 border-secondary-fixed-dim opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none scale-95 group-hover:scale-100"></div>
+<div class="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+<span class="material-symbols-outlined text-secondary-fixed-dim">zoom_in</span>
+</div>
+</div>
+<!-- Photo Card 6 -->
+<div class="group relative aspect-[16/9] overflow-hidden rounded-sm border border-surface-tint/20 bg-inverse-surface cursor-pointer md:col-span-2 lg:col-span-3">
+<img alt="Gallery Image" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" src="https://lh3.googleusercontent.com/aida/ADBb0uiJQIFBNUA-jtnOQsV4ERX_rZoMYZYKbBiRN8OTHcb3smCz1ACSdFxzGT3UPZtrJxtkp07uG2n9FFjM6dQfyVYqgC_eOw1qfdlUjR5OOi5Ti0mrsKIaLEUnBbdHp_NOD8M30krGKe9g5PrEvkCo4wfiFh7Ff2Y13RNDNj2f94WI6gJlS2muGdgIbWUMezZlt0RbhDiZ0oVYv-3QK7v1NfOzdq-BX0QbY13pxYJJwJmApJpImOU3Ro2RnnT2"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<div class="absolute inset-0 border-2 border-secondary-fixed-dim opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none scale-[0.98] group-hover:scale-100"></div>
+<div class="absolute bottom-6 left-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-primary">Equipe Executiva M2</span>
+<span class="material-symbols-outlined text-secondary-fixed-dim">zoom_in</span>
+</div>
+</div>
+</div>
+<div class="mt-12 flex justify-center">
+<button class="bg-secondary-fixed-dim text-primary font-label-lg text-label-lg uppercase tracking-widest px-8 py-4 hover:bg-secondary-fixed transition-colors duration-300 rounded-sm shadow-sm hover:shadow-[0_4px_14px_0_rgba(233,195,73,0.2)]">
+                    Carregar Mais Fotos
+                </button>
+</div>
+</section>
+</main>
+<!-- Footer Component -->
+<footer class="bg-tertiary w-full py-12 px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter border-t border-surface-tint/20 mt-auto">
+<div class="font-headline-sm text-headline-sm font-bold text-on-tertiary">
+            M2 INTELIGÊNCIA
+        </div>
+<div class="flex flex-wrap justify-center gap-6 md:gap-8">
+<a class="font-label-md text-label-md text-surface-dim hover:text-secondary-fixed-dim transition-colors uppercase tracking-widest hover:underline decoration-secondary-fixed-dim underline-offset-4" href="#">Privacidade</a>
+<a class="font-label-md text-label-md text-surface-dim hover:text-secondary-fixed-dim transition-colors uppercase tracking-widest hover:underline decoration-secondary-fixed-dim underline-offset-4" href="#">Compliance</a>
+<a class="font-label-md text-label-md text-surface-dim hover:text-secondary-fixed-dim transition-colors uppercase tracking-widest hover:underline decoration-secondary-fixed-dim underline-offset-4" href="#">Termos</a>
+<a class="font-label-md text-label-md text-surface-dim hover:text-secondary-fixed-dim transition-colors uppercase tracking-widest hover:underline decoration-secondary-fixed-dim underline-offset-4" href="#">Carreiras</a>
+</div>
+<div class="font-body-sm text-body-sm text-surface-tint text-center md:text-right">
+            © 2024 M2 Inteligência Tributária.<br class="md:hidden"/> Todos os direitos reservados.
+        </div>
+</footer>
+</body></html>
