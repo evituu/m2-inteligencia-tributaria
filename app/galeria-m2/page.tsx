@@ -2,7 +2,7 @@ import Link from "next/link";
 import { HeroGaleria } from "./_components/hero-galeria";
 import { NavigationMenu } from "@/components/layout/navigation-menu";
 import { Footer } from "@/components/layout/Footer";
-import { getAllAlbums } from "./_lib/albums";
+import { getAllAlbums } from "@/data/gallery";
 
 
 export const metadata = {

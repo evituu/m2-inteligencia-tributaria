@@ -4,7 +4,7 @@ import { NavigationMenu } from "@/components/layout/navigation-menu";
 import { Footer } from "@/components/layout/Footer";
 import { AlbumPhotoGrid } from "../_components/album-photo-grid";
 import { HeroAlbum } from "../_components/hero-album";
-import { getAlbumBySlug, getAlbumPhotos } from "../_lib/albums";
+import { getAlbumBySlug, getAlbumPhotos } from "@/data/gallery";
 
 interface AlbumPageProps {
   params: Promise<{ slug: string }>;

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ZoomIn } from "lucide-react";
-import type { AlbumPhoto, AlbumPhotoLayout } from "../_lib/albums";
+import type { AlbumPhoto, AlbumPhotoLayout } from "@/data/gallery";
 
 function layoutClasses(layout: AlbumPhotoLayout = "default"): string {
   switch (layout) {

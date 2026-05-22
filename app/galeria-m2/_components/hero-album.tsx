@@ -1,6 +1,6 @@
 ﻿import Link from "next/link";
 import { ArrowLeft, Calendar, MapPin } from "lucide-react";
-import type { GalleryAlbum } from "../_lib/albums";
+import type { GalleryAlbum } from "@/data/gallery";
 
 interface HeroAlbumProps {
   album: GalleryAlbum;

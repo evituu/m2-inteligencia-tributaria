@@ -71,8 +71,7 @@ export function getAlbumPhotos(album: GalleryAlbum): AlbumPhoto[] {
   return ALBUM_PHOTO_FILES.map((file, index) => ({
     src: `/imagens/${album.imageFolder}/${file}`,
     alt: `${album.title} — foto ${index + 1}`,
-    layout:
-      index === 2 ? "featured" : index === 5 ? "wide" : "default",
+    layout: index === 2 ? "featured" : index === 5 ? "wide" : "default",
     caption: index === 5 ? "Equipe M2" : undefined,
   }));
 }
