@@ -17,6 +17,7 @@ type AdminShellProps = {
 const navItems = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/posts", label: "Artigos" },
+  { href: "/admin/albums", label: "Galeria" },
 ];
 
 export function AdminShell({ title, subtitle, primaryAction, children }: AdminShellProps) {
@@ -27,7 +28,7 @@ export function AdminShell({ title, subtitle, primaryAction, children }: AdminSh
       <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 gap-6 px-4 py-6 md:px-8 lg:grid-cols-[240px_1fr]">
         <aside className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#c9a84c]">M2 Admin</p>
-          <p className="mt-1 text-lg font-bold text-white">Blog Dashboard</p>
+          <p className="mt-1 text-lg font-bold text-white">Painel de conteudo</p>
           <nav className="mt-5 flex flex-wrap gap-2 lg:flex-col">
             {navItems.map((item) => {
               const active =

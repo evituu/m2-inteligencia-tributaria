@@ -9,10 +9,10 @@ const leaders = [
       "Com mais de 15 anos de experiência em auditoria fiscal e contencioso tributário, lidera as operações de recuperação de créditos com foco em mitigação de riscos e conformidade legal.",
   },
   {
-    name: "Nucci",
-    role: "Sócia-fundadora | Diretora Estratégica",
+    name: "Nucia Carla",
+    role: "Sócia-fundadora | Diretora Financeira",
     description:
-      "Especialista em planejamento tributário corporativo. Sua visão analítica garante que cada projeto executado maximize a eficiência fiscal e fortaleça o caixa das empresas parceiras.",
+      "Especialista em finanças e contabilidade. Sua visão analítica garante que cada projeto executado maximize a eficiência fiscal e fortaleça o caixa da empresa",
   },
 ];
 

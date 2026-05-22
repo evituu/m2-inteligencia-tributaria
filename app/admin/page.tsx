@@ -1,6 +1,9 @@
 ﻿"use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import { NavigationMenu } from "@/components/layout/navigation-menu";
+import { Footer } from "@/components/layout/Footer";
 import { AdminShell } from "./_components/AdminShell";
 
 type Metrics = {
@@ -45,24 +48,50 @@ export default function AdminPage() {
   }, []);
 
   return (
-    <AdminShell
-      title="Dashboard do Blog"
-      subtitle="Visão editorial rápida de publicações, rascunhos e desativados."
-      primaryAction={{ label: "Inserir novo artigo", href: "/admin/posts/novo" }}
-    >
-      <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <KpiCard title="Publicados" value={metrics.published} loading={loading} accentClass="text-emerald-300" />
-        <KpiCard title="Rascunhos" value={metrics.draft} loading={loading} accentClass="text-amber-300" />
-        <KpiCard title="Desativados" value={metrics.archived} loading={loading} accentClass="text-zinc-300" />
-      </section>
+    <div className="flex min-h-screen flex-col bg-[#04070d]">
+      <NavigationMenu />
+      <div className="flex-1 pt-22">
+        <AdminShell
+          title="Painel Admin"
+          subtitle="Gerencie artigos do blog e albuns da galeria de eventos."
+          primaryAction={{ label: "Inserir novo artigo", href: "/admin/posts/novo" }}
+        >
+          <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <KpiCard title="Publicados" value={metrics.published} loading={loading} accentClass="text-emerald-300" />
+            <KpiCard title="Rascunhos" value={metrics.draft} loading={loading} accentClass="text-amber-300" />
+            <KpiCard title="Desativados" value={metrics.archived} loading={loading} accentClass="text-zinc-300" />
+          </section>
 
-      <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-5">
-        <h2 className="text-lg font-bold text-white">Próximas ações</h2>
-        <p className="mt-2 text-sm text-zinc-400">
-          Use o atalho de criação para abrir o formulário do artigo e publicar com mais velocidade.
-        </p>
-      </section>
-    </AdminShell>
+          <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <article className="rounded-2xl border border-zinc-800 bg-[#060b12] p-5">
+              <h2 className="text-lg font-bold text-white">Blog</h2>
+              <p className="mt-2 text-sm text-zinc-400">
+                Crie e publique artigos com capa, categorias e status editorial.
+              </p>
+              <Link
+                href="/admin/posts"
+                className="mt-4 inline-flex h-10 items-center rounded-md bg-[#f2c40f] px-4 text-sm font-semibold text-[#12151b] hover:bg-[#e3b80d]"
+              >
+                Gerenciar artigos
+              </Link>
+            </article>
+            <article className="rounded-2xl border border-zinc-800 bg-[#060b12] p-5">
+              <h2 className="text-lg font-bold text-white">Galeria M2</h2>
+              <p className="mt-2 text-sm text-zinc-400">
+                Cadastre albuns de eventos com titulo, banner e fotos (ou ZIP).
+              </p>
+              <Link
+                href="/admin/albums/novo"
+                className="mt-4 inline-flex h-10 items-center rounded-md border border-zinc-700 px-4 text-sm font-semibold text-zinc-100 hover:bg-zinc-800"
+              >
+                Novo album
+              </Link>
+            </article>
+          </section>
+        </AdminShell>
+      </div>
+      <Footer />
+    </div>
   );
 }
 

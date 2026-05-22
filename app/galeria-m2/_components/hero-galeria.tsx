@@ -53,7 +53,7 @@ export function HeroGaleria() {
 
       {/* Conteúdo central com alta legibilidade */}
       <div className="relative z-10 max-w-4xl flex flex-col items-center text-center px-4 py-20 md:py-32">
-        <span className="text-[#f2c40f] text-sm md:text-sm font-semibold italic tracking-[0.2em] uppercase mb-4 drop-shadow-lg">
+        <span className="text-gold-gradient text-sm md:text-sm font-semibold italic tracking-[0.2em] uppercase mb-4 drop-shadow-lg">
           Nossas Memórias
         </span>
         
@@ -62,8 +62,8 @@ export function HeroGaleria() {
         </h1>
         
         <p className="text-white text-base md:text-lg mb-12 max-w-2xl leading-relaxed drop-shadow-md">
-          Transparência, excelência corporativa e a dedicação da nossa equipe refletidas em nosso 
-          ambiente de trabalho e eventos. Conheça os bastidores da M2 Intelligence Tax.
+        Registros que refletem nossa cultura, nossos encontros e os momentos que fortalecem a
+        trajetória da M2 Inteligência Tributária.
         </p>
         
         <div className="w-16 h-1 mt-2 bg-[#f2c40f] rounded-full drop-shadow-lg"></div>
