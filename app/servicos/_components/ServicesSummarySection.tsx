@@ -26,10 +26,10 @@ const services = [
       "Empresas que revendem alimentos, cosméticos, medicamentos e autopeças pagam PIS/COFINS em duplicidade.",
   },
   {
-    title: "PIS/COFINS sobre Diesel",
-    tag: "Lucro Real · Postos",
+    title: "Laudos de Perda",
+    tag: "Lucro Real · Setor alimentício",
     description:
-      "Postos de combustível têm direito a crédito de PIS e COFINS sobre o diesel adquirido para revenda.",
+      "Comprovação técnica de perdas naturais em processos de desossa, fracionamento e deterioração, permitindo dedução de IRPJ e CSLL.",
   },
   {
     title: "Evaporação de Combustíveis",

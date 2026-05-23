@@ -6,7 +6,7 @@ import { ComplianceSection } from "@/app/servicos/_components/ComplianceSection"
 import { FaqSection } from "@/components/home/FaqSection";
 import { ServicesCtaSection } from "@/app/servicos/_components/ServicesCtaSection";
 import { Footer } from "@/components/layout/Footer";
-import { ServicesSummarySection } from "@/components/home/ServicesSummarySection";
+import { ServicesSummarySection } from "@/app/servicos/_components/ServicesSummarySection";
 
 export default function ServicosPage() {
   return (
