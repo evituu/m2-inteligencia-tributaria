@@ -1,23 +1,33 @@
 const steps = [
   {
-    title: "Análise gratuita",
+    title: "Recebimento dos documentos",
     description:
-      "Você nos envia as informações da empresa. Identificamos se há créditos a recuperar e o potencial estimado, sem custo.",
+      "O cliente envia os documentos, informações e arquivos fiscais necessários para iniciarmos a análise da empresa.",
   },
   {
-    title: "Levantamento técnico",
+    title: "Análise e revisão",
     description:
-      "Com os documentos em mãos, apuramos os valores, períodos elegíveis e a legislação aplicável a cada caso.",
+      "Nossa equipe realiza a conferência técnica dos dados fiscais, revisa as informações e identifica possíveis créditos tributários a recuperar.",
   },
   {
-    title: "Protocolo na Receita Federal",
+    title: "Contrato",
     description:
-      "Formalizamos o pedido com toda a documentação técnica e jurídica exigida, com laudo assinado por responsável técnico.",
+      "Após a validação das oportunidades encontradas, formalizamos a contratação com clareza sobre escopo, condições e honorários.",
+  },
+  {
+    title: "Formalização dos pedidos",
+    description:
+      "Com tudo aprovado, preparamos e formalizamos os pedidos de recuperação ou compensação dos créditos junto aos órgãos competentes.",
   },
   {
     title: "Crédito recuperado",
     description:
-      "Os valores são restituídos em dinheiro ou usados para compensar tributos futuros. Você paga nossos honorários apenas sobre o que for efetivamente recuperado.",
+      "Os valores recuperados podem ser restituídos em dinheiro ou utilizados para compensar tributos futuros da empresa.",
+  },
+  {
+    title: "Acompanhamento",
+    description:
+      "Acompanhamos o andamento dos pedidos e mantemos o cliente informado até a conclusão do processo.",
   },
 ];
 
@@ -27,18 +37,14 @@ export function HowItWorksSection() {
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-8">
         <div className="mx-auto mb-12 max-w-3xl text-center">
           <h2 className="mt-4 text-4xl font-black uppercase leading-[1.08] tracking-tight md:text-5xl">
-            Como 
+            Como
             <span className="text-gold-gradient"> recuperamos </span>
-            os seus 
-            <span className="text-gold-gradient"> créditos </span>
+            seus créditos passo a passo
           </h2>
-          <p className="mt-4 text-base text-zinc-400 md:text-lg">
-            Transparente do início ao fim. Você acompanha cada etapa.
-          </p>
         </div>
 
-        <div className="relative grid gap-5 lg:grid-cols-4">
-          <div className="absolute left-[12.5%] right-[12.5%] top-8 hidden h-px bg-[#f2c40f]/35 lg:block" />
+        <div className="relative grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+
           {steps.map((step, index) => (
             <article
               key={step.title}
@@ -47,8 +53,14 @@ export function HowItWorksSection() {
               <div className="relative z-10 mb-5 flex h-16 w-16 items-center justify-center rounded-full border border-[#f2c40f]/50 bg-[#0a0f16] text-2xl font-black text-[#f2c40f]">
                 {index + 1}
               </div>
-              <h3 className="text-lg font-black uppercase text-white">{step.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-zinc-300">{step.description}</p>
+
+              <h3 className="text-lg font-black uppercase text-white">
+                {step.title}
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-zinc-300">
+                {step.description}
+              </p>
             </article>
           ))}
         </div>
