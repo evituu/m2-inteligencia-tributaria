@@ -26,22 +26,22 @@ const faqs = [
   {
     question: "Quais documentos são necessários para começar?",
     answer:
-      "Na análise inicial, precisamos apenas de informações básicas: CNPJ, regime tributário e segmento. A documentação detalhada, como SPED, DCTF e folha de pagamento, é solicitada somente após a confirmação do trabalho.",
+      "Inicialmente, é necessário o acesso ao certificado digital da empresa (e-CNPJ) ou uma procuração digital habilitada via Portal e-CAC. Com isso, nossa equipe consegue acessar as informações contábeis e fiscais necessárias para realizar a análise técnica com segurança e precisão.",
   },
   {
     question: "O crédito é recebido em dinheiro ou usado para compensação?",
     answer:
-      "Depende do tipo de crédito e da situação da empresa. Em geral, é possível receber em dinheiro via PER/DCOMP ou compensar tributos futuros. Nossa equipe orienta sobre a melhor opção para cada caso.",
+      "Os créditos tributários podem ser utilizados de duas formas, dependendo da situação da empresa e da estratégia tributária adotada: por meio de compensação de tributos federais vincendos ou, em alguns casos específicos, via restituição em dinheiro. Nossa equipe realiza toda a análise técnica para identificar a alternativa mais segura e vantajosa para cada empresa.",
   },
   {
-    question: "Quanto tempo demora o processo?",
+    question: "Quanto é o prazo da análise?",
     answer:
-      "Varia conforme a tese e a celeridade da Receita Federal. Compensações levam em média 60 a 180 dias após o protocolo. Restituições em dinheiro podem levar de 6 meses a 2 anos. Você é informado em cada etapa.",
+      "Com toda a documentação e os acessos necessários em mãos, os resultados da análise são entregues em até 72 horas.",
   },
   {
     question: "A Receita Federal pode questionar?",
     answer:
-      "Todos os créditos recuperados têm base em legislação vigente e jurisprudência consolidada, inclusive decisões do STF e STJ. Casos questionados são acompanhados pela nossa equipe sem custo adicional.",
+      "Os processos de recuperação tributária seguem critérios técnicos e legais previstos na legislação vigente ou validação por parte da Receita Federal. Por isso, a M2 Inteligência Tributária realiza análises técnicas fundamentadas na legislação vigente, em documentos fiscais e em cruzamentos de dados, garantindo maior segurança jurídica e conformidade em cada processo realizado.",
   },
   {
     question: "Como funcionam os honorários?",
