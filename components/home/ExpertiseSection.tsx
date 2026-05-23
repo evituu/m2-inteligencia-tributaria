@@ -15,8 +15,8 @@ export function ExpertiseSection() {
             <p>
               A M2 Inteligência Tributária nasceu de uma realidade simples: a
               maioria das empresas brasileiras paga mais imposto do que deveria,
-              e não sabe disso. Com base em Juazeiro do Norte (CE) e Porangatu
-              (GO), atuamos em todo o Brasil, identificando créditos tributários
+              e não sabe disso. Com base em Juazeiro do Norte (CE), Porangatu
+              (GO) e João Pessoa (PB), atuamos em todo o Brasil, identificando créditos tributários
               e recuperando valores com rigor técnico e respaldo jurídico.
             </p>
             <p>
