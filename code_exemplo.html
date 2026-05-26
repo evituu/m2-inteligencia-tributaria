@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Article - M2 INTELLIGENCE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "surface-tint": "#5f5e5e",
+                        "on-background": "#1a1c1c",
+                        "surface": "#f9f9f9",
+                        "on-tertiary-fixed": "#0d1d2a",
+                        "on-surface-variant": "#444748",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-primary-fixed": "#1c1b1b",
+                        "tertiary": "#000000",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-secondary-container": "#745c00",
+                        "inverse-primary": "#c8c6c5",
+                        "primary": "#000000",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f9f9f9",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-secondary-fixed": "#241a00",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#dadada",
+                        "on-primary-container": "#858383",
+                        "tertiary-fixed-dim": "#b8c8da",
+                        "on-tertiary-fixed-variant": "#394857",
+                        "tertiary-container": "#0d1d2a",
+                        "on-tertiary-container": "#768696",
+                        "outline": "#747878",
+                        "tertiary-fixed": "#d4e4f6",
+                        "primary-container": "#1c1b1b",
+                        "on-secondary-fixed-variant": "#574500",
+                        "secondary-container": "#fed65b",
+                        "background": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#e9c349",
+                        "outline-variant": "#c4c7c7",
+                        "on-surface": "#1a1c1c",
+                        "surface-container": "#eeeeee",
+                        "secondary": "#735c00",
+                        "surface-container-low": "#f3f3f4",
+                        "surface-container-high": "#e8e8e8",
+                        "secondary-fixed": "#ffe088",
+                        "primary-fixed": "#e5e2e1",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "surface-variant": "#e2e2e2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "label-lg": ["Montserrat"],
+                        "headline-sm": ["Montserrat"],
+                        "body-sm": ["Montserrat"],
+                        "body-md": ["Montserrat"],
+                        "label-md": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom Gold Overrides for the requested Dark/Gold Theme while keeping design system base */
+        .theme-dark-gold {
+            background-color: #121212; /* Deep Charcoal */
+            color: #ffffff;
+        }
+        .theme-accent-gold {
+            color: #D4AF37; /* Primary Gold from guidelines */
+        }
+        .bg-accent-gold {
+            background-color: #D4AF37;
+        }
+        .border-accent-gold {
+            border-color: #D4AF37;
+        }
+    </style>
+</head>
+<body class="theme-dark-gold font-body-md antialiased selection:bg-secondary-fixed selection:text-primary pt-20">
+<!-- Navigation / TopAppBar (JSON) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 bg-primary dark:bg-primary border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<button class="text-on-primary opacity-80 hover:text-secondary transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<span class="font-headline-md text-headline-md font-bold tracking-tighter text-secondary dark:text-secondary-fixed">
+                M2 INTELLIGENCE
+            </span>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-6">
+<!-- Since this is an article, there's no direct match in top nav, leaving unselected -->
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-on-primary opacity-80 hover:text-secondary transition-colors duration-300" href="#">Insights</a>
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-on-primary opacity-80 hover:text-secondary transition-colors duration-300" href="#">Services</a>
+</nav>
+<button class="text-on-primary opacity-80 hover:text-secondary transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="max-w-[800px] mx-auto px-margin-mobile md:px-0 pb-24 pt-12">
+<!-- Metadata -->
+<div class="flex items-center gap-4 mb-6 font-label-md text-label-md uppercase tracking-widest theme-accent-gold">
+<span>Tax Strategy</span>
+<span class="w-[4px] h-[4px] bg-accent-gold rounded-full"></span>
+<span>8 MIN READ</span>
+<span class="w-[4px] h-[4px] bg-accent-gold rounded-full"></span>
+<span>OCTOBER 24, 2024</span>
+</div>
+<!-- Headline -->
+<h1 class="font-headline-lg-mobile md:font-headline-xl text-headline-lg-mobile md:text-headline-xl text-on-primary mb-6">
+            O Impacto da Inteligência Tributária na Recuperação de Créditos
+        </h1>
+<!-- Subtitle -->
+<p class="font-body-lg text-body-lg text-surface-variant mb-10 opacity-90 leading-relaxed">
+            Uma análise aprofundada sobre como a estruturação avançada de dados e a auditoria preditiva podem destrancar fluxos de caixa ociosos para corporações multinacionais.
+        </p>
+<!-- Author Meta -->
+<div class="flex items-center gap-4 mb-12 py-6 border-t border-b border-surface-tint">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Author Profile" class="w-full h-full object-cover" data-alt="A professional corporate headshot of a mature male executive in a sharp tailored suit against a dark grey studio background. High-contrast lighting emphasizes authority and expertise, fitting a premium intelligence brand. The mood is serious and trustworthy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVbGlYeAgUvp2ma2VzrZAjuXONmmXjjPlITo5-yNLjrwU0h3bCP1N8iMSELGx9ReTaIzbWIRuQkbOeZbl_AyC21fj0G34IvEkn__MYDdORmjHyQdAcg4FAKUweJXJhMYDAt0_a0DgDeGNfDjpy3G2a-8-dhjmgl8vn7O55LjZw4T6BAn1veLN9pJ6FlG0IPfCaNUPzBChP5CaKF0WQ8ktmJ4jXrnOeDXYhD9st6cXeCicbOjaQBXp-SGY_XK0OnDhr-2-bivFg2FBe"/>
+</div>
+<div>
+<div class="font-label-lg text-label-lg text-on-primary">CARLOS EDUARDO ALMEIDA</div>
+<div class="font-body-sm text-body-sm text-surface-variant">Senior Tax Intelligence Analyst</div>
+</div>
+<div class="ml-auto flex gap-3">
+<button class="w-8 h-8 flex items-center justify-center rounded-full border border-surface-tint hover:border-accent-gold transition-colors theme-accent-gold">
+<span class="material-symbols-outlined text-[16px]" data-icon="share">share</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-full border border-surface-tint hover:border-accent-gold transition-colors theme-accent-gold">
+<span class="material-symbols-outlined text-[16px]" data-icon="bookmark">bookmark</span>
+</button>
+</div>
+</div>
+<!-- Hero Image -->
+<figure class="mb-12">
+<img alt="Corporate office interior" class="w-full h-[400px] object-cover rounded-sm border border-surface-tint" src="https://lh3.googleusercontent.com/aida/ADBb0uiIqzqh45Dv-i8f427E1rdVC0SDYQqkMuFdJ1azscCp30pnBazRKPY3Ks-GocLnYHAFMHM60VQAaO1mENJMPpQfGembh4xdgq3atTutTSAcbsDOm3n_Ls1Cn2QvKm-SztrqRFzt3qyVrOscNTGuJKiahrB50Q7hl5NBPme-aFgsZ6Y1MRc_BNB3TigSCr_w5h202rzmweu_CKp1WewHL3aafiJFy5nQG1HHOl8jnLYn4nR0op1WGtqPPTqd"/>
+<figcaption class="mt-3 font-body-sm text-body-sm text-surface-variant opacity-70">
+                Figure 1: Data-driven operations floor at M2 Intelligence headquarters.
+            </figcaption>
+</figure>
+<!-- Article Body -->
+<article class="prose prose-invert max-w-none text-on-primary">
+<p class="font-body-lg text-body-lg mb-8 leading-relaxed">
+                No cenário econômico atual, a eficiência tributária deixou de ser uma vantagem competitiva para se tornar um pilar de sobrevivência corporativa. Organizações que operam sob regimes tributários complexos, como o brasileiro, frequentemente acumulam créditos inexplorados devido a ineficiências operacionais e falta de visibilidade analítica.
+            </p>
+<h2 class="font-headline-md text-headline-md mt-12 mb-6 theme-accent-gold">A Era da Auditoria Preditiva</h2>
+<p class="font-body-md text-body-md mb-8 leading-relaxed opacity-90">
+                A aplicação de inteligência artificial na revisão de obrigações acessórias tem demonstrado resultados significativos. Ao cruzar milhares de linhas de arquivos SPED com a legislação vigente em tempo real, mitigamos o erro humano e identificamos oportunidades de monetização que passariam despercebidas por métodos tradicionais de auditoria.
+            </p>
+<!-- Quote Block -->
+<blockquote class="my-10 pl-6 border-l-2 border-accent-gold py-2">
+<p class="font-headline-sm text-headline-sm italic text-surface-variant">
+                    "A inteligência tributária não é sobre encontrar brechas, mas sim sobre aplicar a precisão matemática à conformidade legal, transformando o compliance em um centro de lucro."
+                </p>
+<footer class="mt-4 font-label-md text-label-md uppercase tracking-widest text-on-primary opacity-80">
+                    — Diretoria Executiva, M2 Intelligence
+                </footer>
+</blockquote>
+<h3 class="font-headline-sm text-headline-sm mt-10 mb-4 text-on-primary">Metodologia de Recuperação</h3>
+<ul class="space-y-4 mb-8 list-none">
+<li class="flex gap-4 items-start">
+<span class="material-symbols-outlined theme-accent-gold mt-1 text-[20px]" data-icon="check_circle">check_circle</span>
+<div>
+<strong class="block font-label-lg text-label-lg mb-1">Fase 1: Diagnóstico Algorítmico</strong>
+<span class="font-body-sm text-body-sm opacity-80">Mapeamento automatizado da base de dados fiscais dos últimos 60 meses.</span>
+</div>
+</li>
+<li class="flex gap-4 items-start">
+<span class="material-symbols-outlined theme-accent-gold mt-1 text-[20px]" data-icon="check_circle">check_circle</span>
+<div>
+<strong class="block font-label-lg text-label-lg mb-1">Fase 2: Validação Jurídica</strong>
+<span class="font-body-sm text-body-sm opacity-80">Análise de jurisprudência aplicada aos indícios apontados pelo motor de regras.</span>
+</div>
+</li>
+<li class="flex gap-4 items-start">
+<span class="material-symbols-outlined theme-accent-gold mt-1 text-[20px]" data-icon="check_circle">check_circle</span>
+<div>
+<strong class="block font-label-lg text-label-lg mb-1">Fase 3: Monetização</strong>
+<span class="font-body-sm text-body-sm opacity-80">Estruturação técnica para compensação ou restituição administrativa.</span>
+</div>
+</li>
+</ul>
+<p class="font-body-md text-body-md mb-8 leading-relaxed opacity-90">
+                Implementar estas estratégias exige parceiros com profunda capacidade analítica e segurança jurídica. Os dividendos, contudo, são claros: injeção de liquidez direta no caixa da companhia, sem onerar as operações diárias.
+            </p>
+</article>
+<!-- Tags & Bottom Share -->
+<div class="mt-16 pt-8 border-t border-surface-tint flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex gap-3">
+<span class="px-4 py-2 border border-surface-tint rounded-sm font-label-md text-label-md uppercase tracking-widest text-on-primary hover:border-accent-gold transition-colors cursor-pointer">Tax Intelligence</span>
+<span class="px-4 py-2 border border-surface-tint rounded-sm font-label-md text-label-md uppercase tracking-widest text-on-primary hover:border-accent-gold transition-colors cursor-pointer">Compliance</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-label-md text-label-md uppercase tracking-widest text-surface-variant">Compartilhar</span>
+<div class="flex gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-tint bg-opacity-20 hover:bg-accent-gold hover:text-primary transition-colors text-on-primary">
+<span class="material-symbols-outlined" data-icon="ios_share">ios_share</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-tint bg-opacity-20 hover:bg-accent-gold hover:text-primary transition-colors text-on-primary">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (JSON) -->
+<footer class="w-full py-16 px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter bg-primary dark:bg-primary border-t border-outline-variant">
+<span class="font-headline-sm text-headline-sm text-on-primary">
+            M2 INTELLIGENCE
+        </span>
+<div class="flex gap-6">
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-on-primary opacity-60 hover:text-secondary-fixed transition-colors duration-300" href="#">Insights</a>
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-on-primary opacity-60 hover:text-secondary-fixed transition-colors duration-300" href="#">Legal</a>
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-on-primary opacity-60 hover:text-secondary-fixed transition-colors duration-300" href="#">Privacy</a>
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-on-primary opacity-60 hover:text-secondary-fixed transition-colors duration-300" href="#">Contact</a>
+</div>
+<span class="font-label-md text-label-md uppercase tracking-widest text-on-primary opacity-60">
+            © 2024 M2 TAX INTELLIGENCE. ALL RIGHTS RESERVED.
+        </span>
+</footer>
+</body></html>
