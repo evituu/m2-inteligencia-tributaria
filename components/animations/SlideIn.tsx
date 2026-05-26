@@ -15,8 +15,8 @@ interface SlideInProps {
 export function SlideIn({
   from = "left",
   delay = 0,
-  duration = 600,
-  distance = 40,
+  duration = 1000,
+  distance = 100,
   className,
   children,
 }: SlideInProps) {

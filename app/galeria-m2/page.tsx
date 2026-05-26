@@ -3,7 +3,7 @@ import { HeroGaleria } from "./_components/hero-galeria";
 import { NavigationMenu } from "@/components/layout/navigation-menu";
 import { Footer } from "@/components/layout/Footer";
 import { getAllAlbums } from "@/data/gallery";
-
+import { SlideIn } from "@/components/animations/SlideIn";
 
 export const metadata = {
   title: "Galeria - M2 Inteligência Tributária",
@@ -15,39 +15,53 @@ export default function GaleriaPage() {
     <main className="min-h-screen bg-background flex flex-col">
       <NavigationMenu />
       <HeroGaleria />
+
       <section className="w-full px-4 md:px-6 lg:px-8 py-16 md:py-20 bg-white">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-10 text-center">
-            <h2 className="mt-3 text-4xl md:text-3xl font-extrabold text-gold-gradient">
-              ÁLBUNS M2
-            </h2>
-            <p className="mt-3 text-sm md:text-base text-zinc-600">
-              Selecione um album para explorar nossos momentos e bastidores.
-            </p>
-          </div>
+          <SlideIn from="bottom" duration={900} distance={60}>
+            <div className="mb-10 text-center">
+              <h2 className="mt-3 text-4xl md:text-3xl font-extrabold text-gold-gradient">
+                ÁLBUNS M2
+              </h2>
+              <p className="mt-3 text-sm md:text-base text-zinc-600">
+                Selecione um álbum para explorar nossos momentos e bastidores.
+              </p>
+            </div>
+          </SlideIn>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {getAllAlbums().map((album) => (
-              <Link
+            {getAllAlbums().map((album, index) => (
+              <SlideIn
                 key={album.slug}
-                href={`/galeria-m2/${album.slug}`}
-                className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f2c40f] focus-visible:ring-offset-2 rounded-2xl"
+                from="bottom"
+                delay={index * 150}
+                duration={900}
+                distance={60}
+                className="h-full"
               >
-                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-zinc-200">
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-[1.02]"
-                    style={{ backgroundImage: `url('${album.coverImage}')` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
-                  <div className="absolute inset-x-6 bottom-5">
-                    <h3 className="mt-1 text-xl font-semibold text-gold-gradient">{album.title}</h3>
+                <Link
+                  href={`/galeria-m2/${album.slug}`}
+                  className="group block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f2c40f] focus-visible:ring-offset-2"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-zinc-200">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-[1.02]"
+                      style={{ backgroundImage: `url('${album.coverImage}')` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
+                    <div className="absolute inset-x-6 bottom-5">
+                      <h3 className="mt-1 text-xl font-semibold text-gold-gradient">
+                        {album.title}
+                      </h3>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </SlideIn>
             ))}
           </div>
         </div>
       </section>
+
       <Footer />
     </main>
   );

@@ -63,7 +63,7 @@ export function MethodologySection() {
               className="h-full"
             >
               <article className="relative h-full border border-[#f2c40f]/30 bg-white px-6 py-7 shadow-2xl shadow-black/20 transition-all duration-300 hover:-translate-y-1 hover:border-[#f2c40f] hover:shadow-[0_8px_32px_rgba(242,196,15,0.18)] md:px-7 md:py-8">
-                <h3 className="mt-1 text-lg font-bold uppercase tracking-tight text-[#12151b]">
+                <h3 className="mt-1 text-lg font-extrabold uppercase tracking-tight text-gold-gradient">
                   {title}
                 </h3>
                 <p className="mt-4 text-sm leading-7 text-zinc-600">

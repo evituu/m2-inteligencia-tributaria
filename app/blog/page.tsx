@@ -34,8 +34,8 @@ export default async function BlogPage() {
     <>
       <BlogFeaturedHero article={featuredArticle} />
       <BlogArticlesSection articles={articles} />
-      <BlogEbookBanner />
-      <BlogNewsletterSection />
+      {/* <BlogEbookBanner /> */}
+      {/* <BlogNewsletterSection /> */}
       <Footer />
     </>
   );

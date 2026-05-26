@@ -39,10 +39,6 @@ export function ServicesCtaSection() {
             Falar pelo WhatsApp
           </a>
         </div>
-
-        <p className="mt-8 text-xs text-zinc-500">
-          Análise inicial gratuita e sem compromisso.
-        </p>
       </div>
     </section>
   );

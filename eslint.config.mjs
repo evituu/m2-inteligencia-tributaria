@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vite exemplo separado — não faz parte do app Next.js
+    "exemplo_page_galeria/**",
   ]),
 ]);
 
