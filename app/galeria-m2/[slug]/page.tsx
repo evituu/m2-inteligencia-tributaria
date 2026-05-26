@@ -4,7 +4,8 @@ import { NavigationMenu } from "@/components/layout/navigation-menu";
 import { Footer } from "@/components/layout/Footer";
 import { AlbumPhotoGrid } from "../_components/album-photo-grid";
 import { HeroAlbum } from "../_components/hero-album";
-import { getAlbumBySlug, getAlbumPhotos } from "@/data/gallery";
+import { AlbumRelatedAlbums } from "../_components/AlbumRelatedAlbums";
+import { getAlbumBySlug, getAlbumPhotos, getOtherAlbums } from "@/data/gallery";
 
 interface AlbumPageProps {
   params: Promise<{ slug: string }>;
@@ -22,6 +23,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
   const album = getAlbumBySlug(slug);
   if (!album) notFound();
   const photos = getAlbumPhotos(album);
+  const otherAlbums = getOtherAlbums(slug, 3);
 
   return (
     <main className="flex min-h-screen flex-col bg-[#05090c]">
@@ -32,6 +34,7 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
           <AlbumPhotoGrid photos={photos} />
         </div>
       </section>
+      <AlbumRelatedAlbums albums={otherAlbums} />
       <Footer />
     </main>
   );

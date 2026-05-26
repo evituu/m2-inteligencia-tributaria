@@ -67,6 +67,16 @@ export function getAlbumBySlug(slug: string): GalleryAlbum | undefined {
   return GALLERY_ALBUMS.find((album) => album.slug === slug);
 }
 
+export function getOtherAlbums(
+  excludeSlug: string,
+  limit = 3,
+): GalleryAlbum[] {
+  return GALLERY_ALBUMS.filter((album) => album.slug !== excludeSlug).slice(
+    0,
+    limit,
+  );
+}
+
 export function getAlbumPhotos(album: GalleryAlbum): AlbumPhoto[] {
   return ALBUM_PHOTO_FILES.map((file, index) => ({
     src: `/imagens/${album.imageFolder}/${file}`,
