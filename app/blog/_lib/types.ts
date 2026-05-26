@@ -15,6 +15,17 @@ export interface Article {
   coverImage: string;
 }
 
+export interface ArticleAuthor {
+  name: string;
+  role: string;
+  avatarUrl: string;
+}
+
+export interface ArticleDetail extends Article {
+  content: string;
+  author: ArticleAuthor;
+}
+
 export type BlogCategoryFilterId =
   | "all"
   | "recuperacao"

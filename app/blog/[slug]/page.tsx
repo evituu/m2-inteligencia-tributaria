@@ -2,14 +2,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Clock, CalendarDays } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { NavigationMenu } from "@/components/layout/navigation-menu";
 import { Footer } from "@/components/layout/Footer";
 import {
   formatArticleDate,
   getArticleBySlug,
+  getOtherArticles,
 } from "@/app/blog/_lib/articles";
 import { ArticleShareButtons } from "@/app/blog/_components/ArticleShareButtons";
+import { ArticleBody } from "@/app/blog/_components/ArticleBody";
+import { ArticleRelatedPosts } from "@/app/blog/_components/ArticleRelatedPosts";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -44,88 +47,85 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound();
   }
 
+  const otherArticles = await getOtherArticles(slug, 3);
+
   return (
     <>
-      {/* ── Hero escuro ── */}
-      <section className="relative overflow-hidden bg-[#04070d] pb-14 text-white md:pb-20">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(242,196,15,0.12),_transparent_55%)]" />
+      <div className="min-h-screen bg-white text-[#1a1a1a]">
         <NavigationMenu />
 
-        <div className="relative mx-auto w-full max-w-[860px] px-5 pt-32 md:px-8 md:pt-40">
+        <main className="mx-auto w-full max-w-[800px] px-5 pb-24 pt-32 md:px-8 md:pt-36">
 
-          {/* Categoria */}
-          <span className="inline-flex bg-[#f2c40f]/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-[#f2c40f]">
-            {article.category}
-          </span>
+          {/* Metadados */}
+          <div className="mb-6 flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-widest text-[#735c00]">
+            <span>{article.category}</span>
+            <span className="h-1 w-1 rounded-full bg-[#f2c40f]" />
+            <span>{article.readingTimeMinutes} min de leitura</span>
+            <span className="h-1 w-1 rounded-full bg-[#f2c40f]" />
+            <span>{formatArticleDate(article.publishedAt)}</span>
+          </div>
 
           {/* Título */}
-          <h1 className="mt-5 text-3xl font-black uppercase leading-tight tracking-tight md:text-5xl">
+          <h1 className="mb-6 text-3xl font-black leading-tight tracking-tight text-[#1a1c1c] md:text-5xl">
             {article.title}
           </h1>
 
-          {/* Meta */}
-          <div className="mt-5 flex flex-wrap items-center gap-5 text-sm text-zinc-400">
-            <span className="flex items-center gap-1.5">
-              <CalendarDays className="h-4 w-4 text-[#f2c40f]" />
-              {formatArticleDate(article.publishedAt)}
-            </span>
-            <span className="h-1 w-1 rounded-full bg-zinc-600" />
-            <span className="flex items-center gap-1.5">
-              <Clock className="h-4 w-4 text-[#f2c40f]" />
-              {article.readingTimeMinutes} min de leitura
-            </span>
+          {/* Subtítulo */}
+          {article.excerpt ? (
+            <p className="mb-10 text-lg leading-relaxed text-zinc-600 md:text-xl md:leading-9">
+              {article.excerpt}
+            </p>
+          ) : null}
+
+          {/* Autor */}
+          <div className="mb-12 flex items-center gap-4 border-y border-zinc-200 py-6">
+            <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border border-zinc-200 bg-white">
+              <Image
+                src={article.author.avatarUrl}
+                alt={article.author.name}
+                width={48}
+                height={48}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div>
+              <p className="text-sm font-bold tracking-wide text-[#1a1c1c]">
+                {article.author.name}
+              </p>
+              <p className="text-sm text-zinc-500">{article.author.role}</p>
+            </div>
           </div>
 
-          {/* Subtítulo / excerpt (fica no hero) */}
-          <p className="mt-7 text-base leading-8 text-zinc-300 md:text-lg md:leading-9">
-            {article.excerpt}
-          </p>
-        </div>
-      </section>
-
-      {/* ── Corpo do artigo — fundo branco ── */}
-      <main className="bg-white">
-        <div className="mx-auto w-full max-w-[860px] px-5 pb-24 pt-12 md:px-8">
-
           {/* Imagem de capa */}
-          {article.coverImage && (
+          {article.coverImage ? (
             <figure className="mb-12">
-              <div className="overflow-hidden border border-zinc-100 shadow-sm">
+              <div className="overflow-hidden border border-zinc-100 bg-white shadow-sm">
                 <Image
                   src={article.coverImage}
                   alt={article.title}
-                  width={860}
-                  height={480}
+                  width={800}
+                  height={450}
                   className="aspect-[16/9] w-full object-cover"
                   priority
                 />
               </div>
             </figure>
-          )}
+          ) : null}
 
           {/* Corpo do artigo */}
-          <article className="prose prose-zinc max-w-none text-[#1a1a1a]">
-            <p className="text-base leading-8 text-zinc-600 md:text-lg md:leading-9">
-              Conteúdo completo em breve. Esta página está preparada para
-              receber o corpo do artigo via CMS ou API.
-            </p>
-          </article>
+          <ArticleBody content={article.content} />
 
-          {/* Divisor */}
-          <div className="my-14 h-px bg-zinc-100" />
-
-          {/* Rodapé do artigo: tag + compartilhar */}
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            {/* Tag da categoria */}
+          {/* Rodapé: tag + compartilhar */}
+          <div className="mt-16 flex flex-col gap-6 border-t border-zinc-200 pt-8 sm:flex-row sm:items-center sm:justify-between">
             <span className="inline-flex border border-zinc-200 px-4 py-2 text-xs font-bold uppercase tracking-widest text-zinc-500 transition-colors hover:border-[#f2c40f] hover:text-[#12151b]">
               {article.category}
             </span>
-
-            {/* Botões de compartilhamento */}
             <ArticleShareButtons title={article.title} slug={slug} />
           </div>
-        </div>
-      </main>
+        </main>
+
+        <ArticleRelatedPosts articles={otherArticles} />
+      </div>
 
       <Footer />
     </>

@@ -105,7 +105,12 @@ export async function POST(req: Request) {
       authorId = existingAuthor.id;
     } else {
       const createdAuthor = await prisma.author.create({
-        data: { name: "Equipe M2", slug: "equipe-m2" },
+        data: {
+          name: "Veimar",
+          slug: "veimar",
+          bio: "Contador tributarista",
+          avatarUrl: "/imagens/office/foto_veimar_m2.jpg",
+        },
       });
       authorId = createdAuthor.id;
     }

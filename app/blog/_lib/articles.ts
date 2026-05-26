@@ -1,10 +1,12 @@
 import { PostStatus } from "@prisma/client";
 import { prisma } from "@/lib/server/db";
-import type { Article, BlogCategory, BlogCategoryFilterId } from "./types";
+import type { Article, ArticleDetail, BlogCategory, BlogCategoryFilterId } from "./types";
 import { BLOG_CATEGORY_FILTERS } from "./categories";
 
 const DEFAULT_READING_TIME_MINUTES = 6;
 const DEFAULT_COVER_IMAGE = "/imagens/office/foto_material_m2.jpg";
+const DEFAULT_AUTHOR_AVATAR = "/imagens/office/foto_veimar_m2.jpg";
+const DEFAULT_AUTHOR_ROLE = "Especialista em recuperação de crédito";
 
 const VALID_CATEGORIES: BlogCategory[] = [
   "Recuperação de Crédito",
@@ -21,6 +23,25 @@ function resolveCategory(value?: string | null): BlogCategory {
   return VALID_CATEGORIES.includes(value as BlogCategory)
     ? (value as BlogCategory)
     : "Compliance";
+}
+
+function mapArticleAuthor(author: {
+  name: string;
+  bio: string | null;
+  avatarUrl: string | null;
+}) {
+  const name = author.name === "Equipe M2" ? "Veimar" : author.name;
+  const role =
+    !author.bio ||
+    author.bio === "Conteúdo institucional da M2 Inteligência Tributária."
+      ? DEFAULT_AUTHOR_ROLE
+      : author.bio;
+
+  return {
+    name,
+    role,
+    avatarUrl: author.avatarUrl ?? DEFAULT_AUTHOR_AVATAR,
+  };
 }
 
 function mapPostToArticle(post: {
@@ -81,12 +102,22 @@ export async function getLatestArticles(limit = 3): Promise<Article[]> {
   return articles.slice(0, limit);
 }
 
+export async function getOtherArticles(
+  excludeSlug: string,
+  limit = 3,
+): Promise<Article[]> {
+  const articles = await getPublishedArticles();
+  return articles.filter((article) => article.slug !== excludeSlug).slice(0, limit);
+}
+
 export async function getArticlesExcludingFeatured(): Promise<Article[]> {
   const articles = await getPublishedArticles();
   return articles.slice(1);
 }
 
-export async function getArticleBySlug(slug: string): Promise<Article | undefined> {
+export async function getArticleBySlug(
+  slug: string,
+): Promise<ArticleDetail | undefined> {
   const post = await prisma.post.findUnique({
     where: { slug },
     select: {
@@ -94,6 +125,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | undefine
       slug: true,
       title: true,
       excerpt: true,
+      content: true,
       coverImageUrl: true,
       publishedAt: true,
       createdAt: true,
@@ -103,6 +135,13 @@ export async function getArticleBySlug(slug: string): Promise<Article | undefine
           name: true,
         },
       },
+      author: {
+        select: {
+          name: true,
+          bio: true,
+          avatarUrl: true,
+        },
+      },
     },
   });
 
@@ -110,7 +149,11 @@ export async function getArticleBySlug(slug: string): Promise<Article | undefine
     return undefined;
   }
 
-  return mapPostToArticle(post);
+  return {
+    ...mapPostToArticle(post),
+    content: post.content,
+    author: mapArticleAuthor(post.author),
+  };
 }
 
 export function filterArticles(
