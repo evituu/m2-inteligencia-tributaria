@@ -13,6 +13,7 @@ import {
 import { ArticleShareButtons } from "@/app/blog/_components/ArticleShareButtons";
 import { ArticleBody } from "@/app/blog/_components/ArticleBody";
 import { ArticleRelatedPosts } from "@/app/blog/_components/ArticleRelatedPosts";
+import { LatestInsightsTicker } from "@/components/home/LatestInsightsTicker";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -55,7 +56,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <NavigationMenu />
 
         <main className="mx-auto w-full max-w-[800px] px-5 pb-24 pt-32 md:px-8 md:pt-36">
-
+          
           {/* Metadados */}
           <div className="mb-6 flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-widest text-[#735c00]">
             <span>{article.category}</span>

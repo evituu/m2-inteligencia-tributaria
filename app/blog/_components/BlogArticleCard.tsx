@@ -9,8 +9,14 @@ interface BlogArticleCardProps {
 }
 
 export function BlogArticleCard({ article }: BlogArticleCardProps) {
+  const href = `/blog/${article.slug}`;
+
   return (
-    <article className="group flex h-full flex-col overflow-hidden border border-white/10 bg-[#11161f] transition-all duration-300 hover:-translate-y-1 hover:border-[#f2c40f]/50">
+    <Link
+      href={href}
+      className="group flex h-full flex-col overflow-hidden border border-white/10 bg-[#11161f] transition-all duration-300 hover:-translate-y-1 hover:border-[#f2c40f]/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f2c40f]/60"
+      aria-label={`Ler artigo: ${article.title}`}
+    >
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src={article.coverImage}
@@ -24,13 +30,15 @@ export function BlogArticleCard({ article }: BlogArticleCardProps) {
           {article.category}
         </span>
       </div>
+
       <div className="flex flex-1 flex-col p-6">
-        <h3 className="text-lg font-black uppercase leading-tight tracking-tight text-white">
+        <h3 className="text-lg font-black uppercase leading-tight tracking-tight text-gold-gradient">
           {article.title}
         </h3>
         <p className="mt-3 flex-1 text-sm leading-7 text-zinc-400">
           {article.excerpt}
         </p>
+
         <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4 text-xs text-zinc-500">
           <time dateTime={article.publishedAt}>
             {formatArticleDate(article.publishedAt)}
@@ -40,14 +48,12 @@ export function BlogArticleCard({ article }: BlogArticleCardProps) {
             {article.readingTimeMinutes} min
           </span>
         </div>
-        <Link
-          href={`/blog/${article.slug}`}
-          className="mt-4 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gold-gradient transition-colors hover:text-[#ffd82f]"
-        >
+
+        <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-gold-gradient transition-colors group-hover:text-[#ffd82f]">
           Ler mais
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-        </Link>
+        </span>
       </div>
-    </article>
+    </Link>
   );
 }
