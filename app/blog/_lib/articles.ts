@@ -30,7 +30,7 @@ function mapArticleAuthor(author: {
   bio: string | null;
   avatarUrl: string | null;
 }) {
-  const name = author.name === "Equipe M2" ? "Veimar" : author.name;
+  const name = author.name === "Equipe M2" ? "Veimar Barroso" : author.name;
   const role =
     !author.bio ||
     author.bio === "Conteúdo institucional da M2 Inteligência Tributária."
