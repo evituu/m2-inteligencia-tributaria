@@ -9,6 +9,8 @@ interface SlideInProps {
   duration?: number;
   distance?: number;
   className?: string;
+  /** false evita cortar texto/sombras durante a animação (ex.: títulos grandes) */
+  overflowHidden?: boolean;
   children: React.ReactNode;
 }
 
@@ -18,6 +20,7 @@ export function SlideIn({
   duration = 1000,
   distance = 100,
   className,
+  overflowHidden = true,
   children,
 }: SlideInProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -50,7 +53,7 @@ export function SlideIn({
   return (
     <div
       ref={ref}
-      className={cn("overflow-hidden", className)}
+      className={cn(overflowHidden && "overflow-hidden", className)}
       style={{
         transform: visible ? "translate(0, 0)" : initial[from],
         opacity: visible ? 1 : 0,
