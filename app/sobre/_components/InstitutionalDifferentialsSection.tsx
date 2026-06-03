@@ -141,10 +141,23 @@ export function InstitutionalDifferentialsSection() {
               5 Anos de Acompanhamento Garantido
             </h3>
             <p className="mt-3 max-w-2xl text-base leading-8 text-[#3b3f47] md:text-lg md:leading-8">
-              Após a assinatura do contrato, a M2 permanece ao seu lado por{" "}
-              <span className="font-bold text-[#12151b]">5 anos</span>,
-              monitorando resultados, adaptando estratégias e assegurando que
-              cada crédito recuperado continue gerando valor para o seu negócio.
+              Contamos com um setor de monitoramento dedicado, responsável por
+              acompanhar continuamente cada protocolo e processo, identificando{" "}
+              <span className="font-bold text-[#12151b]">
+                eventuais notificações da Receita Federal
+              </span>{" "}
+              para que sejam tratadas de forma{" "}
+              <span className="font-bold text-[#12151b]">ágil</span>,{" "}
+              <span className="font-bold text-[#12151b]">segura</span> e dentro
+              dos{" "}
+              <span className="font-bold text-[#12151b]">prazos legais</span>.
+            </p>
+            <p className="mt-4 max-w-2xl text-base leading-8 text-[#3b3f47] md:text-lg md:leading-8">
+              Esse acompanhamento se mantém mesmo após a conclusão do processo de
+              recuperação tributária, por{" "}
+              <span className="font-bold text-[#12151b]">5 anos</span>, em
+              cumprimento à cláusula de responsabilidade técnica prevista em
+              contrato.
             </p>
           </div>
           </article>
