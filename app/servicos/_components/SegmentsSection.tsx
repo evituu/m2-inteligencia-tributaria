@@ -1,20 +1,28 @@
 "use client";
 
 import {
-  Beef,
+  Building2,
   Car,
   ChevronLeft,
   ChevronRight,
   Coffee,
-  Disc,
+  Croissant,
+  Dog,
   Drumstick,
+  Factory,
   Flame,
   FuelIcon,
+  Package,
   PawPrint,
   Pill,
+  Shirt,
   ShoppingCart,
   Sparkles,
+  Stethoscope,
+  Store,
   Tractor,
+  Truck,
+  Warehouse,
 } from "lucide-react";
 import {
   useCallback,
@@ -31,18 +39,26 @@ interface SegmentItem {
 }
 
 const segments: SegmentItem[] = [
-  { name: "Autopeças", icon: Car },
-  { name: "Revenda de pneus", icon: Disc },
-  { name: "Máquinas agrícolas", icon: Tractor },
-  { name: "Postos de combustíveis", icon: FuelIcon },
-  { name: "Revenda de gás", icon: Flame },
-  { name: "Pet shops", icon: PawPrint },
   { name: "Farmácias", icon: Pill },
-  { name: "Perfumarias e cosméticos", icon: Sparkles },
-  { name: "Supermercados", icon: ShoppingCart },
-  { name: "Bares e restaurantes", icon: Coffee },
+  { name: "Perfumarias", icon: Sparkles },
+  { name: "Supermercados e Mercantis", icon: ShoppingCart },
   { name: "Açougues", icon: Drumstick },
-  { name: "Frigoríficos", icon: Beef },
+  { name: "Atacarejos", icon: Warehouse },
+  { name: "Distribuidoras", icon: Package },
+  { name: "Transportadoras", icon: Truck },
+  { name: "Revendas de Gás", icon: Flame },
+  { name: "Bares e Restaurantes", icon: Coffee },
+  { name: "Padarias", icon: Croissant },
+  { name: "Postos de Combustíveis", icon: FuelIcon },
+  { name: "Conveniências", icon: Store },
+  { name: "Autopeças", icon: Car },
+  { name: "Indústrias", icon: Factory },
+  { name: "Confecções", icon: Shirt },
+  { name: "Construtoras", icon: Building2 },
+  { name: "Agropecuárias", icon: Tractor },
+  { name: "Clínicas veterinárias", icon: Dog },
+  { name: "Pet shops", icon: PawPrint },
+  { name: "Clínicas médicas", icon: Stethoscope },
 ];
 
 const AUTOPLAY_MS = 4000;
