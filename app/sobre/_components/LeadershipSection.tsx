@@ -3,16 +3,16 @@ import { SlideIn } from "@/components/animations/SlideIn";
 
 const leaders = [
   {
-    name: "Veimar Barroso",
-    role: "Sócio-fundador | Diretor Tributário",
+    name: "Veimar Barroso Gomides",
+    role: "CEO e fundador da M2",
     description:
-      "Com mais de 15 anos de experiência em auditoria fiscal e contencioso tributário, lidera as operações de recuperação de créditos com foco em mitigação de riscos e conformidade legal.",
+      "Atua no setor tributário há mais de 15 anos e é responsável pela direção estratégica da empresa, tomada de decisões e direcionamento da organização.",
   },
   {
-    name: "Nucia Carla",
-    role: "Sócia-fundadora | Diretora Financeira",
+    name: "Nuccia Carla",
+    role: "Sócia e Diretora Executiva da M2",
     description:
-      "Especialista em finanças e contabilidade. Sua visão analítica garante que cada projeto executado maximize a eficiência fiscal e fortaleça o caixa da empresa",
+      "Responsável pela condução estratégica e pela gestão institucional da empresa.",
   },
 ];
 
