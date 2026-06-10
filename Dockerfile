@@ -9,6 +9,12 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Placeholder usado só para satisfazer o PrismaClient durante o build
+# Os valores reais são injetados em runtime pelo EasyPanel
+ARG DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder"
+ENV DATABASE_URL=$DATABASE_URL
+
 RUN npx prisma generate
 RUN SKIP_ENV_VALIDATION=1 npm run build
 
