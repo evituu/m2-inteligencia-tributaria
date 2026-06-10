@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { AlbumPhotoGrid } from "../_components/album-photo-grid";
 import { HeroAlbum } from "../_components/hero-album";
 import { AlbumRelatedAlbums } from "../_components/AlbumRelatedAlbums";
-import { getAlbumBySlug, getAlbumPhotos, getOtherAlbums } from "@/data/gallery";
+import { getPublicAlbumBySlug, getOtherPublicAlbums } from "../_lib/gallery";
 
 interface AlbumPageProps {
   params: Promise<{ slug: string }>;
@@ -13,17 +13,21 @@ interface AlbumPageProps {
 
 export async function generateMetadata({ params }: AlbumPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const album = getAlbumBySlug(slug);
-  if (!album) return { title: "Album nao encontrado | M2" };
-  return { title: `${album.title} | Galeria M2`, description: album.description };
+  const result = await getPublicAlbumBySlug(slug);
+  if (!result) return { title: "Album não encontrado | M2" };
+  return {
+    title: `${result.album.title} | Galeria M2`,
+    description: result.album.description,
+  };
 }
 
 export default async function AlbumPage({ params }: AlbumPageProps) {
   const { slug } = await params;
-  const album = getAlbumBySlug(slug);
-  if (!album) notFound();
-  const photos = getAlbumPhotos(album);
-  const otherAlbums = getOtherAlbums(slug, 3);
+  const result = await getPublicAlbumBySlug(slug);
+  if (!result) notFound();
+
+  const { album, photos } = result;
+  const otherAlbums = await getOtherPublicAlbums(slug, 3);
 
   return (
     <main className="flex min-h-screen flex-col bg-[#05090c]">

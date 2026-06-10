@@ -2,14 +2,17 @@ import { HeroGaleria } from "./_components/hero-galeria";
 import { NavigationMenu } from "@/components/layout/navigation-menu";
 import { Footer } from "@/components/layout/Footer";
 import { GalleryAlbumCard } from "./_components/GalleryAlbumCard";
-import { getAllAlbums } from "@/data/gallery";
+import { getAllPublicAlbums } from "./_lib/gallery";
 import { SlideIn } from "@/components/animations/SlideIn";
+
 export const metadata = {
   title: "Galeria - M2 Inteligência Tributária",
   description: "Conheça os bastidores, nossa cultura e estrutura através da Galeria M2.",
 };
 
-export default function GaleriaPage() {
+export default async function GaleriaPage() {
+  const albums = await getAllPublicAlbums();
+
   return (
     <main className="min-h-screen bg-background flex flex-col">
       <NavigationMenu />
@@ -28,19 +31,26 @@ export default function GaleriaPage() {
             </div>
           </SlideIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {getAllAlbums().map((album, index) => (
-              <SlideIn
-                key={album.slug}
-                from="bottom"
-                delay={index * 150}
-                duration={900}
-                distance={60}
-                className="h-full"
-              >
-                <GalleryAlbumCard album={album} />              </SlideIn>
-            ))}
-          </div>
+          {albums.length === 0 ? (
+            <p className="mt-8 text-center text-zinc-500">
+              Nenhum álbum publicado no momento.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {albums.map((album, index) => (
+                <SlideIn
+                  key={album.slug}
+                  from="bottom"
+                  delay={index * 150}
+                  duration={900}
+                  distance={60}
+                  className="h-full"
+                >
+                  <GalleryAlbumCard album={album} />
+                </SlideIn>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
