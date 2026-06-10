@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { HeroGaleria } from "./_components/hero-galeria";
 import { NavigationMenu } from "@/components/layout/navigation-menu";
 import { Footer } from "@/components/layout/Footer";
