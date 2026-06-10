@@ -84,7 +84,9 @@ export async function DELETE(
     select: { r2Key: true },
   });
 
-  await Promise.all(photos.map((photo) => deleteFromR2(photo.r2Key)));
+  await Promise.all(
+    photos.map((photo) => deleteFromR2(photo.r2Key).catch(() => undefined)),
+  );
 
   await prisma.galleryAlbum.delete({ where: { id } });
 

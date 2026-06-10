@@ -53,6 +53,21 @@ export async function POST(
     );
   }
 
+  for (const file of files) {
+    if (!MIME_EXTENSIONS[file.type]) {
+      return NextResponse.json(
+        { message: "Formato invalido. Use JPG, PNG ou WEBP." },
+        { status: 400 },
+      );
+    }
+    if (file.size <= 0 || file.size > MAX_FILE_SIZE_BYTES) {
+      return NextResponse.json(
+        { message: "Arquivo excede o limite de 5MB." },
+        { status: 400 },
+      );
+    }
+  }
+
   const maxOrderResult = await prisma.galleryPhoto.aggregate({
     _max: { order: true },
     where: { albumId },
@@ -63,20 +78,6 @@ export async function POST(
 
   for (const file of files) {
     const ext = MIME_EXTENSIONS[file.type];
-    if (!ext) {
-      return NextResponse.json(
-        { message: "Formato invalido. Use JPG, PNG ou WEBP." },
-        { status: 400 },
-      );
-    }
-
-    if (file.size <= 0 || file.size > MAX_FILE_SIZE_BYTES) {
-      return NextResponse.json(
-        { message: "Arquivo excede o limite de 5MB." },
-        { status: 400 },
-      );
-    }
-
     const key = `gallery/${albumId}/${Date.now()}-${randomUUID()}.${ext}`;
     const buffer = Buffer.from(await file.arrayBuffer());
     const url = await uploadToR2(buffer, key, file.type);
