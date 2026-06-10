@@ -123,3 +123,35 @@ model NewsletterSubscriber {
   createdAt     DateTime         @default(now())
   updatedAt     DateTime         @updatedAt
 }
+
+model GalleryAlbum {
+  id          String         @id @default(cuid())
+  title       String
+  slug        String         @unique
+  description String?
+  coverImage  String?
+  eventDate   String?
+  location    String?
+  order       Int            @default(0)
+  isPublic    Boolean        @default(true)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  photos      GalleryPhoto[]
+
+  @@index([isPublic, order])
+}
+
+model GalleryPhoto {
+  id        String       @id @default(cuid())
+  albumId   String
+  url       String
+  r2Key     String
+  alt       String?
+  caption   String?
+  order     Int          @default(0)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  album     GalleryAlbum @relation(fields: [albumId], references: [id], onDelete: Cascade)
+
+  @@index([albumId, order])
+}
