@@ -1,8 +1,8 @@
 ﻿"use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { ReactNode, useState } from "react";
 
 type AdminShellProps = {
   title: string;
@@ -17,21 +17,35 @@ type AdminShellProps = {
 const navItems = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/posts", label: "Artigos" },
+  { href: "/admin/gallery", label: "Galeria" },
 ];
 
 export function AdminShell({ title, subtitle, primaryAction, children }: AdminShellProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [loggingOut, setLoggingOut] = useState(false);
+
+  async function handleLogout() {
+    setLoggingOut(true);
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } finally {
+      router.push("/admin/login");
+    }
+  }
 
   return (
     <main className="min-h-screen bg-[#04070d] text-zinc-100">
       <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 gap-6 px-4 py-6 md:px-8 lg:grid-cols-[240px_1fr]">
         <aside className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#c9a84c]">M2 Admin</p>
-          <p className="mt-1 text-lg font-bold text-white">Blog Dashboard</p>
+          <p className="mt-1 text-lg font-bold text-white">Dashboard</p>
           <nav className="mt-5 flex flex-wrap gap-2 lg:flex-col">
             {navItems.map((item) => {
               const active =
-                item.href === "/admin" ? pathname === item.href : pathname.startsWith(item.href);
+                item.href === "/admin"
+                  ? pathname === item.href
+                  : pathname.startsWith(item.href);
 
               return (
                 <Link
@@ -47,6 +61,15 @@ export function AdminShell({ title, subtitle, primaryAction, children }: AdminSh
                 </Link>
               );
             })}
+
+            <button
+              type="button"
+              onClick={() => void handleLogout()}
+              disabled={loggingOut}
+              className="mt-2 inline-flex h-10 items-center rounded-md border border-zinc-700 px-3 text-sm font-medium text-zinc-400 transition hover:border-zinc-600 hover:text-zinc-200 disabled:opacity-50 lg:mt-4"
+            >
+              {loggingOut ? "Saindo..." : "Sair"}
+            </button>
           </nav>
         </aside>
 
