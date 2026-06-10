@@ -13,4 +13,7 @@ export const envSchema = z.object({
   CLOUDFLARE_R2_PUBLIC_URL: z.string().url(),
 });
 
-export const env = envSchema.parse(process.env);
+export const env =
+  process.env.SKIP_ENV_VALIDATION === "1"
+    ? (process.env as unknown as z.infer<typeof envSchema>)
+    : envSchema.parse(process.env);
