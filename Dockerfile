@@ -10,10 +10,11 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Placeholder usado só para satisfazer o PrismaClient durante o build
-# Os valores reais são injetados em runtime pelo EasyPanel
+# Placeholders usados durante o build; valores reais injetados em runtime pelo EasyPanel
 ARG DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder"
+ARG CLOUDFLARE_R2_PUBLIC_URL="https://placeholder.r2.dev"
 ENV DATABASE_URL=$DATABASE_URL
+ENV CLOUDFLARE_R2_PUBLIC_URL=$CLOUDFLARE_R2_PUBLIC_URL
 
 RUN npx prisma generate
 RUN SKIP_ENV_VALIDATION=1 npm run build
