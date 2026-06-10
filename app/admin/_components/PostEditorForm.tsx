@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -427,8 +429,12 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
             <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">Preview do artigo</p>
             <h3 className="text-xl font-semibold text-zinc-100">{title.trim() || "Titulo do artigo"}</h3>
             <p className="text-sm text-zinc-300">{excerpt.trim() || "Resumo do artigo para a listagem."}</p>
-            <div className="max-h-80 overflow-y-auto whitespace-pre-wrap rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-sm leading-6 text-zinc-200">
-              {content.trim() || "O conteudo completo aparece aqui em tempo real para revisao."}
+            <div className="max-h-80 overflow-y-auto rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-sm leading-6 text-zinc-200 prose prose-sm prose-invert max-w-none">
+              {content.trim() ? (
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+              ) : (
+                <span className="text-zinc-500">O conteudo completo aparece aqui em tempo real para revisao.</span>
+              )}
             </div>
           </div>
         </div>

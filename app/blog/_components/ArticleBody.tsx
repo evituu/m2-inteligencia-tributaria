@@ -1,3 +1,6 @@
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 interface ArticleBodyProps {
   content: string;
 }
@@ -6,13 +9,28 @@ function looksLikeHtml(content: string) {
   return /<\/?[a-z][\s\S]*>/i.test(content);
 }
 
+function looksLikeMarkdown(content: string) {
+  return /^#{1,6}\s|\*\*[\s\S]+?\*\*|^[-*]\s|^\d+\.\s|\[.+\]\(.+\)|```/m.test(content);
+}
+
+const proseClasses =
+  "prose prose-zinc max-w-none text-[#1a1a1a] prose-headings:font-bold prose-headings:text-[#1a1a1a] prose-p:text-zinc-700 prose-p:leading-8 prose-a:text-[#735c00] prose-strong:text-[#1a1a1a]";
+
 export function ArticleBody({ content }: ArticleBodyProps) {
   if (looksLikeHtml(content)) {
     return (
       <article
-        className="prose prose-zinc max-w-none text-[#1a1a1a] prose-headings:font-bold prose-headings:text-[#1a1a1a] prose-p:text-zinc-700 prose-p:leading-8 prose-a:text-[#735c00] prose-strong:text-[#1a1a1a]"
+        className={proseClasses}
         dangerouslySetInnerHTML={{ __html: content }}
       />
+    );
+  }
+
+  if (looksLikeMarkdown(content)) {
+    return (
+      <article className={proseClasses}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+      </article>
     );
   }
 
@@ -23,7 +41,7 @@ export function ArticleBody({ content }: ArticleBodyProps) {
 
   if (paragraphs.length === 0) {
     return (
-      <article className="prose prose-zinc max-w-none text-[#1a1a1a]">
+      <article className={proseClasses}>
         <p className="text-base leading-8 text-zinc-700 md:text-lg md:leading-9">
           Conteúdo em breve.
         </p>
@@ -32,7 +50,7 @@ export function ArticleBody({ content }: ArticleBodyProps) {
   }
 
   return (
-    <article className="prose prose-zinc max-w-none text-[#1a1a1a]">
+    <article className={proseClasses}>
       {paragraphs.map((paragraph) => (
         <p
           key={paragraph.slice(0, 48)}
