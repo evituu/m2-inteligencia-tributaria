@@ -7,7 +7,6 @@ import {
 import { BlogFeaturedHero } from "@/app/blog/_components/BlogFeaturedHero";
 import { BlogArticlesSection } from "@/app/blog/_components/BlogArticlesSection";
 import { BlogEbookBanner } from "@/app/blog/_components/BlogEbookBanner";
-import { BlogNewsletterSection } from "@/app/blog/_components/BlogNewsletterSection";
 
 export const metadata: Metadata = {
   title: "Insights e Artigos | M2 Inteligencia Tributaria",
@@ -35,7 +34,6 @@ export default async function BlogPage() {
       <BlogFeaturedHero article={featuredArticle} />
       <BlogArticlesSection articles={articles} />
       {/* <BlogEbookBanner /> */}
-      {/* <BlogNewsletterSection /> */}
       <Footer />
     </>
   );
