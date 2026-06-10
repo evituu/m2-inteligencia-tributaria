@@ -1,15 +1,13 @@
 import { randomUUID } from "crypto";
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
 import { NextResponse } from "next/server";
 
 import { requireAdminFromRequest } from "@/lib/server/auth/guards";
 import { validateCsrf } from "@/lib/server/security/csrf";
+import { uploadToR2 } from "@/lib/server/storage/r2";
 
 export const runtime = "nodejs";
 
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "covers");
 
 function getExtensionByMime(mimeType: string) {
   switch (mimeType) {
@@ -30,9 +28,7 @@ export async function POST(req: Request) {
   }
 
   const guard = await requireAdminFromRequest(req);
-  if (!guard.ok) {
-    return guard.response;
-  }
+  if (!guard.ok) return guard.response;
 
   const formData = await req.formData().catch(() => null);
   const file = formData?.get("file");
@@ -56,14 +52,10 @@ export async function POST(req: Request) {
     );
   }
 
-  await mkdir(UPLOAD_DIR, { recursive: true });
+  const key = `covers/${Date.now()}-${randomUUID()}.${extension}`;
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const url = await uploadToR2(buffer, key, file.type);
 
-  const fileName = `${Date.now()}-${randomUUID()}.${extension}`;
-  const filePath = path.join(UPLOAD_DIR, fileName);
-  const fileBuffer = Buffer.from(await file.arrayBuffer());
-
-  await writeFile(filePath, fileBuffer);
-
-  return NextResponse.json({ url: `/uploads/covers/${fileName}` }, { status: 201 });
+  return NextResponse.json({ url }, { status: 201 });
 }
 
