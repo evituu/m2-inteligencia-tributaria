@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -11,6 +12,8 @@ type AdminPost = {
   slug: string;
   status: "draft" | "published" | "archived";
   createdAt: string;
+  coverImageUrl: string | null;
+  publishedAt: string | null;
 };
 
 function slugify(text: string) {
@@ -252,13 +255,39 @@ export default function AdminPostsPage() {
           <div className="mt-4 space-y-3">
             {filteredPosts.map((post) => (
               <article key={post.id} className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-4">
-                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <p className="font-semibold text-white">{post.title}</p>
-                    <p className="text-xs text-zinc-400">
-                      /{post.slug} • {post.status} • {new Date(post.createdAt).toLocaleDateString("pt-BR")}
-                    </p>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  {/* Left: thumbnail + info */}
+                  <div className="flex items-center gap-3">
+                    {/* Thumbnail */}
+                    {post.coverImageUrl ? (
+                      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-800">
+                        <Image
+                          src={post.coverImageUrl}
+                          alt=""
+                          fill
+                          className="object-cover"
+                          sizes="56px"
+                          unoptimized
+                        />
+                      </div>
+                    ) : (
+                      <div className="h-14 w-14 shrink-0 rounded-lg border border-zinc-700 bg-zinc-800" />
+                    )}
+                    {/* Title + meta */}
+                    <div className="min-w-0">
+                      <p className="truncate font-semibold text-white">{post.title}</p>
+                      <div className="mt-1 flex flex-wrap items-center gap-2">
+                        <StatusBadge status={post.status} />
+                        <span className="text-xs text-zinc-500">/{post.slug}</span>
+                        {post.publishedAt ? (
+                          <span className="text-xs text-zinc-500">
+                            {new Date(post.publishedAt).toLocaleDateString("pt-BR")}
+                          </span>
+                        ) : null}
+                      </div>
+                    </div>
                   </div>
+                  {/* Right: action buttons */}
                   <div className="flex flex-wrap gap-2">
                     <button
                       type="button"
@@ -302,6 +331,20 @@ export default function AdminPostsPage() {
         ) : null}
       </section>
     </AdminShell>
+  );
+}
+
+function StatusBadge({ status }: { status: AdminPost["status"] }) {
+  const map = {
+    published: { label: "Publicado", className: "bg-emerald-900/50 text-emerald-300 border-emerald-800" },
+    draft: { label: "Rascunho", className: "bg-amber-900/50 text-amber-300 border-amber-800" },
+    archived: { label: "Desativado", className: "bg-zinc-800 text-zinc-400 border-zinc-700" },
+  } as const;
+  const { label, className } = map[status];
+  return (
+    <span className={`inline-flex items-center rounded border px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${className}`}>
+      {label}
+    </span>
   );
 }
 
