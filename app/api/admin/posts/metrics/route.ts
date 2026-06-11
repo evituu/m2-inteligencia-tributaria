@@ -10,12 +10,14 @@ export async function GET(req: Request) {
     return guard.response;
   }
 
-  const [published, draft, archived, total] = await Promise.all([
+  const [published, draft, archived, total, albumCount, photoCount] = await Promise.all([
     prisma.post.count({ where: { status: "published" } }),
     prisma.post.count({ where: { status: "draft" } }),
     prisma.post.count({ where: { status: "archived" } }),
     prisma.post.count(),
+    prisma.galleryAlbum.count(),
+    prisma.galleryPhoto.count(),
   ]);
 
-  return NextResponse.json({ published, draft, archived, total }, { status: 200 });
+  return NextResponse.json({ published, draft, archived, total, albums: albumCount, photos: photoCount }, { status: 200 });
 }

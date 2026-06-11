@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -10,13 +10,11 @@ type Metrics = {
   published: number;
   draft: number;
   archived: number;
+  albums: number;
+  photos: number;
 };
 
-const fallbackMetrics: Metrics = {
-  published: 0,
-  draft: 0,
-  archived: 0,
-};
+const fallbackMetrics: Metrics = { published: 0, draft: 0, archived: 0, albums: 0, photos: 0 };
 
 export default function AdminPage() {
   const [metrics, setMetrics] = useState<Metrics>(fallbackMetrics);
@@ -36,6 +34,8 @@ export default function AdminPage() {
           published: data.published ?? 0,
           draft: data.draft ?? 0,
           archived: data.archived ?? 0,
+          albums: data.albums ?? 0,
+          photos: data.photos ?? 0,
         });
       } catch {
         setMetrics(fallbackMetrics);
@@ -56,23 +56,27 @@ export default function AdminPage() {
           subtitle="Visao editorial rapida de publicacoes, rascunhos e desativados."
           primaryAction={{ label: "Inserir novo artigo", href: "/admin/posts/novo" }}
         >
+          {/* Blog KPIs */}
           <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <KpiCard title="Publicados" value={metrics.published} loading={loading} accentClass="text-emerald-300" />
             <KpiCard title="Rascunhos" value={metrics.draft} loading={loading} accentClass="text-amber-300" />
             <KpiCard title="Desativados" value={metrics.archived} loading={loading} accentClass="text-zinc-300" />
           </section>
 
+          {/* Gallery KPIs */}
+          <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <KpiCard title="Álbuns" value={metrics.albums} loading={loading} accentClass="text-sky-300" />
+            <KpiCard title="Fotos" value={metrics.photos} loading={loading} accentClass="text-sky-300" />
+          </section>
+
           <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-5">
-            <h2 className="text-lg font-bold text-white">Proximas acoes</h2>
-            <p className="mt-2 text-sm text-zinc-400">
-              Use o atalho de criacao para abrir o formulario do artigo e publicar com mais velocidade.
-            </p>
-            <Link
-              href="/admin/posts"
-              className="mt-4 inline-flex h-10 items-center rounded-md bg-[#f2c40f] px-4 text-sm font-semibold text-[#12151b] hover:bg-[#e3b80d]"
-            >
-              Gerenciar artigos
-            </Link>
+            <h2 className="text-lg font-bold text-white">Atalhos</h2>
+            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <ShortcutCard href="/admin/posts/novo" label="Novo artigo" description="Criar um rascunho" />
+              <ShortcutCard href="/admin/gallery/novo" label="Novo álbum" description="Criar álbum de fotos" />
+              <ShortcutCard href="/admin/categorias" label="Categorias" description="Gerenciar categorias" />
+              <ShortcutCard href="/" label="Ver site" description="Abrir o site público" target="_blank" />
+            </div>
           </section>
         </AdminShell>
       </div>
@@ -100,3 +104,15 @@ function KpiCard({
   );
 }
 
+function ShortcutCard({ href, label, description, target }: { href: string; label: string; description: string; target?: string }) {
+  return (
+    <Link
+      href={href}
+      target={target}
+      className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-4 transition hover:border-zinc-700 hover:bg-zinc-900"
+    >
+      <p className="font-semibold text-white">{label}</p>
+      <p className="mt-1 text-xs text-zinc-400">{description}</p>
+    </Link>
+  );
+}
