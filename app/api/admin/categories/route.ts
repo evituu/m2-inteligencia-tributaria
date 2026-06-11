@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { requireAdminFromRequest } from "../../../../lib/server/auth/guards";
 import { prisma } from "../../../../lib/server/db";
+import { validateCsrf } from "../../../../lib/server/security/csrf";
 
 const createCategorySchema = z.object({
   name: z.string().min(2),
@@ -23,6 +24,7 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
+  if (!validateCsrf(req)) return NextResponse.json({ message: "CSRF invalido" }, { status: 403 });
   const guard = await requireAdminFromRequest(req);
 
   if (!guard.ok) {

@@ -17,6 +17,7 @@ type AdminShellProps = {
 const navItems = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/posts", label: "Artigos" },
+  { href: "/admin/categorias", label: "Categorias" },
   { href: "/admin/gallery", label: "Galeria" },
 ];
 
