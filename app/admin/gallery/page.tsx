@@ -101,6 +101,12 @@ export default function AdminGalleryPage() {
                     >
                       Fotos
                     </Link>
+                    <Link
+                      href={`/admin/gallery/${album.id}/editar`}
+                      className="inline-flex h-8 items-center rounded-md border border-zinc-700 bg-zinc-800 px-3 text-xs font-semibold text-zinc-200"
+                    >
+                      Editar
+                    </Link>
                     <button
                       type="button"
                       onClick={() => void handleDelete(album.id, album.title)}
