@@ -91,6 +91,40 @@ export default function AdminGalleryAlbumPage() {
     await loadAlbum();
   }
 
+  async function handleReorder(
+    photoAId: string,
+    photoBId: string,
+    orderA: number,
+    orderB: number,
+  ) {
+    setError(null);
+    const csrfToken = await getCsrfToken();
+    if (!csrfToken) {
+      setError("Falha de CSRF. Recarregue a página.");
+      return;
+    }
+
+    const [resA, resB] = await Promise.all([
+      fetch(`/api/admin/gallery/photos/${photoAId}`, {
+        method: "PATCH",
+        headers: { "x-csrf-token": csrfToken, "Content-Type": "application/json" },
+        body: JSON.stringify({ order: orderB }),
+      }),
+      fetch(`/api/admin/gallery/photos/${photoBId}`, {
+        method: "PATCH",
+        headers: { "x-csrf-token": csrfToken, "Content-Type": "application/json" },
+        body: JSON.stringify({ order: orderA }),
+      }),
+    ]);
+
+    if (!resA.ok || !resB.ok) {
+      setError("Falha ao reordenar fotos.");
+      return;
+    }
+
+    await loadAlbum();
+  }
+
   async function handleDeletePhoto(photoId: string) {
     if (!confirm("Excluir esta foto permanentemente?")) return;
 
@@ -175,30 +209,58 @@ export default function AdminGalleryAlbumPage() {
           </p>
         ) : (
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-            {album.photos.map((photo) => (
-              <div key={photo.id} className="group relative">
-                <div className="aspect-square overflow-hidden rounded-lg border border-zinc-700 bg-zinc-800">
-                  <Image
-                    src={photo.url}
-                    alt={photo.alt ?? photo.caption ?? "Foto do álbum"}
-                    width={200}
-                    height={200}
-                    className="h-full w-full object-cover"
-                  />
+            {album.photos.map((photo, index) => {
+              const prevPhoto = album.photos[index - 1];
+              const nextPhoto = album.photos[index + 1];
+              return (
+                <div key={photo.id} className="group relative">
+                  <div className="aspect-square overflow-hidden rounded-lg border border-zinc-700 bg-zinc-800">
+                    <Image
+                      src={photo.url}
+                      alt={photo.alt ?? photo.caption ?? "Foto do álbum"}
+                      width={200}
+                      height={200}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => void handleDeletePhoto(photo.id)}
+                    className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-900/90 text-sm font-bold text-white opacity-0 transition-opacity group-hover:opacity-100"
+                    aria-label="Excluir foto"
+                  >
+                    ×
+                  </button>
+                  <div className="mt-1 flex gap-1">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        void handleReorder(photo.id, prevPhoto.id, photo.order, prevPhoto.order)
+                      }
+                      disabled={index === 0}
+                      className="flex h-6 w-6 items-center justify-center rounded bg-zinc-800 text-xs text-zinc-300 disabled:opacity-30"
+                      aria-label="Mover para cima"
+                    >
+                      ↑
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        void handleReorder(photo.id, nextPhoto.id, photo.order, nextPhoto.order)
+                      }
+                      disabled={index === album.photos.length - 1}
+                      className="flex h-6 w-6 items-center justify-center rounded bg-zinc-800 text-xs text-zinc-300 disabled:opacity-30"
+                      aria-label="Mover para baixo"
+                    >
+                      ↓
+                    </button>
+                  </div>
+                  {photo.caption ? (
+                    <p className="mt-1 truncate text-xs text-zinc-400">{photo.caption}</p>
+                  ) : null}
                 </div>
-                <button
-                  type="button"
-                  onClick={() => void handleDeletePhoto(photo.id)}
-                  className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-900/90 text-sm font-bold text-white opacity-0 transition-opacity group-hover:opacity-100"
-                  aria-label="Excluir foto"
-                >
-                  ×
-                </button>
-                {photo.caption ? (
-                  <p className="mt-1 truncate text-xs text-zinc-400">{photo.caption}</p>
-                ) : null}
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </section>
