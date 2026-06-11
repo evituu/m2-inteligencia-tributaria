@@ -5,17 +5,14 @@ import { requireAdminFromRequest } from "@/lib/server/auth/guards";
 import { prisma } from "@/lib/server/db";
 import { validateCsrf } from "@/lib/server/security/csrf";
 import { uploadToR2 } from "@/lib/server/storage/r2";
+import { processImage } from "@/lib/server/storage/processImage";
 
 export const runtime = "nodejs";
 
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
 const MAX_FILES = 5;
 
-const MIME_EXTENSIONS: Record<string, string> = {
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/webp": "webp",
-};
+const ALLOWED_MIME_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 export async function POST(
   req: Request,
@@ -54,7 +51,7 @@ export async function POST(
   }
 
   for (const file of files) {
-    if (!MIME_EXTENSIONS[file.type]) {
+    if (!ALLOWED_MIME_TYPES.has(file.type)) {
       return NextResponse.json(
         { message: "Formato invalido. Use JPG, PNG ou WEBP." },
         { status: 400 },
@@ -77,10 +74,10 @@ export async function POST(
   const created: { id: string; url: string; order: number }[] = [];
 
   for (const file of files) {
-    const ext = MIME_EXTENSIONS[file.type];
-    const key = `gallery/${albumId}/${Date.now()}-${randomUUID()}.${ext}`;
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const url = await uploadToR2(buffer, key, file.type);
+    const key = `gallery/${albumId}/${Date.now()}-${randomUUID()}.webp`;
+    const rawBuffer = Buffer.from(await file.arrayBuffer());
+    const processed = await processImage(rawBuffer);
+    const url = await uploadToR2(processed.buffer, key, "image/webp");
 
     const photo = await prisma.galleryPhoto.create({
       data: { albumId, url, r2Key: key, order: nextOrder },
