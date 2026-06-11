@@ -77,7 +77,7 @@ export async function POST(
     const key = `gallery/${albumId}/${Date.now()}-${randomUUID()}.webp`;
     const rawBuffer = Buffer.from(await file.arrayBuffer());
     const processed = await processImage(rawBuffer);
-    const url = await uploadToR2(processed.buffer, key, "image/webp");
+    const url = await uploadToR2(processed.buffer, key, processed.mimeType);
 
     const photo = await prisma.galleryPhoto.create({
       data: { albumId, url, r2Key: key, order: nextOrder },
