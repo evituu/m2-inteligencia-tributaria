@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { DateTimePicker } from "./DateTimePicker";
 
 type PostStatus = "draft" | "published" | "archived";
 
@@ -104,6 +105,7 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
   const skipUnloadGuardRef = useRef(false);
   const isSavingRemoteRef = useRef(false);
   const autosaveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
 
 
   const canSubmit = useMemo(() => title.trim().length >= 3 && content.trim().length > 0, [title, content]);
@@ -369,19 +371,56 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
     router.push(href);
   }
 
+  function insertMarkdown(
+    before: string,
+    after = "",
+    placeholder = "texto",
+  ) {
+    const el = contentRef.current;
+    if (!el) return;
+    const start = el.selectionStart;
+    const end = el.selectionEnd;
+    const selected = content.substring(start, end) || placeholder;
+    const next =
+      content.substring(0, start) + before + selected + after + content.substring(end);
+    setContent(next);
+    requestAnimationFrame(() => {
+      el.focus();
+      el.setSelectionRange(start + before.length, start + before.length + selected.length);
+    });
+  }
+
+  const toolbarActions = [
+    { label: "B",   title: "Negrito",         action: () => insertMarkdown("**", "**", "negrito") },
+    { label: "I",   title: "Itálico",          action: () => insertMarkdown("*", "*", "itálico") },
+    { label: "H2",  title: "Título",           action: () => insertMarkdown("## ", "", "Título") },
+    { label: "H3",  title: "Subtítulo",        action: () => insertMarkdown("### ", "", "Subtítulo") },
+    { label: "〝〞", title: "Citação",          action: () => insertMarkdown("> ", "", "citação") },
+    { label: "—",   title: "Lista",            action: () => insertMarkdown("- ", "", "item") },
+    { label: "1.",  title: "Lista numerada",   action: () => insertMarkdown("1. ", "", "item") },
+    { label: "`  `", title: "Código inline",   action: () => insertMarkdown("`", "`", "código") },
+    { label: "🔗",  title: "Link",             action: () => insertMarkdown("[", "](url)", "texto do link") },
+  ] as const;
+
   return (
-    <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">
-      <div className="grid gap-4 lg:grid-cols-[1.5fr_1fr]">
-        <div className="space-y-4 rounded-xl border border-zinc-800 bg-zinc-950/50 p-4">
+    <section className="min-w-0 overflow-hidden rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">
+      <div className="grid min-w-0 gap-4 lg:grid-cols-[1.5fr_1fr]">
+        <div className="min-w-0 space-y-4 rounded-xl border border-zinc-800 bg-zinc-950/50 p-4">
           <div className="space-y-2">
-            <Label htmlFor="title" className="text-zinc-200">
-              Titulo
-            </Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="title" className="text-zinc-200">
+                Titulo
+              </Label>
+              <span className={`text-xs ${title.length >= 110 ? "text-amber-400" : "text-zinc-500"}`}>
+                {title.length}/120
+              </span>
+            </div>
             <Input
               id="title"
               value={title}
               onChange={(event) => handleTitleChange(event.target.value)}
               placeholder="Ex.: Reforma tributaria: impactos para PMEs"
+              maxLength={120}
               className="h-10 border-zinc-700 bg-zinc-900 text-zinc-100"
             />
           </div>
@@ -414,22 +453,38 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
 
           <div className="space-y-2">
             <Label htmlFor="content" className="text-zinc-200">
-              Conteudo
+              Conteudo (Markdown)
             </Label>
-            <Textarea
-              id="content"
-              value={content}
-              onChange={(event) => setContent(event.target.value)}
-              placeholder="Escreva o conteudo completo do artigo..."
-              className="min-h-56 border-zinc-700 bg-zinc-900 text-zinc-100"
-            />
+            <div className="overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900 focus-within:border-zinc-500">
+              <div className="flex flex-wrap gap-px border-b border-zinc-700 bg-zinc-800 p-1">
+                {toolbarActions.map((btn) => (
+                  <button
+                    key={btn.title}
+                    type="button"
+                    title={btn.title}
+                    onMouseDown={(e) => { e.preventDefault(); btn.action(); }}
+                    className="inline-flex h-7 min-w-[2rem] items-center justify-center rounded px-2 text-xs font-medium text-zinc-300 hover:bg-zinc-700 hover:text-white"
+                  >
+                    {btn.label}
+                  </button>
+                ))}
+              </div>
+              <textarea
+                ref={contentRef}
+                id="content"
+                value={content}
+                onChange={(event) => setContent(event.target.value)}
+                placeholder="Escreva o conteudo completo do artigo..."
+                className="min-h-56 w-full resize-y overflow-x-hidden break-words bg-transparent px-2.5 py-2 text-sm text-zinc-100 outline-none placeholder:text-zinc-500"
+              />
+            </div>
           </div>
 
-          <div className="space-y-2 rounded-xl border border-zinc-800 bg-zinc-950/70 p-4">
+          <div className="min-w-0 space-y-2 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950/70 p-4">
             <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">Preview do artigo</p>
-            <h3 className="text-xl font-semibold text-zinc-100">{title.trim() || "Titulo do artigo"}</h3>
-            <p className="text-sm text-zinc-300">{excerpt.trim() || "Resumo do artigo para a listagem."}</p>
-            <div className="max-h-80 overflow-y-auto rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-sm leading-6 text-zinc-200 prose prose-sm prose-invert max-w-none">
+            <h3 className="break-words text-xl font-semibold text-zinc-100">{title.trim() || "Titulo do artigo"}</h3>
+            <p className="break-words text-sm text-zinc-300">{excerpt.trim() || "Resumo do artigo para a listagem."}</p>
+            <div className="max-h-80 max-w-none overflow-y-auto overflow-x-hidden break-words rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-sm leading-6 text-zinc-200 prose prose-sm prose-invert [&_*]:max-w-full [&_*]:break-words">
               {content.trim() ? (
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
               ) : (
@@ -439,7 +494,7 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
           </div>
         </div>
 
-        <aside className="space-y-4 rounded-xl border border-zinc-800 bg-zinc-950/50 p-4">
+        <aside className="min-w-0 space-y-4 rounded-xl border border-zinc-800 bg-zinc-950/50 p-4">
           <div className="space-y-2">
             <Label htmlFor="status" className="text-zinc-200">
               Status
@@ -510,15 +565,12 @@ export function PostEditorForm({ mode, initialData, initialCategories = [] }: Po
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="publishedAt" className="text-zinc-200">
+            <Label className="text-zinc-200">
               Data de publicacao (opcional)
             </Label>
-            <Input
-              id="publishedAt"
-              type="datetime-local"
+            <DateTimePicker
               value={publishedAt}
-              onChange={(event) => setPublishedAt(event.target.value)}
-              className="h-10 border-zinc-700 bg-zinc-900 text-zinc-100"
+              onChange={setPublishedAt}
             />
           </div>
 

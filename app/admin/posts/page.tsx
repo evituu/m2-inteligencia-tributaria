@@ -257,7 +257,7 @@ export default function AdminPostsPage() {
               <article key={post.id} className="rounded-xl border border-zinc-800 bg-zinc-900/70 p-4">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   {/* Left: thumbnail + info */}
-                  <div className="flex items-center gap-3">
+                  <div className="flex min-w-0 items-center gap-3">
                     {/* Thumbnail */}
                     {post.coverImageUrl ? (
                       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-800">

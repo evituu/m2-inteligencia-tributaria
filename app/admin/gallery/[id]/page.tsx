@@ -19,6 +19,7 @@ type AdminAlbumDetail = {
   title: string;
   slug: string;
   isPublic: boolean;
+  coverImage: string | null;
   photos: AdminPhoto[];
 };
 
@@ -121,6 +122,28 @@ export default function AdminGalleryAlbumPage() {
     await loadAlbum();
   }
 
+  async function handleSetCover(photoUrl: string) {
+    const csrfToken = await getCsrfToken();
+    if (!csrfToken) {
+      toast.error("Falha de CSRF. Recarregue a página.");
+      return;
+    }
+
+    const res = await fetch(`/api/admin/gallery/albums/${id}`, {
+      method: "PATCH",
+      headers: { "x-csrf-token": csrfToken, "Content-Type": "application/json" },
+      body: JSON.stringify({ coverImage: photoUrl }),
+    });
+
+    if (!res.ok) {
+      toast.error("Falha ao definir capa.");
+      return;
+    }
+
+    toast.success("Capa do álbum atualizada.");
+    await loadAlbum();
+  }
+
   async function handleDeletePhoto(photoId: string) {
     if (!window.confirm("Excluir esta foto permanentemente?")) return;
 
@@ -207,9 +230,10 @@ export default function AdminGalleryAlbumPage() {
             {album.photos.map((photo, index) => {
               const prevPhoto = album.photos[index - 1];
               const nextPhoto = album.photos[index + 1];
+              const isCover = album.coverImage === photo.url;
               return (
                 <div key={photo.id} className="group relative">
-                  <div className="aspect-square overflow-hidden rounded-lg border border-zinc-700 bg-zinc-800">
+                  <div className={`aspect-square overflow-hidden rounded-lg border bg-zinc-800 ${isCover ? "border-[#f2c40f]" : "border-zinc-700"}`}>
                     <Image
                       src={photo.url}
                       alt={photo.alt ?? photo.caption ?? "Foto do álbum"}
@@ -217,6 +241,11 @@ export default function AdminGalleryAlbumPage() {
                       height={200}
                       className="h-full w-full object-cover"
                     />
+                    {isCover ? (
+                      <span className="absolute left-1 top-1 rounded bg-[#f2c40f] px-1.5 py-0.5 text-[10px] font-bold uppercase text-[#12151b]">
+                        Capa
+                      </span>
+                    ) : null}
                   </div>
                   <button
                     type="button"
@@ -249,6 +278,17 @@ export default function AdminGalleryAlbumPage() {
                     >
                       ↓
                     </button>
+                    {!isCover ? (
+                      <button
+                        type="button"
+                        onClick={() => void handleSetCover(photo.url)}
+                        className="flex h-6 flex-1 items-center justify-center rounded bg-zinc-800 text-[10px] text-zinc-400 hover:bg-[#c9a84c]/20 hover:text-[#f2c40f]"
+                        aria-label="Definir como capa"
+                        title="Definir como capa"
+                      >
+                        ☆ capa
+                      </button>
+                    ) : null}
                   </div>
                   {photo.caption ? (
                     <p className="mt-1 truncate text-xs text-zinc-400">{photo.caption}</p>

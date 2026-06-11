@@ -88,5 +88,12 @@ export async function POST(
     nextOrder++;
   }
 
+  if (!album.coverImage && maxOrderResult._max.order === null && created.length > 0) {
+    await prisma.galleryAlbum.update({
+      where: { id: albumId },
+      data: { coverImage: created[0].url },
+    });
+  }
+
   return NextResponse.json({ items: created }, { status: 201 });
 }

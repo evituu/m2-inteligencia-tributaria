@@ -105,6 +105,16 @@ export default function AdminGalleryPage() {
                     >
                       Editar
                     </Link>
+                    {album.isPublic ? (
+                      <Link
+                        href={`/galeria-m2/${album.slug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex h-8 items-center rounded-md border border-emerald-800 bg-emerald-950/60 px-3 text-xs font-semibold text-emerald-300"
+                      >
+                        Ver no site
+                      </Link>
+                    ) : null}
                     <button
                       type="button"
                       onClick={() => void handleDelete(album.id, album.title)}

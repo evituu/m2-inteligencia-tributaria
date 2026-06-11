@@ -67,13 +67,13 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </div>
 
           {/* Título */}
-          <h1 className="mb-6 text-3xl font-black leading-tight tracking-tight text-[#1a1c1c] md:text-5xl">
+          <h1 className="mb-6 break-words text-3xl font-black leading-tight tracking-tight text-[#1a1c1c] md:text-5xl">
             {article.title}
           </h1>
 
           {/* Subtítulo */}
           {article.excerpt ? (
-            <p className="mb-10 text-lg leading-relaxed text-zinc-600 md:text-xl md:leading-9">
+            <p className="mb-10 break-words text-lg leading-relaxed text-zinc-600 md:text-xl md:leading-9">
               {article.excerpt}
             </p>
           ) : null}

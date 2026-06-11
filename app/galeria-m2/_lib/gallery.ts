@@ -47,6 +47,7 @@ export async function getPublicAlbumBySlug(
     src: photo.url,
     alt: photo.alt ?? `${album.title} — foto ${index + 1}`,
     caption: photo.caption ?? undefined,
+    layout: index % 6 === 2 ? "featured" : index % 6 === 5 ? "wide" : "default",
   }));
 
   return { album: mapAlbum(album), photos };

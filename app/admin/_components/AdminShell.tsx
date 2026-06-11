@@ -74,7 +74,7 @@ export function AdminShell({ title, subtitle, primaryAction, children }: AdminSh
           </nav>
         </aside>
 
-        <section className="space-y-6">
+        <section className="min-w-0 space-y-6">
           <header className="rounded-2xl border border-zinc-800 bg-[#060b12] p-5">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>

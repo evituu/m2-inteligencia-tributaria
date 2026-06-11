@@ -30,10 +30,10 @@ export function BlogFeaturedHero({ article }: BlogFeaturedHeroProps) {
         <span className="mb-6 inline-flex w-fit items-center bg-[#f2c40f]/15 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-[#f2c40f]">
           {article.category}
         </span>
-        <h1 className="max-w-[900px] text-3xl font-black uppercase leading-[1.06] tracking-tight md:text-5xl lg:text-6xl">
+        <h1 className="max-w-[900px] break-words text-3xl font-black uppercase leading-[1.06] tracking-tight md:text-5xl lg:text-6xl">
           {article.title}
         </h1>
-        <p className="mt-6 max-w-[720px] text-base leading-relaxed text-zinc-300 md:text-lg">
+        <p className="mt-6 max-w-[720px] break-words text-base leading-relaxed text-zinc-300 md:text-lg">
           {article.excerpt}
         </p>
         <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-zinc-400">

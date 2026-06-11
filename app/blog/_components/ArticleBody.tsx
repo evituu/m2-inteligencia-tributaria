@@ -14,7 +14,7 @@ function looksLikeMarkdown(content: string) {
 }
 
 const proseClasses =
-  "prose prose-zinc max-w-none text-[#1a1a1a] prose-headings:font-bold prose-headings:text-[#1a1a1a] prose-p:text-zinc-700 prose-p:leading-8 prose-a:text-[#735c00] prose-strong:text-[#1a1a1a]";
+  "prose prose-zinc max-w-none break-words overflow-hidden text-[#1a1a1a] prose-headings:font-bold prose-headings:text-[#1a1a1a] prose-headings:break-words prose-p:text-zinc-700 prose-p:leading-8 prose-p:break-words prose-a:text-[#735c00] prose-strong:text-[#1a1a1a]";
 
 export function ArticleBody({ content }: ArticleBodyProps) {
   if (looksLikeHtml(content)) {
