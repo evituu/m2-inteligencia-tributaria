@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { AdminShell } from "../../_components/AdminShell";
 
 type AdminPhoto = {
@@ -34,8 +35,6 @@ export default function AdminGalleryAlbumPage() {
   const [album, setAlbum] = useState<AdminAlbumDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   async function loadAlbum() {
@@ -59,13 +58,11 @@ export default function AdminGalleryAlbumPage() {
     if (!files || files.length === 0) return;
 
     setUploading(true);
-    setError(null);
-    setSuccess(null);
 
     const csrfToken = await getCsrfToken();
     if (!csrfToken) {
       setUploading(false);
-      setError("Falha de CSRF. Recarregue a página.");
+      toast.error("Falha de CSRF. Recarregue a página.");
       return;
     }
 
@@ -82,12 +79,12 @@ export default function AdminGalleryAlbumPage() {
 
     if (!res.ok) {
       const body = (await res.json().catch(() => null)) as { message?: string } | null;
-      setError(body?.message ?? "Falha no upload.");
+      toast.error(body?.message ?? "Falha no upload.");
       return;
     }
 
     if (fileInputRef.current) fileInputRef.current.value = "";
-    setSuccess("Fotos enviadas com sucesso.");
+    toast.success("Fotos enviadas com sucesso.");
     await loadAlbum();
   }
 
@@ -97,10 +94,9 @@ export default function AdminGalleryAlbumPage() {
     orderA: number,
     orderB: number,
   ) {
-    setError(null);
     const csrfToken = await getCsrfToken();
     if (!csrfToken) {
-      setError("Falha de CSRF. Recarregue a página.");
+      toast.error("Falha de CSRF. Recarregue a página.");
       return;
     }
 
@@ -118,7 +114,7 @@ export default function AdminGalleryAlbumPage() {
     ]);
 
     if (!resA.ok || !resB.ok) {
-      setError("Falha ao reordenar fotos.");
+      toast.error("Falha ao reordenar fotos.");
       return;
     }
 
@@ -126,7 +122,7 @@ export default function AdminGalleryAlbumPage() {
   }
 
   async function handleDeletePhoto(photoId: string) {
-    if (!confirm("Excluir esta foto permanentemente?")) return;
+    if (!window.confirm("Excluir esta foto permanentemente?")) return;
 
     const csrfToken = await getCsrfToken();
     const res = await fetch(`/api/admin/gallery/photos/${photoId}`, {
@@ -135,10 +131,11 @@ export default function AdminGalleryAlbumPage() {
     });
 
     if (!res.ok && res.status !== 204) {
-      setError("Falha ao excluir foto.");
+      toast.error("Falha ao excluir foto.");
       return;
     }
 
+    toast.success("Foto excluída.");
     await loadAlbum();
   }
 
@@ -194,8 +191,6 @@ export default function AdminGalleryAlbumPage() {
             {uploading ? "Enviando..." : "Enviar fotos"}
           </button>
         </div>
-        {error ? <p className="mt-3 text-sm text-red-400">{error}</p> : null}
-        {success ? <p className="mt-3 text-sm text-emerald-400">{success}</p> : null}
       </section>
 
       <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">

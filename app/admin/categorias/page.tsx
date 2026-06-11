@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 import { AdminShell } from "../_components/AdminShell";
 
 type Category = {
@@ -89,10 +90,13 @@ export default function CategoriasPage() {
 
     if (!res.ok) {
       const body = (await res.json().catch(() => null)) as { message?: string } | null;
-      setFormError(body?.message ?? "Falha ao criar categoria.");
+      const message = body?.message ?? "Falha ao criar categoria.";
+      setFormError(message);
+      toast.error(message);
       return;
     }
 
+    toast.success("Categoria criada.");
     setName("");
     setSlug("");
     setManualSlug(false);
@@ -117,10 +121,13 @@ export default function CategoriasPage() {
 
     if (!res.ok && res.status !== 204) {
       const body = (await res.json().catch(() => null)) as { message?: string } | null;
-      setListError(body?.message ?? "Falha ao excluir categoria.");
+      const message = body?.message ?? "Falha ao excluir categoria.";
+      setListError(message);
+      toast.error(message);
       return;
     }
 
+    toast.success("Categoria excluída.");
     await loadCategories();
   }
 

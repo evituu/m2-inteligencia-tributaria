@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { toast } from "sonner";
 import { AdminShell } from "../../../_components/AdminShell";
 
 function slugify(text: string) {
@@ -105,10 +106,13 @@ export default function EditAlbumPage() {
 
     if (!res.ok) {
       const body = (await res.json().catch(() => null)) as { message?: string } | null;
-      setError(body?.message ?? "Falha ao salvar álbum.");
+      const errorMessage = body?.message ?? "Falha ao salvar álbum.";
+      setError(errorMessage);
+      toast.error(errorMessage);
       return;
     }
 
+    toast.success("Álbum atualizado.");
     router.push("/admin/gallery");
   }
 

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { AdminShell } from "../_components/AdminShell";
 
 type AdminAlbum = {
@@ -23,14 +24,11 @@ async function getCsrfToken() {
 export default function AdminGalleryPage() {
   const [albums, setAlbums] = useState<AdminAlbum[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   async function loadAlbums() {
     setLoading(true);
-    setError(null);
     const res = await fetch("/api/admin/gallery/albums");
     if (!res.ok) {
-      setError("Não foi possível carregar os álbuns.");
       setLoading(false);
       return;
     }
@@ -44,7 +42,7 @@ export default function AdminGalleryPage() {
   }, []);
 
   async function handleDelete(id: string, title: string) {
-    if (!confirm(`Excluir o álbum "${title}" e todas as suas fotos? Esta ação não pode ser desfeita.`)) {
+    if (!window.confirm(`Excluir o álbum "${title}" e todas as suas fotos? Esta ação não pode ser desfeita.`)) {
       return;
     }
 
@@ -55,10 +53,11 @@ export default function AdminGalleryPage() {
     });
 
     if (!res.ok && res.status !== 204) {
-      setError("Falha ao excluir álbum.");
+      toast.error("Falha ao excluir álbum.");
       return;
     }
 
+    toast.success("Álbum excluído com sucesso.");
     await loadAlbums();
   }
 
@@ -71,7 +70,6 @@ export default function AdminGalleryPage() {
       <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">
         <h2 className="text-lg font-bold text-white">Álbuns</h2>
 
-        {error ? <p className="mt-3 text-sm text-red-400">{error}</p> : null}
         {loading ? <p className="mt-4 text-sm text-zinc-400">Carregando...</p> : null}
 
         {!loading && albums.length === 0 ? (

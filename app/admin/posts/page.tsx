@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import { AdminShell } from "../_components/AdminShell";
 
 type AdminPost = {
@@ -100,10 +101,13 @@ export default function AdminPostsPage() {
 
     if (!response.ok) {
       const body = (await response.json().catch(() => null)) as { message?: string } | null;
-      setError(body?.message || "Falha ao criar post.");
+      const message = body?.message || "Falha ao criar post.";
+      setError(message);
+      toast.error(message);
       return;
     }
 
+    toast.success("Rascunho criado.");
     setTitle("");
     setContent("");
     await loadPosts();
@@ -123,9 +127,11 @@ export default function AdminPostsPage() {
 
     if (!response.ok) {
       setError("Falha ao atualizar status do post.");
+      toast.error("Falha ao atualizar status do post.");
       return;
     }
 
+    toast.success("Status atualizado.");
     await loadPosts();
   }
 
@@ -142,9 +148,11 @@ export default function AdminPostsPage() {
 
     if (!response.ok && response.status !== 204) {
       setError("Falha ao excluir post.");
+      toast.error("Falha ao excluir post.");
       return;
     }
 
+    toast.success("Artigo excluído.");
     await loadPosts();
   }
 
