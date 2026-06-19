@@ -15,7 +15,7 @@ const quickLinks = [
   { label: "Serviços", href: "/servicos" },
   { label: "Blog", href: "/blog" },
   { label: "Galeria", href: "/galeria-m2" },
-  { label: "Contato", href: "/formulario" },
+  { label: "Contato", href: "/#formulario" },
 ];
 
 const socialLinks = [
