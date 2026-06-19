@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { PostStatus } from "@prisma/client";
 import { prisma } from "@/lib/server/db";
 
+export const dynamic = "force-dynamic";
+
 const BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL ?? "https://m2inteligenciatributaria.com.br";
 
