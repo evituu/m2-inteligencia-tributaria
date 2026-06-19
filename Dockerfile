@@ -17,7 +17,7 @@ ENV DATABASE_URL=$DATABASE_URL
 ENV CLOUDFLARE_R2_PUBLIC_URL=$CLOUDFLARE_R2_PUBLIC_URL
 
 RUN npx prisma generate
-RUN SKIP_ENV_VALIDATION=1 npm run build
+RUN SKIP_ENV_VALIDATION=1 NODE_OPTIONS="--max-old-space-size=4096" npm run build
 
 # Stage 3: imagem final de produção
 FROM node:22-alpine AS runner
