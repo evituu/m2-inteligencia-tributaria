@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { prisma } from "../../../lib/server/db";
+import { appendLeadToSheet } from "../../../lib/server/integrations/google-sheets";
 import { validateCsrf } from "../../../lib/server/security/csrf";
 import { buildRateLimitKey, checkRateLimit, getClientIp, hashIdentifier } from "../../../lib/server/security/rate-limit";
 import { leadSchema } from "../../../lib/server/validation/lead";
@@ -87,6 +88,19 @@ export async function POST(req: Request) {
     select: {
       id: true,
     },
+  });
+
+  void appendLeadToSheet({
+    fullName: parsedBody.data.fullName,
+    email,
+    phone: parsedBody.data.whatsapp,
+    company: parsedBody.data.companyName,
+    taxRegime: parsedBody.data.taxRegime,
+    message: parsedBody.data.needDetails || null,
+    source: `service:${parsedBody.data.service};challenge:${parsedBody.data.challenge};cnpj:${parsedBody.data.cnpj}`,
+    createdAt: new Date(),
+  }).catch((err: unknown) => {
+    console.error("[google-sheets] sync error:", err);
   });
 
   return NextResponse.json({ id: lead.id }, { status: 201 });
