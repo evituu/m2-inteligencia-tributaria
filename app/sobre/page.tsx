@@ -10,6 +10,8 @@ import { InstitutionalDifferentialsSection } from "@/app/sobre/_components/Insti
 import { AboutCtaSection } from "@/app/sobre/_components/AboutCtaSection";
 import { Footer } from "@/components/layout/Footer";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://m2inteligenciatributaria.com.br";
+
 export const metadata: Metadata = {
   title: "Sobre a M2",
   description:
@@ -48,11 +50,11 @@ export default function SobrePage() {
           name: "Sobre a M2 Inteligência Tributária",
           description:
             "Especialistas em recuperação de créditos tributários com mais de 15 anos de experiência, atuando em todo o Brasil.",
-          url: "https://m2inteligenciatributaria.com.br/sobre",
+          url: `${BASE_URL}/sobre`,
           publisher: {
             "@type": "Organization",
             name: "M2 Inteligência Tributária",
-            url: "https://m2inteligenciatributaria.com.br",
+            url: BASE_URL,
           },
         }}
       />

@@ -13,6 +13,8 @@ import { Footer } from "@/components/layout/Footer";
 import { FaqSection } from "@/components/home/FaqSection";
 import { WhatsAppFab } from "@/components/home/WhatsAppFab";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://m2inteligenciatributaria.com.br";
+
 export default function Home() {
   return (
     <>
@@ -21,8 +23,8 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "M2 Inteligência Tributária",
-          url: "https://m2inteligenciatributaria.com.br",
-          logo: "https://m2inteligenciatributaria.com.br/imagens/logo/LOGO_M2.png",
+          url: BASE_URL,
+          logo: `${BASE_URL}/imagens/logo/LOGO_M2.png`,
           telephone: "+5588992156717",
           email: "m2inteligenciadptovendas@gmail.com",
           address: {
