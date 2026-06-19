@@ -14,6 +14,10 @@ import { ArticleShareButtons } from "@/app/blog/_components/ArticleShareButtons"
 import { ArticleBody } from "@/app/blog/_components/ArticleBody";
 import { ArticleRelatedPosts } from "@/app/blog/_components/ArticleRelatedPosts";
 import { LatestInsightsTicker } from "@/components/home/LatestInsightsTicker";
+import { JsonLd } from "@/components/shared/JsonLd";
+
+const BASE_URL =
+  process.env.NEXT_PUBLIC_BASE_URL ?? "https://m2inteligenciatributaria.com.br";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -30,12 +34,31 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${article.title} | M2 Inteligência Tributária`,
-    description: article.excerpt,
+    title: article.title,
+    description: article.excerpt || undefined,
     openGraph: {
+      type: "article",
       title: article.title,
-      description: article.excerpt,
-      images: article.coverImage ? [article.coverImage] : [],
+      description: article.excerpt || undefined,
+      url: `${BASE_URL}/blog/${article.slug}`,
+      siteName: "M2 Inteligência Tributária",
+      locale: "pt_BR",
+      publishedTime: article.publishedAt,
+      authors: [article.author.name],
+      images: [
+        {
+          url: article.coverImage,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.excerpt || undefined,
+      images: [article.coverImage],
     },
   };
 }
@@ -52,6 +75,34 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: article.title,
+          description: article.excerpt,
+          image: article.coverImage,
+          url: `${BASE_URL}/blog/${article.slug}`,
+          datePublished: article.publishedAt,
+          dateModified: article.publishedAt,
+          author: {
+            "@type": "Person",
+            name: article.author.name,
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "M2 Inteligência Tributária",
+            logo: {
+              "@type": "ImageObject",
+              url: `${BASE_URL}/imagens/logo/LOGO_M2.png`,
+            },
+          },
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `${BASE_URL}/blog/${article.slug}`,
+          },
+        }}
+      />
       <div className="min-h-screen bg-white text-[#1a1a1a]">
         <NavigationMenu />
 
