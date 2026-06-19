@@ -36,7 +36,11 @@ export default function AdminGalleryAlbumPage() {
   const [album, setAlbum] = useState<AdminAlbumDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<{ sent: number; total: number } | null>(null);
+  const [selectedCount, setSelectedCount] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const CHUNK_SIZE = 10;
 
   async function loadAlbum() {
     setLoading(true);
@@ -58,34 +62,51 @@ export default function AdminGalleryAlbumPage() {
     const files = fileInputRef.current?.files;
     if (!files || files.length === 0) return;
 
+    const fileArray = Array.from(files);
+    const chunks: File[][] = [];
+    for (let i = 0; i < fileArray.length; i += CHUNK_SIZE) {
+      chunks.push(fileArray.slice(i, i + CHUNK_SIZE));
+    }
+
     setUploading(true);
+    setUploadProgress({ sent: 0, total: fileArray.length });
 
     const csrfToken = await getCsrfToken();
     if (!csrfToken) {
       setUploading(false);
+      setUploadProgress(null);
       toast.error("Falha de CSRF. Recarregue a página.");
       return;
     }
 
-    const formData = new FormData();
-    Array.from(files).forEach((file) => formData.append("files", file));
+    let sent = 0;
+    for (const chunk of chunks) {
+      const formData = new FormData();
+      chunk.forEach((file) => formData.append("files", file));
 
-    const res = await fetch(`/api/admin/gallery/albums/${id}/photos`, {
-      method: "POST",
-      headers: { "x-csrf-token": csrfToken },
-      body: formData,
-    });
+      const res = await fetch(`/api/admin/gallery/albums/${id}/photos`, {
+        method: "POST",
+        headers: { "x-csrf-token": csrfToken },
+        body: formData,
+      });
 
-    setUploading(false);
+      if (!res.ok) {
+        const body = (await res.json().catch(() => null)) as { message?: string } | null;
+        toast.error(body?.message ?? "Falha no upload.");
+        setUploading(false);
+        setUploadProgress(null);
+        return;
+      }
 
-    if (!res.ok) {
-      const body = (await res.json().catch(() => null)) as { message?: string } | null;
-      toast.error(body?.message ?? "Falha no upload.");
-      return;
+      sent += chunk.length;
+      setUploadProgress({ sent, total: fileArray.length });
     }
 
     if (fileInputRef.current) fileInputRef.current.value = "";
-    toast.success("Fotos enviadas com sucesso.");
+    setSelectedCount(0);
+    toast.success(`${fileArray.length} foto${fileArray.length !== 1 ? "s" : ""} enviada${fileArray.length !== 1 ? "s" : ""} com sucesso.`);
+    setUploading(false);
+    setUploadProgress(null);
     await loadAlbum();
   }
 
@@ -195,7 +216,7 @@ export default function AdminGalleryAlbumPage() {
       <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">
         <h2 className="text-lg font-bold text-white">Enviar fotos</h2>
         <p className="mt-1 text-sm text-zinc-400">
-          Máximo 5 arquivos por vez, 5MB cada (JPG, PNG, WEBP).
+          Selecione quantas fotos quiser. Máximo 5 MB por arquivo (JPG, PNG, WEBP).
         </p>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
@@ -203,17 +224,36 @@ export default function AdminGalleryAlbumPage() {
             type="file"
             multiple
             accept="image/jpeg,image/png,image/webp"
-            className="text-sm text-zinc-300 file:mr-3 file:rounded file:border-0 file:bg-zinc-800 file:px-3 file:py-1.5 file:text-xs file:text-zinc-200 file:cursor-pointer"
+            disabled={uploading}
+            onChange={(e) => setSelectedCount(e.target.files?.length ?? 0)}
+            className="text-sm text-zinc-300 file:mr-3 file:rounded file:border-0 file:bg-zinc-800 file:px-3 file:py-1.5 file:text-xs file:text-zinc-200 file:cursor-pointer disabled:opacity-50"
           />
           <button
             type="button"
             onClick={() => void handleUpload()}
-            disabled={uploading}
+            disabled={uploading || selectedCount === 0}
             className="inline-flex h-9 items-center justify-center rounded-md bg-[#f2c40f] px-5 text-sm font-semibold text-[#12151b] disabled:opacity-60"
           >
-            {uploading ? "Enviando..." : "Enviar fotos"}
+            {uploading && uploadProgress
+              ? `Enviando ${uploadProgress.sent} de ${uploadProgress.total}...`
+              : selectedCount > 0
+                ? `Enviar ${selectedCount} foto${selectedCount !== 1 ? "s" : ""}`
+                : "Enviar fotos"}
           </button>
         </div>
+        {uploading && uploadProgress && uploadProgress.total > CHUNK_SIZE && (
+          <div className="mt-3">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-800">
+              <div
+                className="h-full rounded-full bg-[#f2c40f] transition-all duration-300"
+                style={{ width: `${(uploadProgress.sent / uploadProgress.total) * 100}%` }}
+              />
+            </div>
+            <p className="mt-1 text-xs text-zinc-500">
+              {Math.round((uploadProgress.sent / uploadProgress.total) * 100)}% concluído
+            </p>
+          </div>
+        )}
       </section>
 
       <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">

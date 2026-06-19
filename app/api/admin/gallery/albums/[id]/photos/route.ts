@@ -10,7 +10,7 @@ import { processImage } from "@/lib/server/storage/processImage";
 export const runtime = "nodejs";
 
 const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
-const MAX_FILES = 5;
+const MAX_FILES = 10;
 
 const ALLOWED_MIME_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 

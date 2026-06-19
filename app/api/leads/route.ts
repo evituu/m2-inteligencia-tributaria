@@ -92,12 +92,14 @@ export async function POST(req: Request) {
 
   void appendLeadToSheet({
     fullName: parsedBody.data.fullName,
-    email,
-    phone: parsedBody.data.whatsapp,
     company: parsedBody.data.companyName,
+    cnpj: parsedBody.data.cnpj,
+    phone: parsedBody.data.whatsapp,
+    email,
     taxRegime: parsedBody.data.taxRegime,
+    service: parsedBody.data.service,
+    challenge: parsedBody.data.challenge,
     message: parsedBody.data.needDetails || null,
-    source: `service:${parsedBody.data.service};challenge:${parsedBody.data.challenge};cnpj:${parsedBody.data.cnpj}`,
     createdAt: new Date(),
   }).catch((err: unknown) => {
     console.error("[google-sheets] sync error:", err);

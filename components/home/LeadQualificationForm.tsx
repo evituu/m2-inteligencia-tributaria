@@ -83,6 +83,14 @@ function maskCnpj(value: string) {
     .replace(/(\d{4})(\d)/, "$1-$2");
 }
 
+function maskWhatsapp(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 11);
+  if (digits.length <= 2) return `(${digits}`;
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+  if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+}
+
 export function LeadQualificationForm() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -192,7 +200,19 @@ export function LeadQualificationForm() {
 
               <div className="space-y-1.5">
                 <Label htmlFor="whatsapp">WhatsApp *</Label>
-                <Input id="whatsapp" placeholder="(88) 99999-9999" aria-invalid={Boolean(errors.whatsapp)} {...register("whatsapp")} />
+                <Input
+                  id="whatsapp"
+                  placeholder="(88) 99999-9999"
+                  inputMode="numeric"
+                  maxLength={15}
+                  aria-invalid={Boolean(errors.whatsapp)}
+                  {...register("whatsapp", {
+                    onChange: (event) =>
+                      setValue("whatsapp", maskWhatsapp(event.target.value), {
+                        shouldValidate: true,
+                      }),
+                  })}
+                />
                 {errors.whatsapp ? <p className="text-xs text-destructive">{errors.whatsapp.message}</p> : null}
               </div>
             </div>

@@ -2,47 +2,61 @@ import { google } from "googleapis";
 
 export interface LeadForSheet {
   fullName: string;
-  email: string;
-  phone?: string | null;
   company?: string | null;
+  cnpj?: string | null;
+  phone?: string | null;
+  email: string;
   taxRegime?: string | null;
+  service?: string | null;
+  challenge?: string | null;
   message?: string | null;
-  source?: string | null;
   createdAt: Date;
 }
 
 export async function appendLeadToSheet(lead: LeadForSheet): Promise<void> {
-  const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
-  const privateKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY;
+  const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
+  const refreshToken = process.env.GOOGLE_OAUTH_REFRESH_TOKEN;
   const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
 
-  if (!clientEmail || !privateKey || !spreadsheetId) {
+  if (!clientId || !clientSecret || !refreshToken || !spreadsheetId) {
     return;
   }
 
-  const auth = new google.auth.JWT({
-    email: clientEmail,
-    key: privateKey.replace(/\\n/g, "\n"),
-    scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-  });
+  const auth = new google.auth.OAuth2(clientId, clientSecret);
+  auth.setCredentials({ refresh_token: refreshToken });
 
   const sheets = google.sheets({ version: "v4", auth });
 
+  const HEADERS = ["Data", "Nome Completo", "Empresa", "CNPJ", "WhatsApp", "E-mail", "Regime Tributário", "Serviço", "Desafio", "Mensagem"];
+
+  const check = await sheets.spreadsheets.values.get({ spreadsheetId, range: "A1" });
+  if (!check.data.values || check.data.values.length === 0) {
+    await sheets.spreadsheets.values.update({
+      spreadsheetId,
+      range: "A1:J1",
+      valueInputOption: "USER_ENTERED",
+      requestBody: { values: [HEADERS] },
+    });
+  }
+
   await sheets.spreadsheets.values.append({
     spreadsheetId,
-    range: "Sheet1!A:H",
+    range: "A:J",
     valueInputOption: "USER_ENTERED",
     requestBody: {
       values: [
         [
           lead.createdAt.toISOString(),
           lead.fullName,
-          lead.email,
-          lead.phone ?? "",
           lead.company ?? "",
+          lead.cnpj ?? "",
+          lead.phone ?? "",
+          lead.email,
           lead.taxRegime ?? "",
+          lead.service ?? "",
+          lead.challenge ?? "",
           lead.message ?? "",
-          lead.source ?? "",
         ],
       ],
     },
