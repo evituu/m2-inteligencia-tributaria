@@ -51,9 +51,32 @@ const montserrat = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "M2 Inteligência Tributária",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL ?? "https://m2inteligenciatributaria.com.br",
+  ),
+  title: {
+    default: "M2 Inteligência Tributária — Recuperação de Créditos Tributários",
+    template: "%s | M2 Inteligência Tributária",
+  },
   description:
-    "Escritório especializado em recuperação de crédito para empresas de contabilidade, com atuação estratégica, jurídica e operacional.",
+    "Especialistas em recuperação de créditos tributários para empresas de todos os portes. Honorários apenas sobre o que for recuperado. Análise inicial gratuita.",
+  openGraph: {
+    siteName: "M2 Inteligência Tributária",
+    locale: "pt_BR",
+    type: "website",
+    images: [
+      {
+        url: "/imagens/office/fachada_m2.webp",
+        width: 1200,
+        height: 630,
+        alt: "M2 Inteligência Tributária",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/imagens/office/fachada_m2.webp"],
+  },
   icons: {
     icon: "/imagens/logo/LOGO_M2_CLEAN.png",
   },
