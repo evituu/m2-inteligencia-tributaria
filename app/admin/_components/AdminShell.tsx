@@ -18,6 +18,7 @@ const navItems = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/posts", label: "Artigos" },
   { href: "/admin/categorias", label: "Categorias" },
+  { href: "/admin/leads", label: "Leads" },
   { href: "/admin/gallery", label: "Galeria" },
 ];
 
