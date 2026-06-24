@@ -40,7 +40,7 @@ export default function AdminGalleryAlbumPage() {
   const [selectedCount, setSelectedCount] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const CHUNK_SIZE = 1;
+  const CHUNK_SIZE = 5;
 
   async function loadAlbum() {
     setLoading(true);
@@ -80,6 +80,9 @@ export default function AdminGalleryAlbumPage() {
     }
 
     let sent = 0;
+    let totalCreated = 0;
+    let totalFailed = 0;
+
     for (const chunk of chunks) {
       const formData = new FormData();
       chunk.forEach((file) => formData.append("files", file));
@@ -95,18 +98,29 @@ export default function AdminGalleryAlbumPage() {
         toast.error(body?.message ?? "Falha no upload.");
         setUploading(false);
         setUploadProgress(null);
+        if (totalCreated > 0) await loadAlbum();
         return;
       }
 
+      const body = (await res.json()) as { items: unknown[]; failed: number };
+      totalCreated += body.items.length;
+      totalFailed += body.failed ?? 0;
       sent += chunk.length;
       setUploadProgress({ sent, total: fileArray.length });
     }
 
     if (fileInputRef.current) fileInputRef.current.value = "";
     setSelectedCount(0);
-    toast.success(`${fileArray.length} foto${fileArray.length !== 1 ? "s" : ""} enviada${fileArray.length !== 1 ? "s" : ""} com sucesso.`);
     setUploading(false);
     setUploadProgress(null);
+
+    if (totalFailed === 0) {
+      toast.success(`${totalCreated} foto${totalCreated !== 1 ? "s" : ""} enviada${totalCreated !== 1 ? "s" : ""} com sucesso.`);
+    } else {
+      toast.success(`${totalCreated} foto${totalCreated !== 1 ? "s" : ""} enviada${totalCreated !== 1 ? "s" : ""} com sucesso.`);
+      toast.warning(`${totalFailed} arquivo${totalFailed !== 1 ? "s" : ""} não pôde ser processado${totalFailed !== 1 ? "s" : ""}.`);
+    }
+
     await loadAlbum();
   }
 
@@ -216,7 +230,7 @@ export default function AdminGalleryAlbumPage() {
       <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">
         <h2 className="text-lg font-bold text-white">Enviar fotos</h2>
         <p className="mt-1 text-sm text-zinc-400">
-          Selecione quantas fotos quiser. Máximo 20 MB por arquivo (JPG, PNG, WEBP).
+          Selecione quantas fotos quiser. Máximo 100 MB por arquivo (JPG, PNG, WEBP). As fotos são convertidas automaticamente para WebP.
         </p>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
