@@ -17,9 +17,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-// middlewareClientMaxBodySize is a Next.js 16 route-handler body limit config
-// not yet reflected in the NextConfig type definition
-export default {
-  ...nextConfig,
-  middlewareClientMaxBodySize: 100 * 1024 * 1024,
-};
+export default nextConfig;
