@@ -9,10 +9,10 @@ import { processImage } from "@/lib/server/storage/processImage";
 
 export const runtime = "nodejs";
 
-const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
+const MAX_FILE_SIZE_BYTES = 20 * 1024 * 1024;
 const MAX_FILES = 10;
 
-const ALLOWED_MIME_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+const ALLOWED_MIME_TYPES = new Set(["image/jpeg", "image/jpg", "image/png", "image/webp"]);
 
 export async function POST(
   req: Request,
@@ -59,7 +59,7 @@ export async function POST(
     }
     if (file.size <= 0 || file.size > MAX_FILE_SIZE_BYTES) {
       return NextResponse.json(
-        { message: "Arquivo excede o limite de 5MB." },
+        { message: "Arquivo excede o limite de 20MB." },
         { status: 400 },
       );
     }

@@ -216,7 +216,7 @@ export default function AdminGalleryAlbumPage() {
       <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">
         <h2 className="text-lg font-bold text-white">Enviar fotos</h2>
         <p className="mt-1 text-sm text-zinc-400">
-          Selecione quantas fotos quiser. Máximo 5 MB por arquivo (JPG, PNG, WEBP).
+          Selecione quantas fotos quiser. Máximo 20 MB por arquivo (JPG, PNG, WEBP).
         </p>
         <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
