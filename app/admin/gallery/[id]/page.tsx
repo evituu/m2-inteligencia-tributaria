@@ -23,11 +23,73 @@ type AdminAlbumDetail = {
   photos: AdminPhoto[];
 };
 
+// 4 MB per HTTP request — safely under Next.js's 10 MB body limit
+const CHUNK_BYTES = 4 * 1024 * 1024;
+// How many files upload concurrently
+const CONCURRENT_FILES = 3;
+
 async function getCsrfToken() {
   const res = await fetch("/api/auth/csrf", { credentials: "include", cache: "no-store" });
   if (!res.ok) return "";
   const data = (await res.json()) as { csrfToken?: string };
   return data.csrfToken ?? "";
+}
+
+/** Generate a simple unique id without crypto.randomUUID (browser-safe) */
+function uid() {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
+/**
+ * Upload a single file in ≤4 MB chunks.
+ * Returns the created photo record on success, null on failure.
+ */
+async function uploadFileChunked(
+  file: File,
+  albumId: string,
+  csrfToken: string,
+): Promise<{ id: string; url: string; order: number } | null> {
+  const uploadId = uid();
+  const totalChunks = Math.max(1, Math.ceil(file.size / CHUNK_BYTES));
+
+  for (let i = 0; i < totalChunks; i++) {
+    const start = i * CHUNK_BYTES;
+    const end = Math.min(start + CHUNK_BYTES, file.size);
+    const chunk = file.slice(start, end);
+
+    let res: Response;
+    try {
+      res = await fetch(`/api/admin/gallery/albums/${albumId}/photos/upload-chunk`, {
+        method: "POST",
+        headers: {
+          "x-csrf-token": csrfToken,
+          "x-upload-id": uploadId,
+          "x-chunk-index": String(i),
+          "x-total-chunks": String(totalChunks),
+          "x-mime-type": file.type || "image/jpeg",
+          "x-total-size": String(file.size),
+          "content-type": "application/octet-stream",
+        },
+        body: chunk,
+      });
+    } catch {
+      console.error(`[upload] network error on ${file.name} chunk ${i}`);
+      return null;
+    }
+
+    if (!res.ok) {
+      const body = (await res.json().catch(() => null)) as { message?: string } | null;
+      console.error(`[upload] chunk ${i} of ${file.name} → ${res.status}`, body?.message);
+      return null;
+    }
+
+    // Last chunk returns the created photo
+    if (i === totalChunks - 1) {
+      const body = (await res.json()) as { item: { id: string; url: string; order: number } };
+      return body.item;
+    }
+  }
+  return null;
 }
 
 export default function AdminGalleryAlbumPage() {
@@ -36,40 +98,28 @@ export default function AdminGalleryAlbumPage() {
   const [album, setAlbum] = useState<AdminAlbumDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<{ sent: number; total: number } | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<{ done: number; total: number } | null>(null);
   const [selectedCount, setSelectedCount] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const CHUNK_SIZE = 5;
 
   async function loadAlbum() {
     setLoading(true);
     const res = await fetch(`/api/admin/gallery/albums/${id}`);
-    if (!res.ok) {
-      setLoading(false);
-      return;
-    }
+    if (!res.ok) { setLoading(false); return; }
     const data = (await res.json()) as AdminAlbumDetail;
     setAlbum(data);
     setLoading(false);
   }
 
-  useEffect(() => {
-    void loadAlbum();
-  }, [id]);
+  useEffect(() => { void loadAlbum(); }, [id]);
 
   async function handleUpload() {
     const files = fileInputRef.current?.files;
     if (!files || files.length === 0) return;
 
     const fileArray = Array.from(files);
-    const chunks: File[][] = [];
-    for (let i = 0; i < fileArray.length; i += CHUNK_SIZE) {
-      chunks.push(fileArray.slice(i, i + CHUNK_SIZE));
-    }
-
     setUploading(true);
-    setUploadProgress({ sent: 0, total: fileArray.length });
+    setUploadProgress({ done: 0, total: fileArray.length });
 
     const csrfToken = await getCsrfToken();
     if (!csrfToken) {
@@ -79,34 +129,22 @@ export default function AdminGalleryAlbumPage() {
       return;
     }
 
-    let sent = 0;
-    let totalCreated = 0;
-    let totalFailed = 0;
+    let doneCount = 0;
+    let createdCount = 0;
+    let failedCount = 0;
 
-    for (const chunk of chunks) {
-      const formData = new FormData();
-      chunk.forEach((file) => formData.append("files", file));
-
-      const res = await fetch(`/api/admin/gallery/albums/${id}/photos`, {
-        method: "POST",
-        headers: { "x-csrf-token": csrfToken },
-        body: formData,
-      });
-
-      if (!res.ok) {
-        const body = (await res.json().catch(() => null)) as { message?: string } | null;
-        toast.error(body?.message ?? "Falha no upload.");
-        setUploading(false);
-        setUploadProgress(null);
-        if (totalCreated > 0) await loadAlbum();
-        return;
+    // Upload CONCURRENT_FILES at a time; each file uploads its chunks sequentially
+    for (let i = 0; i < fileArray.length; i += CONCURRENT_FILES) {
+      const batch = fileArray.slice(i, i + CONCURRENT_FILES);
+      const results = await Promise.all(
+        batch.map((file) => uploadFileChunked(file, id, csrfToken)),
+      );
+      for (const r of results) {
+        if (r) createdCount++;
+        else failedCount++;
       }
-
-      const body = (await res.json()) as { items: unknown[]; failed: number };
-      totalCreated += body.items.length;
-      totalFailed += body.failed ?? 0;
-      sent += chunk.length;
-      setUploadProgress({ sent, total: fileArray.length });
+      doneCount += batch.length;
+      setUploadProgress({ done: doneCount, total: fileArray.length });
     }
 
     if (fileInputRef.current) fileInputRef.current.value = "";
@@ -114,27 +152,21 @@ export default function AdminGalleryAlbumPage() {
     setUploading(false);
     setUploadProgress(null);
 
-    if (totalFailed === 0) {
-      toast.success(`${totalCreated} foto${totalCreated !== 1 ? "s" : ""} enviada${totalCreated !== 1 ? "s" : ""} com sucesso.`);
+    if (failedCount === 0) {
+      toast.success(`${createdCount} foto${createdCount !== 1 ? "s" : ""} enviada${createdCount !== 1 ? "s" : ""} com sucesso.`);
     } else {
-      toast.success(`${totalCreated} foto${totalCreated !== 1 ? "s" : ""} enviada${totalCreated !== 1 ? "s" : ""} com sucesso.`);
-      toast.warning(`${totalFailed} arquivo${totalFailed !== 1 ? "s" : ""} não pôde ser processado${totalFailed !== 1 ? "s" : ""}.`);
+      if (createdCount > 0) {
+        toast.success(`${createdCount} foto${createdCount !== 1 ? "s" : ""} enviada${createdCount !== 1 ? "s" : ""} com sucesso.`);
+      }
+      toast.warning(`${failedCount} arquivo${failedCount !== 1 ? "s" : ""} não pôde${failedCount !== 1 ? "ram" : ""} ser processado${failedCount !== 1 ? "s" : ""}.`);
     }
 
     await loadAlbum();
   }
 
-  async function handleReorder(
-    photoAId: string,
-    photoBId: string,
-    orderA: number,
-    orderB: number,
-  ) {
+  async function handleReorder(photoAId: string, photoBId: string, orderA: number, orderB: number) {
     const csrfToken = await getCsrfToken();
-    if (!csrfToken) {
-      toast.error("Falha de CSRF. Recarregue a página.");
-      return;
-    }
+    if (!csrfToken) { toast.error("Falha de CSRF. Recarregue a página."); return; }
 
     const [resA, resB] = await Promise.all([
       fetch(`/api/admin/gallery/photos/${photoAId}`, {
@@ -149,20 +181,13 @@ export default function AdminGalleryAlbumPage() {
       }),
     ]);
 
-    if (!resA.ok || !resB.ok) {
-      toast.error("Falha ao reordenar fotos.");
-      return;
-    }
-
+    if (!resA.ok || !resB.ok) { toast.error("Falha ao reordenar fotos."); return; }
     await loadAlbum();
   }
 
   async function handleSetCover(photoUrl: string) {
     const csrfToken = await getCsrfToken();
-    if (!csrfToken) {
-      toast.error("Falha de CSRF. Recarregue a página.");
-      return;
-    }
+    if (!csrfToken) { toast.error("Falha de CSRF. Recarregue a página."); return; }
 
     const res = await fetch(`/api/admin/gallery/albums/${id}`, {
       method: "PATCH",
@@ -170,11 +195,7 @@ export default function AdminGalleryAlbumPage() {
       body: JSON.stringify({ coverImage: photoUrl }),
     });
 
-    if (!res.ok) {
-      toast.error("Falha ao definir capa.");
-      return;
-    }
-
+    if (!res.ok) { toast.error("Falha ao definir capa."); return; }
     toast.success("Capa do álbum atualizada.");
     await loadAlbum();
   }
@@ -188,11 +209,7 @@ export default function AdminGalleryAlbumPage() {
       headers: { "x-csrf-token": csrfToken },
     });
 
-    if (!res.ok && res.status !== 204) {
-      toast.error("Falha ao excluir foto.");
-      return;
-    }
-
+    if (!res.ok && res.status !== 204) { toast.error("Falha ao excluir foto."); return; }
     toast.success("Foto excluída.");
     await loadAlbum();
   }
@@ -210,11 +227,7 @@ export default function AdminGalleryAlbumPage() {
       <AdminShell title="Álbum não encontrado">
         <p className="text-sm text-zinc-400">
           Este álbum não existe ou foi excluído.{" "}
-          <button
-            type="button"
-            onClick={() => router.push("/admin/gallery")}
-            className="text-[#f2c40f] underline"
-          >
+          <button type="button" onClick={() => router.push("/admin/gallery")} className="text-[#f2c40f] underline">
             Voltar para galeria
           </button>
         </p>
@@ -222,16 +235,20 @@ export default function AdminGalleryAlbumPage() {
     );
   }
 
+  const pct = uploadProgress ? Math.round((uploadProgress.done / uploadProgress.total) * 100) : 0;
+
   return (
     <AdminShell
       title={album.title}
       subtitle={`${album.photos.length} foto${album.photos.length !== 1 ? "s" : ""} · ${album.isPublic ? "Público" : "Oculto"}`}
     >
+      {/* Upload panel */}
       <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">
         <h2 className="text-lg font-bold text-white">Enviar fotos</h2>
         <p className="mt-1 text-sm text-zinc-400">
-          Selecione quantas fotos quiser. Máximo 100 MB por arquivo (JPG, PNG, WEBP). As fotos são convertidas automaticamente para WebP.
+          Selecione quantas fotos quiser (JPG, PNG, WEBP, até 100 MB cada). Convertidas automaticamente para WebP.
         </p>
+
         <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
             ref={fileInputRef}
@@ -249,31 +266,29 @@ export default function AdminGalleryAlbumPage() {
             className="inline-flex h-9 items-center justify-center rounded-md bg-[#f2c40f] px-5 text-sm font-semibold text-[#12151b] disabled:opacity-60"
           >
             {uploading && uploadProgress
-              ? `Enviando ${uploadProgress.sent} de ${uploadProgress.total}...`
+              ? `Enviando ${uploadProgress.done} de ${uploadProgress.total}…`
               : selectedCount > 0
                 ? `Enviar ${selectedCount} foto${selectedCount !== 1 ? "s" : ""}`
                 : "Enviar fotos"}
           </button>
         </div>
-        {uploading && uploadProgress && uploadProgress.total > CHUNK_SIZE && (
+
+        {uploading && uploadProgress && (
           <div className="mt-3">
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-800">
               <div
                 className="h-full rounded-full bg-[#f2c40f] transition-all duration-300"
-                style={{ width: `${(uploadProgress.sent / uploadProgress.total) * 100}%` }}
+                style={{ width: `${pct}%` }}
               />
             </div>
-            <p className="mt-1 text-xs text-zinc-500">
-              {Math.round((uploadProgress.sent / uploadProgress.total) * 100)}% concluído
-            </p>
+            <p className="mt-1 text-xs text-zinc-500">{pct}% concluído</p>
           </div>
         )}
       </section>
 
+      {/* Photo grid */}
       <section className="rounded-2xl border border-zinc-800 bg-[#060b12] p-4 md:p-5">
-        <h2 className="text-lg font-bold text-white">
-          Fotos ({album.photos.length})
-        </h2>
+        <h2 className="text-lg font-bold text-white">Fotos ({album.photos.length})</h2>
 
         {album.photos.length === 0 ? (
           <p className="mt-4 text-sm text-zinc-400">
@@ -285,6 +300,7 @@ export default function AdminGalleryAlbumPage() {
               const prevPhoto = album.photos[index - 1];
               const nextPhoto = album.photos[index + 1];
               const isCover = album.coverImage === photo.url;
+
               return (
                 <div key={photo.id} className="group relative">
                   <div className={`aspect-square overflow-hidden rounded-lg border bg-zinc-800 ${isCover ? "border-[#f2c40f]" : "border-zinc-700"}`}>
@@ -295,12 +311,13 @@ export default function AdminGalleryAlbumPage() {
                       height={200}
                       className="h-full w-full object-cover"
                     />
-                    {isCover ? (
+                    {isCover && (
                       <span className="absolute left-1 top-1 rounded bg-[#f2c40f] px-1.5 py-0.5 text-[10px] font-bold uppercase text-[#12151b]">
                         Capa
                       </span>
-                    ) : null}
+                    )}
                   </div>
+
                   <button
                     type="button"
                     onClick={() => void handleDeletePhoto(photo.id)}
@@ -309,12 +326,11 @@ export default function AdminGalleryAlbumPage() {
                   >
                     ×
                   </button>
+
                   <div className="mt-1 flex gap-1">
                     <button
                       type="button"
-                      onClick={() =>
-                        void handleReorder(photo.id, prevPhoto.id, photo.order, prevPhoto.order)
-                      }
+                      onClick={() => void handleReorder(photo.id, prevPhoto.id, photo.order, prevPhoto.order)}
                       disabled={index === 0}
                       className="flex h-6 w-6 items-center justify-center rounded bg-zinc-800 text-xs text-zinc-300 disabled:opacity-30"
                       aria-label="Mover para cima"
@@ -323,16 +339,14 @@ export default function AdminGalleryAlbumPage() {
                     </button>
                     <button
                       type="button"
-                      onClick={() =>
-                        void handleReorder(photo.id, nextPhoto.id, photo.order, nextPhoto.order)
-                      }
+                      onClick={() => void handleReorder(photo.id, nextPhoto.id, photo.order, nextPhoto.order)}
                       disabled={index === album.photos.length - 1}
                       className="flex h-6 w-6 items-center justify-center rounded bg-zinc-800 text-xs text-zinc-300 disabled:opacity-30"
                       aria-label="Mover para baixo"
                     >
                       ↓
                     </button>
-                    {!isCover ? (
+                    {!isCover && (
                       <button
                         type="button"
                         onClick={() => void handleSetCover(photo.url)}
@@ -342,11 +356,12 @@ export default function AdminGalleryAlbumPage() {
                       >
                         ☆ capa
                       </button>
-                    ) : null}
+                    )}
                   </div>
-                  {photo.caption ? (
+
+                  {photo.caption && (
                     <p className="mt-1 truncate text-xs text-zinc-400">{photo.caption}</p>
-                  ) : null}
+                  )}
                 </div>
               );
             })}
