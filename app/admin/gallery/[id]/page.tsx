@@ -40,7 +40,7 @@ export default function AdminGalleryAlbumPage() {
   const [selectedCount, setSelectedCount] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const CHUNK_SIZE = 10;
+  const CHUNK_SIZE = 1;
 
   async function loadAlbum() {
     setLoading(true);
